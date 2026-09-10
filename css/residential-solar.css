@@ -1,0 +1,19 @@
+.solar-hero{position:relative;isolation:isolate;overflow:hidden;background:var(--navy);color:white;padding:75px 0}
+.solar-hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:-2}
+.solar-hero:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,#0c202ef2,#0c202ebd 50%,#0c202e40)}
+.solar-hero h1{font-size:clamp(44px,5.5vw,76px);line-height:1.08;font-weight:600;max-width:800px}.solar-hero h1 span,.solar-hero .eyebrow{color:var(--green)}
+.solar-hero .solar-lead{max-width:530px;color:#e0e8eb;font-size:17px;line-height:1.8;margin-top:25px}.solar-actions{display:flex;align-items:center;flex-wrap:wrap;gap:25px;margin-top:30px}.solar-actions .text-link{color:white}
+.solar-ranges{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px}.solar-ranges article{padding:30px;background:var(--pale);border-radius:7px}.solar-ranges h3{font-size:26px;font-weight:600;margin:18px 0}.solar-ranges p:not(.eyebrow){font-size:15px;color:var(--muted);line-height:1.8}.solar-ranges .text-link{margin-top:25px}
+.solar-note{font-size:13px;color:var(--muted);margin-top:24px;line-height:1.8}
+.solar-included{background:var(--pale)}.solar-included .feature-list{margin-bottom:0}
+.solar-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px}.solar-steps h3{font-size:23px;font-weight:600;margin-bottom:15px}.solar-steps p:not(.eyebrow){font-size:15px;line-height:1.8;color:var(--muted)}
+@media(max-width:700px){.solar-hero{padding:45px 0}.solar-hero .solar-lead{font-size:15px}.solar-ranges,.solar-steps{grid-template-columns:1fr;gap:22px}.solar-ranges article{padding:25px}.solar-hero:after{background:linear-gradient(90deg,#0c202eed,#0c202e88)}}
+.solar-simulator{scroll-margin-top:95px}
+.simulator-frame{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--pale)}
+.simulator-frame iframe{display:block;width:100%;height:780px;border:0;background:white}
+.simulator-fallback{font-size:13px;color:var(--muted);margin-top:18px;line-height:1.8}
+.simulator-fallback a{color:#00836c;text-decoration:underline}
+.solar-final-actions{display:flex;flex-direction:column;align-items:flex-start;gap:18px}
+.solar-final-actions .button{padding:19px 25px;font-size:15px;box-shadow:0 6px 18px #142b3b20}
+.solar-final-actions .text-link{font-size:12px}
+@media(max-width:700px){.simulator-frame iframe{height:720px}.solar-final-actions{width:100%}.solar-final-actions .button{width:100%;font-size:14px;justify-content:space-between}}

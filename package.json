@@ -1,0 +1,15 @@
+{
+  "name": "website-macwatts",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node scripts/serve.js",
+    "test": "node scripts/verify.js"
+  },
+  "keywords": [],
+  "author": "",
+  "description": "Versão estática do website MacWatts em HTML, CSS e JavaScript.",
+  "devDependencies": {
+    "playwright": "^1.63.0"
+  }
+}

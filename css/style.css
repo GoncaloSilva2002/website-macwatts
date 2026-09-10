@@ -1,0 +1,46 @@
+/* Static interactions; the original page styles are stored in ../assets/. */
+html { scroll-behavior: smooth; }
+body { overflow-x: clip; }
+.elementor-64 .elementor-element.elementor-element-35082763 { --margin-left: 0px; --margin-right: 0px; --padding-left: 20px; --padding-right: 20px; }
+.elementor-invisible { visibility: visible !important; }
+.elementor-slides-wrapper { position: relative; overflow: hidden; }
+.elementor-slides-wrapper .swiper-wrapper { display: block; transform: none !important; }
+.elementor-slides-wrapper .swiper-slide { display: none; width: 100% !important; }
+.elementor-slides-wrapper .swiper-slide:first-child,
+.elementor-slides-wrapper .swiper-slide.is-active { display: block; }
+.elementor-slides-wrapper.is-ready .swiper-slide:not(.is-active) { display: none; }
+.elementor-slides-wrapper .swiper-pagination { bottom: 24px; left: 0; width: 100%; display: flex; justify-content: center; gap: 10px; }
+.elementor-posts-container .elementor-post__thumbnail img { position: absolute; inset: 0; width: 100% !important; height: 100% !important; object-fit: cover; transform: none !important; }
+.elementor-slides-wrapper .swiper-pagination-bullet { display: block; padding: 0; border: 1px solid white; background: white; opacity: .6; cursor: pointer; }
+.elementor-slides-wrapper .swiper-pagination-bullet-active { opacity: 1; }
+.slide-control { position: absolute; top: 50%; z-index: 3; border: 0; background: transparent; color: white; font-size: 40px; padding: 10px; cursor: pointer; }
+.slide-control:hover, .slide-control:focus { background: #0003; color: white; }
+.slide-prev { left: 12px; } .slide-next { right: 12px; }
+.slide-pause { position: absolute; bottom: 18px; right: 20px; z-index: 4; color: white; background: #0005; border: 1px solid #ffffff66; border-radius: 20px; font-size: 12px; padding: 5px 12px; }
+.elementor-nav-menu--main .menu-item-has-children { position: relative; }
+.elementor-nav-menu--main .menu-item-has-children > .sub-menu { display: none; position: absolute; top: 100%; left: 0; min-width: 260px; z-index: 1001; }
+.elementor-nav-menu--main .menu-item-has-children:hover > .sub-menu,
+.elementor-nav-menu--main .menu-item-has-children:focus-within > .sub-menu { display: block; }
+.elementor-nav-menu--main .menu-item-has-children > a::after { content: '⌄'; position: static; margin-left: 8px; background: none !important; opacity: 1 !important; height: auto; width: auto; }
+nav.elementor-nav-menu--dropdown { max-height: 0; overflow: hidden; }
+nav.elementor-nav-menu--dropdown.is-open { max-height: 75vh !important; overflow: auto; transform: scaleY(1) !important; width: min(390px, 100vw); right: 0; left: auto; }
+nav.elementor-nav-menu--dropdown.is-open .sub-menu { display: block; padding-left: 15px; }
+nav.elementor-nav-menu--dropdown.is-open a { white-space: normal; }
+a:focus-visible, button:focus-visible, [role=button]:focus-visible { outline: 3px solid #00bca0; outline-offset: 4px; }
+.form-note { margin: 12px 0; font-size: 14px; line-height: 1.6; }
+.image-dialog { border: 0; background: #101720; max-width: 94vw; max-height: 94vh; padding: 40px 12px 12px; }
+.image-dialog::backdrop { background: #000d; }
+.image-dialog img { max-height: 82vh; max-width: 88vw; object-fit: contain; }
+.image-dialog button { position: absolute; right: 8px; top: 4px; border: 0; color: white; background: transparent; font-size: 24px; }
+@media (max-width: 767px) {
+  [data-elementor-type="footer"] .elementor-nav-menu--main { display: block; }
+  [data-elementor-type="footer"] .elementor-menu-toggle,
+  [data-elementor-type="footer"] nav.elementor-nav-menu--dropdown { display: none; }
+  .elementor-slides-wrapper .swiper-slide-inner { padding-left: 36px !important; padding-right: 36px !important; }
+  .slide-control { font-size: 28px; padding: 4px; }
+  .slide-prev { left: 2px; } .slide-next { right: 2px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
