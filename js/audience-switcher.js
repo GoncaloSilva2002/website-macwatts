@@ -20,8 +20,7 @@
     hint.innerHTML = '<button class="audience-hint-close" type="button" aria-label="Fechar aviso">×</button>' +
       '<p class="audience-hint-label">Empresas e particulares</p>' +
       '<h2 id="audience-hint-title">A energia certa para si.</h2>' +
-      '<p>Pode alternar entre <strong>Empresarial</strong> e <strong>Residencial</strong> a qualquer momento. Basta usar este botão no canto do ecrã.</p>' +
-      '<button class="audience-hint-confirm" type="button">Entendido</button>';
+      '<p>Alterne entre <strong>Empresarial</strong> e <strong>Residencial</strong> no botão abaixo.</p>';
     document.body.append(hint);
     hint.querySelectorAll('button').forEach(button => button.addEventListener('click', dismissHint));
     switcher.addEventListener('toggle', () => { if (switcher.open) dismissHint(); });

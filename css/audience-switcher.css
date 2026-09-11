@@ -11,16 +11,30 @@
 .audience-switcher :is(summary,a):focus-visible{outline:3px solid #00b996;outline-offset:3px}
 @media(max-width:520px){.audience-switcher{right:14px;bottom:max(14px,env(safe-area-inset-bottom));font-size:11px}.audience-switcher summary{padding:10px 13px}}
 @media print{.audience-switcher{display:none}}
-.audience-hint{position:fixed;right:24px;bottom:calc(max(20px,env(safe-area-inset-bottom)) + 62px);z-index:41;width:330px;max-width:calc(100vw - 28px);box-sizing:border-box;padding:25px;background:#fff;color:#203347;border:1px solid #dce4e5;border-radius:14px;box-shadow:0 12px 40px #142b3b30;font-family:Manrope,Arial,sans-serif;animation:audience-hint-in .35s ease-out}
+.audience-hint{position:fixed;right:24px;bottom:calc(max(20px,env(safe-area-inset-bottom)) + 62px);z-index:41;width:270px;max-width:calc(100vw - 28px);box-sizing:border-box;padding:18px;background:#fff;color:#203347;border:1px solid #dce4e5;border-radius:14px;box-shadow:0 12px 40px #142b3b30;font-family:Manrope,Arial,sans-serif;animation:audience-hint-in .35s ease-out}
 .audience-hint:after{content:"";position:absolute;right:40px;bottom:-7px;width:12px;height:12px;background:white;border-right:1px solid #dce4e5;border-bottom:1px solid #dce4e5;transform:rotate(45deg)}
-.audience-hint .audience-hint-label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#00836c;margin:0 25px 12px 0;font-weight:700}
-.audience-hint h2{font-size:23px;font-weight:600;line-height:1.25;letter-spacing:-.03em;margin:0 0 14px}
-.audience-hint p{font-size:13px;line-height:1.8;margin:0;color:#61707d}
+.audience-hint .audience-hint-label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#00836c;margin:0 25px 8px 0;font-weight:700}
+.audience-hint h2{font-size:19px;font-weight:600;line-height:1.25;letter-spacing:-.03em;margin:0 0 10px}
+.audience-hint p{font-size:12px;line-height:1.65;margin:0;color:#61707d}
 .audience-hint button{font:inherit;cursor:pointer;border:0}
 .audience-hint .audience-hint-close{position:absolute;right:7px;top:7px;width:36px;height:36px;padding:0;background:transparent;color:#61707d;font-size:24px;border-radius:50%}
-.audience-hint .audience-hint-confirm{display:block;margin-top:20px;padding:11px 20px;min-height:44px;border-radius:6px;background:#00836c;color:white;font-size:12px;font-weight:700}
 .audience-hint button:focus-visible{outline:3px solid #00b996;outline-offset:3px}
 @keyframes audience-hint-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-@media(max-width:520px){.audience-hint{right:14px;bottom:calc(max(14px,env(safe-area-inset-bottom)) + 62px);padding:22px}}
+@media(max-width:520px){
+ .audience-hint{right:14px;bottom:calc(max(14px,env(safe-area-inset-bottom)) + 56px);width:240px;padding:14px;border-radius:10px}
+ .audience-hint .audience-hint-label{font-size:9px;letter-spacing:.04em;margin-bottom:6px}
+ .audience-hint h2{font-size:17px;margin-bottom:8px}
+ .audience-hint p{font-size:12px;line-height:1.5}
+ .audience-hint .audience-hint-close{right:3px;top:3px}
+}
+@media(max-width:360px){
+ .audience-hint{width:220px;padding:12px}
+ .audience-hint .audience-hint-label{display:none}
+ .audience-hint h2{font-size:16px;padding-right:24px}
+}
+@media(max-height:480px){
+ .audience-hint{max-height:calc(100dvh - 90px - env(safe-area-inset-bottom));overflow-y:auto}
+ .audience-hint .audience-hint-label{display:none}
+}
 @media(prefers-reduced-motion:reduce){.audience-hint{animation:none}}
 @media print{.audience-hint{display:none}}
