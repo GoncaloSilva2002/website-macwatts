@@ -7,11 +7,20 @@ const assert = require('node:assert/strict');
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   page.on('response', response => { if (response.url().startsWith('http://localhost:8080') && response.status() >= 400) errors.push(`${response.status()} ${response.url()}`); });
-  const report = JSON.parse(fs.readFileSync('clone-report.json', 'utf8'));
+  const report = { pages: fs.readdirSync('.', { recursive: true }).filter(file => file.endsWith('.html') && !/^(node_modules|assets|templates)[\\/]/.test(file)).map(file => file.replaceAll('\\', '/')) };
   for (const width of [1440, 390]) {
     await page.setViewportSize({ width, height: 900 });
     for (const file of report.pages) {
       await page.goto(`http://localhost:8080/${file}`, { waitUntil: 'load' });
+      assert.equal(await page.locator('.site-header').count(), 1, file);
+      assert.equal(await page.locator('.site-footer').count(), 1, file);
+      assert.equal(await page.locator('main h1').count(), 1, file);
+      if (width === 390) {
+        await page.locator('.menu-toggle').click();
+        assert.equal(await page.locator('#main-nav').isVisible(), true, file);
+        await page.keyboard.press('Escape');
+        assert.equal(await page.locator('.menu-toggle').getAttribute('aria-expanded'), 'false', file);
+      }
       await page.locator('img').evaluateAll(images => images.forEach(img => img.loading = 'eager'));
       await page.waitForFunction(() => [...document.images].every(img => img.complete));
       const state = await page.evaluate(() => ({
@@ -55,9 +64,9 @@ const assert = require('node:assert/strict');
     assert.equal(await question.evaluate(el => el.open), false);
     if (width === 390) {
       await page.locator('.menu-toggle').click();
-      await page.locator('#main-nav a[href="#solar"]').click();
+      await page.locator('#main-nav a[href="#duvidas"]').click();
       assert.equal(await page.locator('.menu-toggle').getAttribute('aria-expanded'), 'false');
-      assert.equal(new URL(page.url()).hash, '#solar');
+      assert.equal(new URL(page.url()).hash, '#duvidas');
     }
   }
   await page.goto('http://localhost:8080/contactos/index.html');

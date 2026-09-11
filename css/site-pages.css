@@ -1,0 +1,61 @@
+/* Shared visual language for the exported service, project and editorial pages. */
+.unified-page{font-family:var(--font);color:var(--ink);background:#fff}
+.unified-page .site-header,.unified-page .site-footer{font-family:'Manrope',sans-serif;width:100%;max-width:none;padding-inline:0;margin-inline:0}
+.unified-page .site-header a,.unified-page .site-footer a{color:inherit;text-decoration:none}
+.unified-page .site-header .button{color:#102e2d}
+.unified-page .site-header .brand img{width:168px!important;height:75px!important;max-width:100%;object-fit:contain}
+.unified-page .site-footer .footer-brand img{width:156px!important;height:29px!important;max-width:100%;object-fit:contain}
+.unified-page .site-header .menu-toggle{border-radius:4px;border:1px solid #ffffff40;background:transparent;color:white;padding:11px}
+.unified-page .site-header .main-nav>a:hover,.unified-page .site-footer a:hover{color:#57dfb8}
+.unified-page .site-footer h2{font-family:var(--font);font-size:12px;font-weight:700;color:white}
+.unified-page .site-header button{box-shadow:none}
+.page-intro{background:var(--navy);color:white;padding:75px 0 85px;border-bottom:4px solid var(--green)}
+.page-intro h1{font-family:var(--font);font-size:clamp(36px,4.5vw,64px);line-height:1.12;font-weight:600;letter-spacing:-.045em;max-width:1050px;color:white;margin:0;text-wrap:balance}
+.page-intro .eyebrow{color:#bdeadc}
+.unified-content .elementor{--e-global-color-primary:#203347;--e-global-color-secondary:#61707d;--e-global-color-text:#61707d;--e-global-color-accent:#00b996;--e-global-typography-primary-font-family:'Manrope';--e-global-typography-secondary-font-family:'Manrope';--e-global-typography-text-font-family:'Manrope';--e-global-typography-accent-font-family:'Manrope'}
+.unified-content .elementor .e-parent{--container-max-width:1240px;--padding-top:48px;--padding-bottom:48px;--padding-left:48px;--padding-right:48px;--margin-top:0px;--margin-bottom:0px;border-radius:0;background-color:white!important;background-image:none!important;min-height:0!important}
+.unified-content .elementor .e-parent:before{background:none!important}
+.unified-content .elementor .e-parent:nth-of-type(even){background-color:var(--pale)!important}
+.unified-content .elementor .e-con-inner{max-width:1240px}
+.unified-content .elementor :is(h2,h3,h4,h5,h6,.elementor-heading-title){font-family:'Manrope',sans-serif!important;color:var(--ink)!important;font-weight:600!important;letter-spacing:-.035em!important;text-transform:none!important;line-height:1.25!important}
+.unified-content .elementor h2{font-size:clamp(28px,3vw,42px)!important}
+.unified-content .elementor :is(h3,h4){font-size:clamp(21px,2vw,28px)!important}
+.unified-content .elementor :is(p,li,.elementor-widget-text-editor){font-family:var(--font)!important;font-size:15px!important;line-height:1.85!important;font-weight:400;color:var(--muted)}
+.unified-content .elementor p{margin:0 0 18px}
+.unified-content .elementor p:last-child{margin-bottom:0}
+.unified-content .elementor .elementor-button{font-family:var(--font)!important;font-size:13px!important;font-weight:800!important;letter-spacing:0!important;text-transform:none!important;line-height:1.5;background:var(--green)!important;color:#102e2d!important;border:0!important;border-radius:5px!important;padding:16px 23px!important;min-height:50px;box-shadow:none!important}
+.unified-content .elementor .elementor-button:hover{background:#34d9ac!important;transform:translateY(-2px)}
+.unified-content .elementor img{border-radius:6px}
+.unified-content .elementor img.content-icon{width:52px!important;height:52px!important;object-fit:contain;border-radius:0;margin-inline:auto}
+.unified-content .elementor .elementor-counter :is(.elementor-counter-number-wrapper,.elementor-counter-title){font-family:var(--font)!important;color:var(--ink)!important;letter-spacing:-.035em}
+.unified-content .elementor .elementor-counter-number-wrapper{font-size:40px!important;font-weight:600!important}
+.unified-content .elementor .elementor-counter-title{font-size:14px!important}
+.unified-content .elementor .elementor-post{background:var(--pale);border:1px solid var(--line);border-radius:7px;overflow:hidden;box-shadow:none}
+.unified-content .elementor .elementor-post__text{padding:24px}
+.unified-content .elementor .elementor-post__title{font-size:23px!important}
+.unified-content .elementor .elementor-post__read-more{font-family:var(--font);color:#00856c;font-weight:800}
+.unified-content .elementor :is(input,textarea,select){font-family:var(--font);border:1px solid var(--line);border-radius:5px;padding:14px;background:#fff;color:var(--ink)}
+.unified-content.legal-content .elementor .e-con-inner{max-width:900px}
+.unified-content.legal-content a{text-decoration:underline;text-underline-offset:3px;color:#00856c}
+.unified-page .site-footer{margin-top:0}
+.unified-page .site-footer .footer-brand img{height:29px;width:156px}
+.unified-page .site-header .brand img{border-radius:0}
+.unified-content .category-projetos .elementor-widget-image{width:100%!important;max-width:100%!important}
+.unified-content .category-projetos .elementor-widget-image img{width:100%;max-height:620px;object-fit:cover}
+.unified-content .category-projetos .elementor-widget-text-editor .elementor-widget-container{display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between}
+.unified-content .category-projetos .elementor-widget-text-editor p{flex:1;min-width:120px;margin:0;padding:16px;border-left:1px solid var(--line)}
+.unified-content .category-projetos .elementor-widget-text-editor strong{font-size:22px;color:var(--ink)}
+.unified-content .category-projetos .elementor-widget-text-editor img{margin-bottom:12px}
+.unified-content .category-projetos .elementor-widget-theme-post-content .elementor-widget-container{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.unified-content .category-projetos .elementor-widget-theme-post-content figure{margin:0!important;width:100%!important;min-width:0}
+.unified-content .category-projetos .elementor-widget-theme-post-content img{width:100%!important;height:auto!important;aspect-ratio:4/3;object-fit:cover}
+@media(max-width:800px){
+ .page-intro{padding:48px 0 55px}
+ .unified-page .site-header .brand img{width:145px!important;height:64px!important}
+ .unified-content .elementor .e-parent{--padding-top:32px;--padding-bottom:32px;--padding-left:20px;--padding-right:20px}
+ .unified-content .elementor .e-con{min-width:0;max-width:100%}
+ .unified-content .elementor :is(h2,h3,h4,p,a){overflow-wrap:anywhere}
+ .unified-content .elementor .elementor-post__text{padding:20px}
+ .unified-content .category-projetos .elementor-widget-theme-post-content .elementor-widget-container{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){.unified-content .elementor .elementor-button:hover{transform:none}}

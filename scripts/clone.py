@@ -190,4 +190,6 @@ import subprocess
 import sys
 if (ROOT / 'scripts/build-business-navigation.py').exists():
     subprocess.run([sys.executable, str(ROOT / 'scripts/build-business-navigation.py')], check=True)
+if (ROOT / 'scripts/unify-site.py').exists():
+    subprocess.run([sys.executable, str(ROOT / 'scripts/unify-site.py')], check=True)
 print('Done:', len(pages), 'pages;', len(assets), 'assets;', len(errors), 'errors', flush=True)
