@@ -4,6 +4,9 @@
 .audience-switcher summary:before{content:"";width:6px;height:6px;border-radius:50%;background:#00a887}
 .audience-switcher summary:after{content:"↕";color:#00856c;font-size:17px}
 .audience-switcher summary:hover{background:#f2f6f5}
+.audience-switcher.is-switching summary:after{animation:audience-switch-spin .45s ease-in-out both}
+@keyframes audience-switch-spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.audience-switcher.is-switching summary:after{animation:none}}
 .audience-switcher nav{position:absolute;right:0;bottom:calc(100% + 10px);width:230px;background:white;border:1px solid #dce4e5;border-radius:12px;padding:8px;box-shadow:0 8px 30px #142b3b26}
 .audience-switcher nav a{display:block;padding:12px;border-radius:6px;text-decoration:none;color:#203347;font-weight:600;min-height:44px}
 .audience-switcher nav a:hover,.audience-switcher nav a[aria-current]{background:#edf7f3;color:#007c66}

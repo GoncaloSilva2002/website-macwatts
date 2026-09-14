@@ -1,6 +1,26 @@
 (() => {
   const switcher = document.querySelector('.audience-switcher');
   if (!switcher) return;
+  const trigger = switcher.querySelector('summary');
+  const destination = switcher.querySelector('nav a:not([aria-current])');
+  if (trigger && destination) {
+    const area = destination.firstChild.textContent.trim();
+    trigger.setAttribute('aria-label', `Mudar para ${area}`);
+    trigger.setAttribute('title', `Mudar para ${area}`);
+    trigger.addEventListener('click', event => {
+      event.preventDefault();
+      if (switcher.classList.contains('is-switching')) return;
+      dismissHint();
+      switcher.classList.add('is-switching');
+      trigger.setAttribute('aria-busy', 'true');
+      const delay = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 450;
+      window.setTimeout(() => window.location.assign(destination.href), delay);
+    });
+    window.addEventListener('pageshow', () => {
+      switcher.classList.remove('is-switching');
+      trigger.removeAttribute('aria-busy');
+    });
+  }
   const hintKey = 'macwatts-area-hint-seen';
   let hint;
   const dismissHint = () => {
