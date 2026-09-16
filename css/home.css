@@ -23,3 +23,5 @@
 @media(prefers-reduced-motion:reduce){.service-photo img{transition:none}.service-card:hover .service-photo img,.service-card:focus-visible .service-photo img{transform:none}}
 .solutions .service-grid,.solutions .service-card{border:0}
 .site-header .button-small{padding:10px 16px;min-height:40px;gap:0}
+.hero{min-height:calc(100svh - 90px)}
+@media(max-width:800px){.hero{min-height:calc(100svh - 76px)}}
