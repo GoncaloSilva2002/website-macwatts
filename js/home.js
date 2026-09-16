@@ -23,4 +23,17 @@
   document.addEventListener('click', event => { if (!event.target.closest('.site-header')) setOpen(false); });
   matchMedia('(max-width: 800px)').addEventListener('change', () => setOpen(false));
   document.querySelector('[data-year]').textContent = new Date().getFullYear();
+  const productionValue = document.querySelector('[data-production-value]');
+  if (productionValue && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const min = 18;
+    const max = 86;
+    const cycleMs = 12000;
+    const updateProduction = time => {
+      const progress = (time % cycleMs) / cycleMs;
+      const daylight = (1 - Math.cos(progress * Math.PI * 2)) / 2;
+      productionValue.textContent = Math.round(min + daylight * (max - min));
+      requestAnimationFrame(updateProduction);
+    };
+    requestAnimationFrame(updateProduction);
+  }
 })();
