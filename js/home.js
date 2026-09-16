@@ -25,12 +25,16 @@
   document.querySelector('[data-year]').textContent = new Date().getFullYear();
   const productionValue = document.querySelector('[data-production-value]');
   if (productionValue && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const min = 6;
+    const min = 0;
     const max = 92;
-    const cycleMs = 12000;
+    const cycleMs = 16000;
     const updateProduction = time => {
       const progress = (time % cycleMs) / cycleMs;
-      const daylight = progress < 0.88 ? Math.min(progress / 0.58, 1) : 0;
+      let daylight = 0;
+      if (progress < 0.12) daylight = progress / 0.12 * 0.18;
+      else if (progress < 0.42) daylight = 0.18 + ((progress - 0.12) / 0.3) * 0.82;
+      else if (progress < 0.66) daylight = 1;
+      else if (progress < 0.94) daylight = 1 - ((progress - 0.66) / 0.28);
       productionValue.textContent = Math.round(min + daylight * (max - min));
       requestAnimationFrame(updateProduction);
     };

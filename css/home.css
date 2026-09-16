@@ -29,8 +29,8 @@
 .hero-solar-orbit{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
 .hero-solar-orbit:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#020811d9 0%,#07121fb8 44%,#07121f80 100%);animation:heroNightCycle 12s linear infinite}
 .hero-sun-path{position:absolute;left:50%;top:42%;width:min(46vw,640px);aspect-ratio:2.2;border-top:1px solid #ffffff30;border-radius:100% 100% 0 0;transform:translateX(-50%) rotate(-2deg);opacity:.65}
-.hero-sun{position:absolute;left:50%;top:42%;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,#fffdf0 0 7%,#ffe66f99 16%,#ffbd3d5c 34%,#ffb23d22 54%,transparent 72%);mix-blend-mode:screen;filter:blur(2px);transform:translate(-50%,-50%);animation:heroSunCycle 12s linear infinite}
-.hero-sun:after{content:"";position:absolute;left:50%;top:50%;width:38px;height:38px;border-radius:50%;background:#fff8c9;box-shadow:0 0 32px #fff4a8,0 0 120px #ffc642;transform:translate(-50%,-50%);opacity:.9}
+.hero-sun{position:absolute;left:50%;top:42%;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,#fff5a83d 0 16%,#ffbf4f24 34%,transparent 68%);mix-blend-mode:screen;filter:blur(12px);transform:translate(-50%,-50%);animation:heroSunCycle 12s linear infinite}
+.hero-sun:after{display:none}
 .hero-production-card{position:absolute;left:calc(50% + 120px);top:39%;min-width:170px;padding:14px 16px;border:1px solid #ffffff42;border-radius:7px;background:#102736c9;box-shadow:0 18px 45px #07131e66;backdrop-filter:blur(8px);animation:heroProductionCycle 12s linear infinite}
 .hero-production-label{display:block;margin-bottom:3px;color:#bdeadc;font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
 .hero-production-card strong{display:block;color:white;font-size:31px;font-weight:600;line-height:1;letter-spacing:-.04em}
@@ -46,3 +46,33 @@
 @keyframes heroWarmCycle{0%,8%{opacity:.05}42%{opacity:.75}70%{opacity:.28}88%,100%{opacity:0}}
 @keyframes heroImageDawn{0%,8%{filter:brightness(.42) saturate(.72) contrast(1.12) hue-rotate(218deg)}42%{filter:brightness(.78) saturate(1.06) contrast(1.08) hue-rotate(18deg)}62%,88%{filter:brightness(1.03) saturate(1.05) contrast(1)}100%{filter:brightness(.42) saturate(.72) contrast(1.12) hue-rotate(218deg)}}
 @media(prefers-reduced-motion:reduce){.business-home .hero-image,.hero-solar-orbit:after{animation:none}.business-home .hero-image{filter:none}.hero-solar-orbit:after{opacity:.25}}
+.hero-image-sunset{opacity:0;animation:heroSunsetImage 16s linear infinite}
+@keyframes heroSunsetImage{0%,58%{opacity:0}72%{opacity:.55}86%{opacity:1}100%{opacity:0}}
+@media(prefers-reduced-motion:reduce){.hero-image-sunset{animation:none;opacity:0}}
+.hero-sun{background:radial-gradient(circle,#fff3b830 0 14%,#ffd27a1e 34%,transparent 70%);filter:blur(18px)}
+.hero-sun:after{width:42px;height:42px;background:radial-gradient(circle,#fffdf2 0 28%,#ffe9a0 58%,#ffc85b 100%);box-shadow:0 0 24px #fff0a8aa,0 0 72px #ffbd3d80;opacity:.82}
+@keyframes heroNightFullDay{0%,7%{opacity:.82}36%,66%{opacity:.03}88%{opacity:.58}100%{opacity:.82}}
+@keyframes heroWarmFullDay{0%{opacity:.08}12%{opacity:.2}34%{opacity:.42}62%{opacity:.24}82%{opacity:.1}100%{opacity:.03}}
+@keyframes heroImageFullDay{0%{filter:brightness(.58) saturate(.86) contrast(1.06) hue-rotate(200deg)}12%{filter:brightness(.7) saturate(.95) contrast(1.04) hue-rotate(80deg)}34%{filter:brightness(.9) saturate(1.03) contrast(1.02) hue-rotate(8deg)}48%,66%{filter:brightness(1.02) saturate(1.02) contrast(1)}88%{filter:brightness(.66) saturate(.88) contrast(1.04) hue-rotate(195deg)}100%{filter:brightness(.58) saturate(.86) contrast(1.06) hue-rotate(200deg)}}
+.hero-solar-orbit .hero-sun-path:after{content:"";position:absolute;left:-42%;top:-120%;width:150%;height:95%;pointer-events:none;background:radial-gradient(circle,#fff7c8 0 1.2px,transparent 1.8px) 8% 20%/120px 90px,radial-gradient(circle,#dff3ff 0 1px,transparent 1.7px) 34% 10%/150px 110px,radial-gradient(circle,#fff 0 1.1px,transparent 1.8px) 72% 30%/135px 95px,radial-gradient(circle,#fff2ac 0 1px,transparent 1.8px) 55% 5%/170px 120px;filter:drop-shadow(0 0 5px #fff4b8);opacity:0;animation:heroStarsCycle 16s linear infinite}
+.hero-solar-orbit .hero-sun-path:after{display:none}
+.hero-solar-orbit .hero-sun-path:before{content:"";position:fixed;inset:90px 0 auto;height:28vh;pointer-events:none;background:radial-gradient(circle,#fff7c8 0 1.2px,transparent 1.9px) 8% 16%/120px 90px,radial-gradient(circle,#dff3ff 0 1px,transparent 1.8px) 34% 12%/150px 110px,radial-gradient(circle,#fff 0 1.1px,transparent 1.9px) 72% 24%/135px 95px,radial-gradient(circle,#fff2ac 0 1px,transparent 1.9px) 55% 8%/170px 120px,radial-gradient(circle,#ffffff 0 .9px,transparent 1.7px) 18% 38%/180px 130px,radial-gradient(circle,#fff6bf 0 1px,transparent 1.9px) 86% 34%/160px 120px;filter:drop-shadow(0 0 5px #fff4b8);opacity:0;animation:heroStarsCycle 16s linear infinite}
+@media(max-width:800px){.hero-solar-orbit .hero-sun-path:before{inset:76px 0 auto;height:26vh}}
+@keyframes heroStarsCycle{0%,8%{opacity:.9}24%,74%{opacity:0}88%,100%{opacity:.78}}
+.hero-solar-orbit .hero-sun-path:before,.hero-solar-orbit .hero-sun-path:after{display:none!important}
+.hero-stars{position:absolute;left:0;right:0;top:0;height:30%;pointer-events:none;background:radial-gradient(circle,#fff7c8 0 1.2px,transparent 1.9px) 8% 16%/120px 90px,radial-gradient(circle,#dff3ff 0 1px,transparent 1.8px) 34% 12%/150px 110px,radial-gradient(circle,#fff 0 1.1px,transparent 1.9px) 72% 24%/135px 95px,radial-gradient(circle,#fff2ac 0 1px,transparent 1.9px) 55% 8%/170px 120px,radial-gradient(circle,#ffffff 0 .9px,transparent 1.7px) 18% 38%/180px 130px,radial-gradient(circle,#fff6bf 0 1px,transparent 1.9px) 86% 34%/160px 120px;filter:drop-shadow(0 0 5px #fff4b8);opacity:0;animation:heroStarsCycle 16s linear infinite}
+@media(max-width:800px){.hero-stars{height:28%}}
+.business-home .hero-image{animation:heroImageFullDay 16s linear infinite}
+.hero-solar-orbit:before{animation:heroNightFullDay 16s linear infinite}
+.hero-solar-orbit:after{animation:heroWarmFullDay 16s linear infinite}
+.hero-sun{animation:heroSunFullDay 16s linear infinite}
+.hero-production-card{left:auto;right:clamp(46px,11vw,165px);top:auto;bottom:clamp(150px,18vh,215px);animation:heroProductionFixed 16s linear infinite}
+@keyframes heroNightFullDay{0%,7%{opacity:1}36%,66%{opacity:.06}88%{opacity:.72}100%{opacity:1}}
+@keyframes heroWarmFullDay{0%{opacity:.18}8%{opacity:.45}34%{opacity:.78}62%{opacity:.45}82%{opacity:.16}100%{opacity:.04}}
+@keyframes heroImageFullDay{0%{filter:brightness(.5) saturate(.78) contrast(1.1) hue-rotate(210deg)}8%{filter:brightness(.62) saturate(.9) contrast(1.1) hue-rotate(120deg)}34%{filter:brightness(.82) saturate(1.08) contrast(1.06) hue-rotate(12deg)}48%,66%{filter:brightness(1.04) saturate(1.05) contrast(1)}88%{filter:brightness(.54) saturate(.82) contrast(1.08) hue-rotate(205deg)}100%{filter:brightness(.42) saturate(.72) contrast(1.12) hue-rotate(218deg)}}
+@keyframes heroSunFullDay{0%{transform:translate(-50%,-50%) translateY(-8px) scale(.68);opacity:.12}10%{opacity:.72}42%{transform:translate(-50%,-50%) translateY(-420px) scale(1.04);opacity:1}58%{transform:translate(-50%,-50%) translateY(-820px) scale(.7);opacity:0}100%{transform:translate(-50%,-50%) translateY(-820px) scale(.7);opacity:0}}
+@keyframes heroProductionCorner{0%{opacity:.72;transform:translate(-70px,8px)}10%{opacity:1;transform:translate(-70px,8px)}42%{opacity:1;transform:translate(-45px,-290px)}56%{opacity:0;transform:translate(-25px,-520px)}62%{opacity:1;transform:translate(30px,18px)}92%{opacity:.95;transform:translate(30px,18px)}100%{opacity:.72;transform:translate(30px,18px)}}
+@keyframes heroProductionFixed{0%,100%{opacity:.76;transform:none}10%,88%{opacity:1;transform:none}}
+@media(max-width:800px){.hero-production-card{left:auto;right:20px;bottom:118px;top:auto}}
+.hero-sun:after{display:block;content:"";position:absolute;left:50%;top:50%;width:48px;height:48px;border-radius:50%;background:radial-gradient(circle,#fffdf2 0 28%,#ffe070 58%,#ffac2f 100%);box-shadow:0 0 38px #fff0a8,0 0 120px #ffbd3d;transform:translate(-50%,-50%);opacity:.95}
+@media(max-width:800px){.hero-sun:after{width:38px;height:38px}}
