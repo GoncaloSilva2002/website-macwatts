@@ -62,7 +62,7 @@ def enhance(path, output=None):
                 first.decompose()
         nav.insert(0, menu(output))
     if not soup.select_one('link[data-business-navigation]'):
-        soup.head.append(soup.new_tag('link', rel='stylesheet', href=rel('css/business-navigation.css', output), **{'data-business-navigation': 'true'}))
+        soup.head.append(soup.new_tag('link', rel='stylesheet', href=rel('css/business-navigation.css', output) + '?v=3', **{'data-business-navigation': 'true'}))
     section = soup.select_one('.solutions .section-heading')
     if section and not section.select_one('.all-solutions-link'):
         section.append(BeautifulSoup(f'<a class="text-link all-solutions-link" href="{rel("empresarial/index.html", output)}">Todas as soluções <span aria-hidden="true">↗</span></a>', 'html.parser'))
@@ -119,7 +119,7 @@ for group, title, _, services in GROUPS:
         else:
             header.insert_after(crumb)
         if not html.select_one('link[data-business-navigation]'):
-            html.head.append(html.new_tag('link', rel='stylesheet', href=rel('css/business-navigation.css', page), **{'data-business-navigation': 'true'}))
+            html.head.append(html.new_tag('link', rel='stylesheet', href=rel('css/business-navigation.css', page) + '?v=3', **{'data-business-navigation': 'true'}))
         page.write_text(str(html), encoding='utf-8')
 report_path = ROOT / 'clone-report.json'
 if report_path.exists():

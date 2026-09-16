@@ -74,8 +74,7 @@ def unify():
         skip.string = 'Saltar para o conteúdo'
         soup.body.insert(0, skip)
         soup.body.append(shared('.site-footer'))
-        soup.body.append(shared('.audience-switcher'))
-        for asset in ('assets/3a65094ad2-manrope.css', 'css/home.css?v=2', 'css/business-navigation.css', 'css/audience-switcher.css', 'css/site-pages.css'):
+        for asset in ('assets/3a65094ad2-manrope.css', 'css/home.css?v=2', 'css/business-navigation.css?v=3', 'css/site-pages.css'):
             for existing in soup.select('link[href]'):
                 if existing['href'].split('?')[0].endswith(asset.split('?')[0]):
                     existing.decompose()

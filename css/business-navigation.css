@@ -14,6 +14,12 @@
 .site-header .business-menu-panel a:focus-visible{outline:2px solid var(--green,#00b996);outline-offset:3px;border-radius:4px}
 .business-menu>summary>span{display:inline-block;transition:transform .2s}
 .business-menu[open]>summary>span{transform:rotate(180deg)}
+.header-audience-switch{display:flex;align-items:center;gap:4px;border:1px solid #ffffff2e;border-radius:999px;padding:3px;background:#ffffff12;flex-shrink:0;margin-right:auto}
+.header-audience-switch a{display:flex;align-items:center;gap:7px;min-height:34px;padding:0 10px;border-radius:999px;color:#e0e8eb;font-size:12px;font-weight:700;line-height:1;text-decoration:none;transition:background .2s,color .2s}
+.header-audience-switch a:hover{color:#57dfb8;background:#ffffff12}
+.header-audience-switch a[aria-current="page"]{color:#142b3b;background:#00b996}
+.header-audience-switch svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
 @media(max-width:800px){.site-header .business-menu-panel{padding:18px 15px 24px;border-bottom:0;border-radius:0;box-shadow:none}.site-header .business-menu-columns{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}.site-header .business-menu-intro{margin-bottom:22px;gap:12px}}
-@media(max-width:520px){.site-header .business-menu-columns{grid-template-columns:1fr;gap:22px}.site-header .business-menu-column{padding-left:16px}.site-header .business-menu-column a{padding-top:12px;padding-bottom:12px}}
+@media(max-width:800px){.header-audience-switch{margin-right:0}.header-audience-switch a{min-height:38px;padding:0 12px}.header-audience-switch span{display:none}}
+@media(max-width:520px){.site-header .business-menu-columns{grid-template-columns:1fr;gap:22px}.site-header .business-menu-column{padding-left:16px}.site-header .business-menu-column a{padding-top:12px;padding-bottom:12px}.header-audience-switch a{justify-content:center;padding:0 10px}}
 @media(prefers-reduced-motion:reduce){.business-menu>summary>span,.site-header .business-menu-column a{transition:none}}
