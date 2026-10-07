@@ -18,6 +18,11 @@
 .client-grid li{height:95px;display:flex;align-items:center;justify-content:center;padding:18px}
 .client-grid img{width:100%;height:100%;object-fit:contain}
 .company-projects{background:var(--pale)}
+.company-projects .project-tag{display:none}
+.company-projects .round-arrow{display:none}
+.company-projects .project-card:nth-child(n+4){display:none}
+.company-projects.projects-expanded .project-card:nth-child(n+4){display:block}
+.projects-more{display:flex;justify-content:center;margin-top:40px}
 .company-projects .project-grid{row-gap:40px}
 @media(max-width:800px){.company-story{gap:35px}.principles-grid{gap:40px}.client-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}}
 @media(max-width:520px){.company-intro{padding:42px 0 50px}.company-story{grid-template-columns:1fr;margin-top:34px;gap:28px}.principles-grid{grid-template-columns:1fr;gap:42px}.client-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.client-grid li{padding:10px;height:75px}}

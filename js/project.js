@@ -2,10 +2,11 @@
   'use strict';
   const items = [...document.querySelectorAll('[data-gallery-image]')];
   if (!items.length) return;
+  const projectName = document.querySelector('.project-title-row h1')?.textContent.trim() || 'projeto';
   const dialog = document.createElement('dialog');
   dialog.className = 'photo-dialog';
-  dialog.setAttribute('aria-label', 'Galeria do projeto South Atlantic');
-  dialog.innerHTML = '<div class="photo-toolbar"><span class="photo-counter" aria-live="polite"></span><div class="photo-controls"><button type="button" data-prev aria-label="Fotografia anterior">←</button><button type="button" data-next aria-label="Fotografia seguinte">→</button><button type="button" data-close aria-label="Fechar galeria">✕</button></div></div><img alt=""><p class="photo-caption"></p>';
+  dialog.setAttribute('aria-label', `Galeria do projeto ${projectName}`);
+  dialog.innerHTML = '<div class="photo-toolbar"><span class="photo-counter" aria-live="polite"></span><div class="photo-controls"><button type="button" data-prev aria-label="Fotografia anterior">←</button><button type="button" data-next aria-label="Fotografia seguinte">→</button><button type="button" data-close aria-label="Fechar galeria">×</button></div></div><img alt=""><p class="photo-caption"></p>';
   document.body.append(dialog);
   let current = 0;
   let opener;
@@ -15,7 +16,7 @@
     dialog.querySelector('img').src = items[current].dataset.galleryImage;
     dialog.querySelector('img').alt = image.alt;
     dialog.querySelector('.photo-caption').textContent = image.alt;
-    dialog.querySelector('.photo-counter').textContent = `${current + 1} / ${items.length} — South Atlantic`;
+    dialog.querySelector('.photo-counter').textContent = `${current + 1} / ${items.length} — ${projectName}`;
   };
   items.forEach((item, index) => item.addEventListener('click', () => {
     opener = item;

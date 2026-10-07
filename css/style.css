@@ -21,7 +21,7 @@ body { overflow-x: clip; }
 .elementor-nav-menu--main .menu-item-has-children > .sub-menu { display: none; position: absolute; top: 100%; left: 0; min-width: 260px; z-index: 1001; }
 .elementor-nav-menu--main .menu-item-has-children:hover > .sub-menu,
 .elementor-nav-menu--main .menu-item-has-children:focus-within > .sub-menu { display: block; }
-.elementor-nav-menu--main .menu-item-has-children > a::after { content: '⌄'; position: static; margin-left: 8px; background: none !important; opacity: 1 !important; height: auto; width: auto; }
+.elementor-nav-menu--main .menu-item-has-children > a::after { content: ''; position: static; margin-left: 8px; background: none !important; opacity: 1 !important; height: auto; width: auto; }
 nav.elementor-nav-menu--dropdown { max-height: 0; overflow: hidden; }
 nav.elementor-nav-menu--dropdown.is-open { max-height: 75vh !important; overflow: auto; transform: scaleY(1) !important; width: min(390px, 100vw); right: 0; left: auto; }
 nav.elementor-nav-menu--dropdown.is-open .sub-menu { display: block; padding-left: 15px; }

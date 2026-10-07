@@ -17,8 +17,9 @@
 .site-header .business-menu-column a:hover,.site-header .business-menu-column a[aria-current="page"]{color:#57dfb8;background:#ffffff08;text-decoration:none}
 .site-header .business-menu-panel a:focus-visible{outline:2px solid var(--green,#00b996);outline-offset:3px;border-radius:4px}
 .business-menu>summary>span{display:inline-block;transition:transform .2s}
+.business-menu>summary>span::after{content:'⌄'}
 .business-menu[open]>summary>span{transform:rotate(180deg)}
-.header-audience-switch{display:flex;align-items:center;gap:4px;border:1px solid #ffffff2e;border-radius:999px;padding:3px;background:#ffffff12;flex-shrink:0;margin-right:auto}
+.header-audience-switch{display:flex;flex-direction:row-reverse;align-items:center;gap:4px;border:1px solid #ffffff2e;border-radius:999px;padding:3px;background:#ffffff12;flex-shrink:0;margin-right:auto}
 .header-audience-switch a{display:flex;align-items:center;gap:7px;min-height:34px;padding:0 10px;border-radius:999px;color:#e0e8eb;font-size:12px;font-weight:700;line-height:1;text-decoration:none;transition:background .2s,color .2s}
 .header-audience-switch a:hover{color:#57dfb8;background:#ffffff12}
 .header-audience-switch a[aria-current="page"]{color:#142b3b;background:#00b996}
