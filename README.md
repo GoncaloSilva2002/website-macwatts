@@ -6,7 +6,7 @@ O menu **Soluções** organiza 14 serviços em quatro áreas: Energia, Consultor
 
 O catálogo central está em `scripts/build-business-navigation.py`. Execute `python scripts/build-business-navigation.py` depois de reconstruir uma página inicial ou de projeto para atualizar os menus. O exportador também executa esta atualização. Os estilos estão em `css/business-navigation.css`; o menu funciona por clique, teclado e toque.
 
-Cópia estática de https://staging.macwatts.pt/, recolhida em 9 de setembro de 2026, com uma nova página inicial empresarial. Inclui 58 páginas públicas interligadas, imagens, fontes e estilos locais. Não necessita de WordPress, PHP ou base de dados.
+Cópia de https://staging.macwatts.pt/, recolhida em 9 de setembro de 2026, com uma nova página inicial empresarial. Inclui 58 páginas públicas interligadas, imagens, fontes e estilos locais. As páginas públicas são ficheiros estáticos; a área de administração usa um servidor Node e não necessita de WordPress, PHP ou base de dados.
 
 A página inicial foi redesenhada: apresentação fixa, navegação simplificada, cartões de serviços, projetos com fotografias uniformes, indicadores compactos no telemóvel e contacto destacado. A página `residencial/index.html` segue o mesmo estilo, com soluções para a casa, secções de solar e mobilidade, perguntas frequentes e acesso ao simulador externo original. Todas as páginas internas partilham o cabeçalho, rodapé, tipografia, cores e botões do novo estilo, preservando os conteúdos existentes.
 
@@ -22,7 +22,7 @@ Abra `index.html` no navegador ou execute, com Node.js instalado:
 npm start
 ```
 
-Aceda a http://localhost:8080. O servidor de desenvolvimento usa apenas módulos nativos de Node.js. Também pode publicar os ficheiros num alojamento estático.
+Aceda a http://localhost:8080. O servidor usa módulos nativos de Node.js. As páginas públicas podem ser alojadas como ficheiros estáticos; para usar a área de administração, o alojamento tem de executar o servidor Node.
 
 ## Ficheiros
 
@@ -57,4 +57,22 @@ Os conteúdos, as imagens e a identidade visual são os do website de origem.
 
 ## Adicionar notícias
 
-Na página de notícias, **Adicionar notícia** abre o formulário externo do GitHub. Preenche o título, anexa a imagem e escreve o texto; a data é preenchida automaticamente. O fluxo cria a página do artigo, guarda a imagem em `assets/`, atualiza `data/news.json`, publica as alterações num commit e fecha o pedido. A submissão e publicação requerem uma conta com permissão de escrita neste repositório.
+Na página de notícias, **Adicionar notícia** abre `/admin/`, uma área protegida por palavra-passe. O formulário recebe o título, uma imagem PNG/JPG/WebP até 8 MB e o texto. A aplicação cria a página do artigo e acrescenta o cartão à lista.
+
+### Configuração local
+
+Cria um ficheiro `.env` na raiz do projeto com `NEWS_ADMIN_PASSWORD` definido para uma palavra-passe única com pelo menos 12 caracteres. Depois executa `npm start` e abre `http://localhost:8080/admin/`. O ficheiro `.env` não é enviado para o GitHub.
+
+### Configuração no Render
+
+O serviço precisa de ser um **Web Service Node**, com `npm start` como comando de arranque. Se o serviço atual for um Static Site, cria um Web Service para este repositório; o Render não permite alterar o tipo de serviço existente. Define estas variáveis no separador **Environment** do Render:
+
+- `HOST` = `0.0.0.0`
+- `NEWS_ADMIN_PASSWORD` = uma palavra-passe única com pelo menos 12 caracteres
+- `GITHUB_REPO_TOKEN` = token fine-grained do GitHub com acesso de leitura e escrita ao conteúdo deste repositório
+- `GITHUB_OWNER` = `GoncaloSilva2002`
+- `GITHUB_REPOSITORY` = `website-macwatts`
+- `GITHUB_BRANCH` = `main`
+- `ADMIN_COOKIE_SECURE` = `true`
+
+O servidor valida a palavra-passe e mantém a sessão num cookie HttpOnly. Ao publicar, cria um commit no GitHub; o Render atualiza o site quando o serviço está ligado a esse repositório e ramo. Não coloques a palavra-passe nem o token no HTML ou no JavaScript.

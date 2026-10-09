@@ -1,0 +1,23 @@
+.news-admin-page{min-height:100vh;background:#f4f7f7;color:#142b3c}
+.news-admin-shell{width:min(100% - 36px,760px);margin:0 auto;padding:48px 0 80px}
+.news-admin-back{display:inline-block;margin-bottom:34px;color:#00836c;font-size:13px;font-weight:700}
+.news-admin-shell>.eyebrow{margin-bottom:10px}
+.news-admin-panel{padding:clamp(25px,5vw,50px);border:1px solid #e2e9e8;border-radius:12px;background:#fff;box-shadow:0 14px 45px #1430440c}
+.news-admin-panel h1{font-size:clamp(32px,5vw,48px);line-height:1.12;letter-spacing:-.045em}
+.news-admin-intro{margin-top:12px;color:#61707d;line-height:1.65}
+.news-admin-panel form{display:grid;gap:11px;margin-top:28px}
+.news-admin-panel label{margin-top:12px;font-size:13px;font-weight:700}
+.news-admin-panel input,.news-admin-panel textarea{width:100%;padding:13px 14px;border:1px solid #ccd7d6;border-radius:6px;background:#fff;color:#142b3c;font:inherit}
+.news-admin-panel input:focus,.news-admin-panel textarea:focus{outline:2px solid #00b79b;outline-offset:1px}
+.news-admin-panel input[type=file]{padding:10px;background:#f8faf9}
+.news-admin-panel textarea{min-height:220px;resize:vertical;line-height:1.65}
+.news-admin-panel small{margin-top:-5px;color:#687780;font-size:12px;line-height:1.5}
+.news-admin-panel .button{justify-self:start;margin-top:15px;border:0;cursor:pointer}
+.news-admin-panel .button:disabled{cursor:wait;opacity:.65}
+.news-admin-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:18px}
+.news-admin-logout{flex:none;padding:9px 0;border:0;background:none;color:#00836c;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
+.news-image-preview{width:min(100%,520px);max-height:300px;margin-top:5px;border-radius:7px;object-fit:cover}
+.news-form-status{min-height:24px;color:#16745f;font-size:13px;line-height:1.6}
+.news-form-status.is-error{color:#b33c31}
+.news-form-status a{margin-left:6px;color:#00836c;font-weight:700}
+@media(max-width:560px){.news-admin-shell{padding-top:28px}.news-admin-heading{display:block}.news-admin-logout{margin-top:15px}.news-admin-panel textarea{min-height:180px}}

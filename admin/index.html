@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Administração de notícias | MacWatts</title>
+  <link rel="stylesheet" href="../assets/3a65094ad2-manrope.css">
+  <link rel="stylesheet" href="../css/home.css?v=2">
+  <link rel="stylesheet" href="../css/news-admin.css">
+  <script defer src="../js/news-admin.js"></script>
+</head>
+<body class="business-home news-admin-page">
+  <main class="news-admin-shell">
+    <a class="news-admin-back" href="../noticias/index.html">← Voltar às notícias</a>
+    <p class="eyebrow">MacWatts · Área reservada</p>
+
+    <section class="news-admin-panel" id="login-panel" aria-labelledby="login-title">
+      <h1 id="login-title">Administração.</h1>
+      <p class="news-admin-intro">Introduz a palavra-passe para gerir as notícias.</p>
+      <form id="login-form">
+        <label for="admin-password">Palavra-passe</label>
+        <input id="admin-password" name="password" type="password" autocomplete="current-password" required>
+        <button class="button" id="login-button" type="submit">Entrar <span aria-hidden="true">→</span></button>
+        <p class="news-form-status" id="login-status" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section class="news-admin-panel" id="editor-panel" aria-labelledby="editor-title" hidden>
+      <div class="news-admin-heading">
+        <div>
+          <h1 id="editor-title">Adicionar notícia.</h1>
+          <p class="news-admin-intro">O artigo e o cartão na lista serão criados automaticamente.</p>
+        </div>
+        <button class="news-admin-logout" id="logout-button" type="button">Terminar sessão</button>
+      </div>
+
+      <form id="news-form">
+        <label for="news-title">Título</label>
+        <input id="news-title" name="title" type="text" maxlength="160" required placeholder="Título da notícia">
+
+        <label for="news-image">Imagem</label>
+        <input id="news-image" name="image" type="file" accept="image/png,image/jpeg,image/webp" required>
+        <small>PNG, JPG ou WebP. Tamanho máximo: 8 MB.</small>
+        <img class="news-image-preview" id="image-preview" alt="Pré-visualização da imagem selecionada" hidden>
+
+        <label for="news-text">Texto da notícia</label>
+        <textarea id="news-text" name="text" rows="12" maxlength="80000" required placeholder="Escreve o texto. Separa os parágrafos com uma linha em branco."></textarea>
+        <small>A data é preenchida automaticamente.</small>
+
+        <button class="button" id="submit-news" type="submit">Criar notícia <span aria-hidden="true">→</span></button>
+        <p class="news-form-status" id="form-status" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
+</body>
+</html>
