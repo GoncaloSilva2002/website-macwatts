@@ -54,3 +54,7 @@ Os conteúdos, as imagens e a identidade visual são os do website de origem.
 ## Estilo partilhado nas páginas internas
 
 `css/site-pages.css` adapta os conteúdos exportados ao estilo de `css/home.css`, incluindo serviços, projetos, notícias, arquivos e páginas legais. `python scripts/unify-site.py` aplica o cabeçalho e o rodapé partilhados às páginas antigas; páginas já convertidas são preservadas. O exportador executa este passo automaticamente depois de atualizar a navegação empresarial.
+
+## Adicionar notícias
+
+Na página de notícias, **Adicionar notícia** abre o formulário externo do GitHub. Preenche o título, anexa a imagem e escreve o texto; a data é preenchida automaticamente. O fluxo cria a página do artigo, guarda a imagem em `assets/`, atualiza `data/news.json`, publica as alterações num commit e fecha o pedido. A submissão e publicação requerem uma conta com permissão de escrita neste repositório.

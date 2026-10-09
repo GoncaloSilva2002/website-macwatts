@@ -1,0 +1,28 @@
+name: Publicar notícia
+description: Envia uma notícia para o site MacWatts.
+title: "[Notícia] "
+body:
+  - type: input
+    id: titulo
+    attributes:
+      label: Título da notícia
+      description: O título será usado no cartão e na página do artigo.
+      placeholder: Exemplo — MacWatts conclui novo projeto de energia
+    validations:
+      required: true
+  - type: textarea
+    id: imagem
+    attributes:
+      label: Imagem da notícia
+      description: Anexa uma imagem neste campo ou cola um URL HTTPS direto para a imagem. Só é aceite uma imagem PNG, JPG ou WebP.
+      placeholder: Arrasta a imagem para aqui ou cola o URL.
+    validations:
+      required: true
+  - type: textarea
+    id: texto
+    attributes:
+      label: Texto da notícia
+      description: Escreve o texto completo. Separa os parágrafos com uma linha em branco.
+      placeholder: Escreve aqui o texto da notícia.
+    validations:
+      required: true
