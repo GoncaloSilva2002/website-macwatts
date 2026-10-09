@@ -58,6 +58,36 @@ function renderParagraphs(text) {
     .filter(Boolean).map(paragraph => `<p>${escapeHtml(paragraph).replace(/\n/g, '<br>')}</p>`).join('\n');
 }
 
+function sourceUrlFrom(value) {
+  if (value === undefined || value === null || value === '') return '';
+  if (typeof value !== 'string' || value.length > 2048) {
+    throw new NewsInputError('O link original tem de ter até 2048 caracteres.');
+  }
+  let url;
+  try {
+    url = new URL(value.trim());
+  } catch {
+    throw new NewsInputError('Introduz um link original válido com HTTPS.');
+  }
+  if (url.protocol !== 'https:' || url.username || url.password) {
+    throw new NewsInputError('O link original tem de usar HTTPS e não pode incluir credenciais.');
+  }
+  return url.href;
+}
+
+function customizeArticle(html, category, sourceUrl) {
+  const newsListUrl = category === 'residencial' ? '../residencial/noticias.html' : '../noticias/index.html';
+  const categoryLabel = category === 'residencial' ? 'Residencial' : 'Empresarial';
+  let result = html.split('href="../noticias/index.html"').join(`href="${newsListUrl}"`);
+  result = result.replace('<p class="eyebrow">Notícias MacWatts</p>', `<p class="eyebrow">Notícias / ${categoryLabel}</p>`);
+  if (sourceUrl) {
+    const safeUrl = escapeHtml(sourceUrl);
+    const sourceLink = `<a class="button news-article-source" href="${safeUrl}" target="_blank" rel="noopener noreferrer">Ler a notícia original <span aria-hidden="true">↗</span></a>`;
+    result = result.replace('<a class="text-link news-article-return"', `${sourceLink}<a class="text-link news-article-return"`);
+  }
+  return result;
+}
+
 async function renderArticle(root, article) {
   const newsIndex = await fs.readFile(path.join(root, 'noticias', 'index.html'), 'utf8');
   const header = newsIndex.match(/<header\b[\s\S]*?<\/header>/i)?.[0];
@@ -117,9 +147,14 @@ async function createNews(root, input, existingNews = null) {
   if (!input || typeof input !== 'object' || Array.isArray(input)) throw new NewsInputError('Os dados enviados não são válidos.');
   const title = typeof input.title === 'string' ? input.title.trim() : '';
   const text = typeof input.text === 'string' ? input.text.trim() : '';
+  const category = input.category;
   if (!title || title.length > 160) throw new NewsInputError('O título é obrigatório e deve ter até 160 caracteres.');
   if (!text || text.length > 80000) throw new NewsInputError('O texto é obrigatório e deve ter até 80 000 caracteres.');
 
+  if (category !== 'residencial' && category !== 'empresarial') {
+    throw new NewsInputError('Escolhe se a notícia é Residencial ou Empresarial.');
+  }
+  const sourceUrl = sourceUrlFrom(input.sourceUrl);
   const { buffer, extension } = imageBufferFrom(input.imageData, input.imageType);
   if (!existingNews) {
     try {
@@ -137,8 +172,8 @@ async function createNews(root, input, existingNews = null) {
   const image = `assets/noticia-${slug}.${extension}`;
   const excerpt = text.replace(/\s+/g, ' ').slice(0, 200).trim();
   const article = { slug, title, image, excerpt, date, dateLabel, paragraphs: renderParagraphs(text) };
-  const html = await renderArticle(root, article);
-  const nextNews = [{ slug, title, image, excerpt, date, dateLabel }, ...existingNews];
+  const html = customizeArticle(await renderArticle(root, article), category, sourceUrl);
+  const nextNews = [{ slug, title, image, excerpt, date, dateLabel, category, sourceUrl }, ...existingNews];
 
   return {
     slug,

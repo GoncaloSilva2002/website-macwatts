@@ -106,6 +106,8 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           title: document.querySelector('#news-title').value,
+          category: document.querySelector('#news-category').value,
+          sourceUrl: document.querySelector('#news-source-url').value,
           text: document.querySelector('#news-text').value,
           imageType: file.type,
           imageData: dataUrl.split(',')[1]

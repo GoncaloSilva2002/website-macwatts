@@ -57,6 +57,8 @@ Os conteúdos, as imagens e a identidade visual são os do website de origem.
 
 ## Adicionar notícias
 
+No formulário de administração, escolhe **Residencial** ou **Empresarial** e, se existir, cola o link HTTPS da fonte. A página da notícia é criada com o estilo do site; o cartão aparece na lista e na página inicial da categoria escolhida, e o artigo inclui um botão para abrir a fonte original.
+
 Na página de notícias, **Adicionar notícia** abre `/admin/`, uma área protegida por palavra-passe. O formulário recebe o título, uma imagem PNG/JPG/WebP até 8 MB e o texto. A aplicação cria a página do artigo e acrescenta o cartão à lista.
 
 ### Configuração local

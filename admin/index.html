@@ -39,6 +39,17 @@
         <label for="news-title">Título</label>
         <input id="news-title" name="title" type="text" maxlength="160" required placeholder="Título da notícia">
 
+        <label for="news-category">Publicar em</label>
+        <select id="news-category" name="category" required>
+          <option value="" disabled selected>Escolhe onde publicar</option>
+          <option value="empresarial">Notícias empresariais</option>
+          <option value="residencial">Notícias residenciais</option>
+        </select>
+
+        <label for="news-source-url">Link original da notícia</label>
+        <input id="news-source-url" name="sourceUrl" type="url" maxlength="2048" placeholder="https://...">
+        <small>Opcional. Aparece no artigo como link para a fonte original. Usa um endereço HTTPS.</small>
+
         <label for="news-image">Imagem</label>
         <input id="news-image" name="image" type="file" accept="image/png,image/jpeg,image/webp" required>
         <small>PNG, JPG ou WebP. Tamanho máximo: 8 MB.</small>
