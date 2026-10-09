@@ -180,7 +180,7 @@ async function handle(req, res, pathname, root) {
 
   if (req.method === 'POST' && pathname === '/api/admin/login') {
     const password = process.env.NEWS_ADMIN_PASSWORD;
-    if (!password || password.length < 12) {
+    if (!password || password.length < 6) {
       sendJson(res, 503, { error: 'A palavra-passe de administração ainda não está configurada no servidor.' });
       return true;
     }

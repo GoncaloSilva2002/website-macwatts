@@ -61,14 +61,14 @@ Na página de notícias, **Adicionar notícia** abre `/admin/`, uma área proteg
 
 ### Configuração local
 
-Cria um ficheiro `.env` na raiz do projeto com `NEWS_ADMIN_PASSWORD` definido para uma palavra-passe única com pelo menos 12 caracteres. Depois executa `npm start` e abre `http://localhost:8080/admin/`. O ficheiro `.env` não é enviado para o GitHub.
+Cria um ficheiro `.env` na raiz do projeto com `NEWS_ADMIN_PASSWORD` definido para uma palavra-passe com pelo menos 6 caracteres. Depois executa `npm start` e abre `http://localhost:8080/admin/`. O ficheiro `.env` não é enviado para o GitHub.
 
 ### Configuração no Render
 
 O serviço precisa de ser um **Web Service Node**, com `npm start` como comando de arranque. Se o serviço atual for um Static Site, cria um Web Service para este repositório; o Render não permite alterar o tipo de serviço existente. Define estas variáveis no separador **Environment** do Render:
 
 - `HOST` = `0.0.0.0`
-- `NEWS_ADMIN_PASSWORD` = uma palavra-passe única com pelo menos 12 caracteres
+- `NEWS_ADMIN_PASSWORD` = uma palavra-passe com pelo menos 6 caracteres
 - `GITHUB_REPO_TOKEN` = token fine-grained do GitHub com acesso de leitura e escrita ao conteúdo deste repositório
 - `GITHUB_OWNER` = `GoncaloSilva2002`
 - `GITHUB_REPOSITORY` = `website-macwatts`
