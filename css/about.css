@@ -26,7 +26,7 @@
 .company-projects .project-grid{row-gap:40px}
 @media(max-width:800px){.company-story{gap:35px}.principles-grid{gap:40px}.client-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}}
 @media(max-width:520px){.company-intro{padding:42px 0 50px}.company-story{grid-template-columns:1fr;margin-top:34px;gap:28px}.principles-grid{grid-template-columns:1fr;gap:42px}.client-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.client-grid li{padding:10px;height:75px}}
-.company-hero{position:relative;isolation:isolate;background:var(--navy);color:white;overflow:hidden}
+.company-hero{position:relative;isolation:isolate;background:var(--navy);color:white;overflow:hidden;min-height:calc(100svh - 90px + 60px);display:flex;flex-direction:column}
 .company-hero-image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:65% center;z-index:-2}
 .company-hero:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,#0c202ef2 0%,#0c202ec4 38%,#0c202e35 100%)}
 .company-hero-content{padding-block:64px 52px}
@@ -35,6 +35,6 @@
 .company-hero h1 em{font-style:normal;color:var(--green)}
 .company-hero .company-lead{color:#e0e8eb;font-size:17px;line-height:1.8;max-width:490px;margin-top:27px}
 .company-hero .button{margin-top:28px}
-.company-hero-caption{display:flex;justify-content:space-between;gap:20px;padding-block:21px;border-top:1px solid #ffffff35;font-size:12px;color:#e0e8eb}
+.company-hero-caption{display:flex;justify-content:space-between;gap:20px;padding-block:21px;border-top:1px solid #ffffff35;font-size:12px;color:#e0e8eb;margin-top:auto}
 .company-hero-caption a{color:white}.company-hero-caption a span{margin-left:14px}
 @media(max-width:520px){.company-intro{padding-top:0}.company-hero-content{padding-block:42px 35px}.company-hero h1{font-size:clamp(45px,12vw,62px)}.company-hero .company-lead{font-size:14px;margin-top:23px}.company-hero-image{object-position:60% center}.company-hero:after{background:linear-gradient(90deg,#0c202eed,#0c202e8c)}.company-hero-caption{font-size:10px;flex-direction:column;gap:9px;padding-block:17px}.company-hero .button{font-size:12px}}

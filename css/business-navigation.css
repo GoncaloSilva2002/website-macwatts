@@ -28,3 +28,10 @@
 @media(max-width:800px){.header-audience-switch{margin-right:0}.header-audience-switch a{min-height:38px;padding:0 12px}.header-audience-switch span{display:none}}
 @media(max-width:520px){.site-header .business-menu-columns{grid-template-columns:1fr;gap:22px}.site-header .business-menu-column{padding-left:16px}.site-header .business-menu-column a{padding-top:12px;padding-bottom:12px}.header-audience-switch a{justify-content:center;padding:0 10px}}
 @media(prefers-reduced-motion:reduce){.business-menu>summary>span,.site-header .business-menu-column a{transition:none}}
+
+.business-directory .directory-card{overflow:hidden;padding:0 26px 26px}
+.business-directory .directory-card-image{display:block;aspect-ratio:16/9;overflow:hidden;margin:0 -26px 24px;background:#f2f6f5}
+.business-directory .directory-card-image img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.business-directory .directory-card:hover .directory-card-image img,.business-directory .directory-card:focus-visible .directory-card-image img{transform:scale(1.04)}
+@media(max-width:520px){.business-directory .directory-card{padding:0 22px 22px}.business-directory .directory-card-image{margin-inline:-22px;margin-bottom:20px}}
+@media(prefers-reduced-motion:reduce){.business-directory .directory-card-image img{transition:none}.business-directory .directory-card:hover .directory-card-image img,.business-directory .directory-card:focus-visible .directory-card-image img{transform:none}}
