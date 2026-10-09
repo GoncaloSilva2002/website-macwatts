@@ -1,1 +1,10 @@
-[]
+[
+  {
+    "slug": "miau",
+    "title": "miau",
+    "image": "assets/noticia-miau.png",
+    "excerpt": "sadasdsadsadsadsadas",
+    "date": "2026-10-09",
+    "dateLabel": "9 outubro 2026"
+  }
+]
