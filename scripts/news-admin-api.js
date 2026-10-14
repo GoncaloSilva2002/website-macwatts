@@ -175,8 +175,7 @@ async function getRemoteFileText(token, filePath, revision) {
   return Buffer.from(file.content, "base64").toString("utf8");
 }
 
-function removeNewsCardFromListing(html, slug) {
-  const href = `../${slug}/index.html`;
+function removeNewsCardFromListing(html, href) {
   const escapedHref = href.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   const cardPattern = new RegExp(`<a\\b(?=[^>]*\\bhref="${escapedHref}")[^>]*>[\\s\\S]*?<\\/a>\\s*`, "g");
   return html.replace(cardPattern, "");
@@ -299,8 +298,14 @@ async function handle(req, res, pathname, root) {
       sendJson(res, 404, { error: "O artigo j\u00e1 n\u00e3o existe na lista de not\u00edcias." });
       return true;
     }
+    const articlePath = typeof article.articlePath === "string" ? article.articlePath : `${slug}/index.html`;
+    const articleFile = path.resolve(root, articlePath);
+    if (!articlePath.endsWith(".html") || !articleFile.startsWith(path.resolve(root) + path.sep)) {
+      sendJson(res, 400, { error: "O caminho do artigo n\u00e3o \u00e9 v\u00e1lido." });
+      return true;
+    }
     const imagePattern = new RegExp(`^assets/noticia-${slug}\\.(?:png|jpg|webp)$`);
-    if (typeof article.image !== "string" || !imagePattern.test(article.image)) {
+    if (typeof article.image !== "string" || (!imagePattern.test(article.image) && !article.articlePath)) {
       sendJson(res, 400, { error: "N\u00e3o \u00e9 poss\u00edvel eliminar os ficheiros associados a este artigo." });
       return true;
     }
@@ -309,13 +314,15 @@ async function handle(req, res, pathname, root) {
     const listingHtml = remote
       ? await getRemoteFileText(token, listingPath, remote.parentSha)
       : await fs.readFile(path.join(root, listingPath), "utf8");
-    const updatedListing = removeNewsCardFromListing(listingHtml, slug);
+    const listingHref = typeof article.listingHref === "string" ? article.listingHref : `../${slug}/index.html`;
+    const updatedListing = removeNewsCardFromListing(listingHtml, listingHref);
     const nextNews = entries.filter(item => !item || item.slug !== slug);
     const files = [
       { path: listingPath, content: Buffer.from(updatedListing, "utf8") },
       { path: "data/news.json", content: Buffer.from(`${JSON.stringify(nextNews, null, 2)}\n`, "utf8") }
     ];
-    const deletedPaths = [`${slug}/index.html`, article.image];
+    const deletedPaths = [articlePath];
+    if (imagePattern.test(article.image)) deletedPaths.push(article.image);
     if (token) {
       await commitNewsDeletion(token, files, deletedPaths, article.title || slug, remote.parentSha, remote.baseTree);
     } else {
@@ -324,13 +331,13 @@ async function handle(req, res, pathname, root) {
         if (!destination.startsWith(root + path.sep)) throw new ApiError(400, "Caminho inv\u00e1lido ao eliminar o artigo.");
         await fs.writeFile(destination, file.content);
       }
-      const articleFile = path.resolve(root, slug, "index.html");
+      const articleFile = path.resolve(root, articlePath);
       const imageFile = path.resolve(root, article.image);
       if (!articleFile.startsWith(root + path.sep) || !imageFile.startsWith(root + path.sep)) {
         throw new ApiError(400, "Caminho inv\u00e1lido ao eliminar o artigo.");
       }
       await fs.rm(articleFile, { force: true });
-      await fs.rm(imageFile, { force: true });
+      if (deletedPaths.length > 1) await fs.rm(imageFile, { force: true });
       await fs.rmdir(path.dirname(articleFile)).catch(() => {});
     }
     sendJson(res, 200, { message: "Artigo eliminado." });

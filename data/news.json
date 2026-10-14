@@ -17,5 +17,45 @@
     "date": "2026-10-09",
     "dateLabel": "9 outubro 2026",
     "category": "empresarial"
+  },
+  {
+    "slug": "compete-2030-anunciou-a-abertura-da-rececao-de-registos-de-pedido-de-auxilio-para-projetos-de-descarbonizacao-das-empresas",
+    "title": "Compete 2030 anunciou a abertura da receção de Registos de Pedido de Auxílio para projetos de Descarbonização das Empresas",
+    "image": "assets/27007bb929-PT2030_LogoCompete2030.png",
+    "date": "2025-03-14",
+    "dateLabel": "14 março 2025",
+    "category": "empresarial",
+    "articlePath": "compete-2030-anunciou-a-abertura-da-rececao-de-registos-de-pedido-de-auxilio-para-projetos-de-descarbonizacao-das-empresas/index.html",
+    "listingHref": "../compete-2030-anunciou-a-abertura-da-rececao-de-registos-de-pedido-de-auxilio-para-projetos-de-descarbonizacao-das-empresas/index.html"
+  },
+  {
+    "slug": "a-empresa-macwatts-esteve-presente-no-forum-de-sustentabilidade-e-energia",
+    "title": "Grupo DSTORE Retail com o apoio da MacWatts avança com a instalação de 9 Centrais Fotovoltaicas em lojas Homa",
+    "image": "assets/9206b83750-card-novidades.png",
+    "date": "2024-12-03",
+    "dateLabel": "3 dezembro 2024",
+    "category": "empresarial",
+    "articlePath": "a-empresa-macwatts-esteve-presente-no-forum-de-sustentabilidade-e-energia/index.html",
+    "listingHref": "../a-empresa-macwatts-esteve-presente-no-forum-de-sustentabilidade-e-energia/index.html"
+  },
+  {
+    "slug": "apoio-a-concretizacao-de-comunidades-de-energia-renovavel-e-autoconsumo-coletivo",
+    "title": "Comunidades de energia renovável e autoconsumo coletivo",
+    "image": "assets/7ab5977ef5-Screenshot-from-2026-06-09-12-15-45-1.png",
+    "date": "2026-06-09",
+    "dateLabel": "9 junho 2026",
+    "category": "residencial",
+    "articlePath": "residencial/apoio-a-concretizacao-de-comunidades-de-energia-renovavel-e-autoconsumo-coletivo.html",
+    "listingHref": "apoio-a-concretizacao-de-comunidades-de-energia-renovavel-e-autoconsumo-coletivo.html"
+  },
+  {
+    "slug": "programa-de-apoio-a-condominios-residenciais",
+    "title": "Programa de Apoio a Condomínios Residenciais",
+    "image": "assets/21d838c928-Screenshot-from-2026-06-09-12-11-43-1.png",
+    "date": "2026-06-09",
+    "dateLabel": "9 junho 2026",
+    "category": "residencial",
+    "articlePath": "residencial/programa-de-apoio-a-condominios-residenciais.html",
+    "listingHref": "programa-de-apoio-a-condominios-residenciais.html"
   }
 ]

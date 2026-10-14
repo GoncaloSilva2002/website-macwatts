@@ -57,7 +57,8 @@
         meta.textContent = `${item.category === "residencial" ? "Residencial" : "Empresarial"} · ${item.dateLabel || item.date || ""}`;
         const title = document.createElement("a");
         title.className = "news-manage-title";
-        title.href = `../${encodeURIComponent(item.slug)}/index.html`;
+        const articlePath = item.articlePath || `${item.slug}/index.html`;
+        title.href = `../${articlePath.split('/').map(encodeURIComponent).join('/')}`;
         title.textContent = item.title;
         info.append(meta, title);
         const button = document.createElement("button");

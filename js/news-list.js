@@ -24,7 +24,7 @@
       for (const item of newestFirst) {
         const card = document.createElement('a');
         card.className = 'news-card';
-        const articleHref = `${base}${encodeURIComponent(item.slug)}/index.html`;
+        const articleHref = item.listingHref || `${base}${encodeURIComponent(item.slug)}/index.html`;
         if ([...grid.querySelectorAll('.news-card')].some(existing => existing.getAttribute('href') === articleHref)) continue;
         card.href = articleHref;
 
