@@ -299,8 +299,12 @@ async function handle(req, res, pathname, root) {
       return true;
     }
     const articlePath = typeof article.articlePath === "string" ? article.articlePath : `${slug}/index.html`;
-    const articleFile = path.resolve(root, articlePath);
-    if (!articlePath.endsWith(".html") || !articleFile.startsWith(path.resolve(root) + path.sep)) {
+    const articlePaths = Array.isArray(article.articlePaths) && article.articlePaths.every(filePath => typeof filePath === "string")
+      ? [...new Set(article.articlePaths)]
+      : [articlePath];
+    if (!articlePaths.includes(articlePath)) articlePaths.unshift(articlePath);
+    const articleFiles = articlePaths.map(filePath => path.resolve(root, filePath));
+    if (articleFiles.some((file, index) => typeof articlePaths[index] !== "string" || !articlePaths[index].endsWith(".html") || !file.startsWith(path.resolve(root) + path.sep))) {
       sendJson(res, 400, { error: "O caminho do artigo n\u00e3o \u00e9 v\u00e1lido." });
       return true;
     }
@@ -310,18 +314,30 @@ async function handle(req, res, pathname, root) {
       return true;
     }
     const category = article.category === "residencial" ? "residencial" : "empresarial";
-    const listingPath = category === "residencial" ? "residencial/noticias.html" : "noticias/index.html";
-    const listingHtml = remote
-      ? await getRemoteFileText(token, listingPath, remote.parentSha)
-      : await fs.readFile(path.join(root, listingPath), "utf8");
-    const listingHref = typeof article.listingHref === "string" ? article.listingHref : `../${slug}/index.html`;
-    const updatedListing = removeNewsCardFromListing(listingHtml, listingHref);
+    const defaultListingPath = category === "residencial" ? "residencial/noticias.html" : "noticias/index.html";
+    const listingRefs = Array.isArray(article.listings) && article.listings.length
+      ? article.listings
+      : [{ path: defaultListingPath, href: typeof article.listingHref === "string" ? article.listingHref : `../${slug}/index.html` }];
+    const updatedListings = new Map();
+    for (const listingRef of listingRefs) {
+      const listingPath = listingRef?.path;
+      if (typeof listingPath !== "string" || typeof listingRef?.href !== "string" || !listingPath.endsWith(".html") || !path.resolve(root, listingPath).startsWith(path.resolve(root) + path.sep)) {
+        sendJson(res, 400, { error: "A lista do artigo n\u00e3o tem um caminho v\u00e1lido." });
+        return true;
+      }
+      const listingHtml = updatedListings.has(listingPath)
+        ? updatedListings.get(listingPath)
+        : remote
+          ? await getRemoteFileText(token, listingPath, remote.parentSha)
+          : await fs.readFile(path.join(root, listingPath), "utf8");
+      updatedListings.set(listingPath, removeNewsCardFromListing(listingHtml, listingRef.href));
+    }
     const nextNews = entries.filter(item => !item || item.slug !== slug);
     const files = [
-      { path: listingPath, content: Buffer.from(updatedListing, "utf8") },
+      ...[...updatedListings].map(([filePath, content]) => ({ path: filePath, content: Buffer.from(content, "utf8") })),
       { path: "data/news.json", content: Buffer.from(`${JSON.stringify(nextNews, null, 2)}\n`, "utf8") }
     ];
-    const deletedPaths = [articlePath];
+    const deletedPaths = [...articlePaths];
     if (imagePattern.test(article.image)) deletedPaths.push(article.image);
     if (token) {
       await commitNewsDeletion(token, files, deletedPaths, article.title || slug, remote.parentSha, remote.baseTree);
@@ -331,14 +347,20 @@ async function handle(req, res, pathname, root) {
         if (!destination.startsWith(root + path.sep)) throw new ApiError(400, "Caminho inv\u00e1lido ao eliminar o artigo.");
         await fs.writeFile(destination, file.content);
       }
-      const articleFile = path.resolve(root, articlePath);
       const imageFile = path.resolve(root, article.image);
-      if (!articleFile.startsWith(root + path.sep) || !imageFile.startsWith(root + path.sep)) {
+      if (!imageFile.startsWith(path.resolve(root) + path.sep)) {
         throw new ApiError(400, "Caminho inv\u00e1lido ao eliminar o artigo.");
       }
-      await fs.rm(articleFile, { force: true });
-      if (deletedPaths.length > 1) await fs.rm(imageFile, { force: true });
-      await fs.rmdir(path.dirname(articleFile)).catch(() => {});
+      for (const deletedPath of deletedPaths) {
+        const destination = path.resolve(root, deletedPath);
+        if (!destination.startsWith(path.resolve(root) + path.sep)) {
+          throw new ApiError(400, "Caminho inv\u00e1lido ao eliminar o artigo.");
+        }
+        await fs.rm(destination, { force: true });
+      }
+      for (const articleFile of articleFiles) {
+        if (path.basename(articleFile) === "index.html") await fs.rmdir(path.dirname(articleFile)).catch(() => {});
+      }
     }
     sendJson(res, 200, { message: "Artigo eliminado." });
     return true;

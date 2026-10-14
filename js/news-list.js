@@ -17,7 +17,7 @@
       const limit = Number.parseInt(grid.dataset.newsLimit || '0', 10);
       const insertionPoint = grid.firstElementChild;
       const newestFirst = [...items]
-        .filter(item => item && item.slug && item.title && item.image && (item.category || 'empresarial') === category)
+        .filter(item => item && item.showInNewsList !== false && item.slug && item.title && item.image && (item.category || 'empresarial') === category)
         .sort((first, second) => String(second.date || '').localeCompare(String(first.date || '')))
         .slice(0, limit > 0 ? limit : undefined);
 

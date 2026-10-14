@@ -26,7 +26,17 @@
     "dateLabel": "14 março 2025",
     "category": "empresarial",
     "articlePath": "compete-2030-anunciou-a-abertura-da-rececao-de-registos-de-pedido-de-auxilio-para-projetos-de-descarbonizacao-das-empresas/index.html",
-    "listingHref": "../compete-2030-anunciou-a-abertura-da-rececao-de-registos-de-pedido-de-auxilio-para-projetos-de-descarbonizacao-das-empresas/index.html"
+    "listingHref": "../compete-2030-anunciou-a-abertura-da-rececao-de-registos-de-pedido-de-auxilio-para-projetos-de-descarbonizacao-das-empresas/index.html",
+    "listings": [
+      {
+        "path": "noticias/index.html",
+        "href": "../compete-2030-anunciou-a-abertura-da-rececao-de-registos-de-pedido-de-auxilio-para-projetos-de-descarbonizacao-das-empresas/index.html"
+      },
+      {
+        "path": "2025/03/14/index.html",
+        "href": "../../../compete-2030-anunciou-a-abertura-da-rececao-de-registos-de-pedido-de-auxilio-para-projetos-de-descarbonizacao-das-empresas/index.html"
+      }
+    ]
   },
   {
     "slug": "a-empresa-macwatts-esteve-presente-no-forum-de-sustentabilidade-e-energia",
@@ -36,7 +46,17 @@
     "dateLabel": "3 dezembro 2024",
     "category": "empresarial",
     "articlePath": "a-empresa-macwatts-esteve-presente-no-forum-de-sustentabilidade-e-energia/index.html",
-    "listingHref": "../a-empresa-macwatts-esteve-presente-no-forum-de-sustentabilidade-e-energia/index.html"
+    "listingHref": "../a-empresa-macwatts-esteve-presente-no-forum-de-sustentabilidade-e-energia/index.html",
+    "listings": [
+      {
+        "path": "noticias/index.html",
+        "href": "../a-empresa-macwatts-esteve-presente-no-forum-de-sustentabilidade-e-energia/index.html"
+      },
+      {
+        "path": "2024/12/03/index.html",
+        "href": "../../../a-empresa-macwatts-esteve-presente-no-forum-de-sustentabilidade-e-energia/index.html"
+      }
+    ]
   },
   {
     "slug": "apoio-a-concretizacao-de-comunidades-de-energia-renovavel-e-autoconsumo-coletivo",
@@ -45,8 +65,22 @@
     "date": "2026-06-09",
     "dateLabel": "9 junho 2026",
     "category": "residencial",
-    "articlePath": "residencial/apoio-a-concretizacao-de-comunidades-de-energia-renovavel-e-autoconsumo-coletivo.html",
-    "listingHref": "apoio-a-concretizacao-de-comunidades-de-energia-renovavel-e-autoconsumo-coletivo.html"
+    "articlePath": "apoio-a-concretizacao-de-comunidades-de-energia-renovavel-e-autoconsumo-coletivo/index.html",
+    "articlePaths": [
+      "apoio-a-concretizacao-de-comunidades-de-energia-renovavel-e-autoconsumo-coletivo/index.html",
+      "residencial/apoio-a-concretizacao-de-comunidades-de-energia-renovavel-e-autoconsumo-coletivo.html"
+    ],
+    "listingHref": "apoio-a-concretizacao-de-comunidades-de-energia-renovavel-e-autoconsumo-coletivo.html",
+    "listings": [
+      {
+        "path": "residencial/noticias.html",
+        "href": "apoio-a-concretizacao-de-comunidades-de-energia-renovavel-e-autoconsumo-coletivo.html"
+      },
+      {
+        "path": "2026/06/09/index.html",
+        "href": "../../../apoio-a-concretizacao-de-comunidades-de-energia-renovavel-e-autoconsumo-coletivo/index.html"
+      }
+    ]
   },
   {
     "slug": "programa-de-apoio-a-condominios-residenciais",
@@ -55,7 +89,37 @@
     "date": "2026-06-09",
     "dateLabel": "9 junho 2026",
     "category": "residencial",
-    "articlePath": "residencial/programa-de-apoio-a-condominios-residenciais.html",
-    "listingHref": "programa-de-apoio-a-condominios-residenciais.html"
+    "articlePath": "programa-de-apoio-a-condominios-residenciais/index.html",
+    "articlePaths": [
+      "programa-de-apoio-a-condominios-residenciais/index.html",
+      "residencial/programa-de-apoio-a-condominios-residenciais.html"
+    ],
+    "listingHref": "programa-de-apoio-a-condominios-residenciais.html",
+    "listings": [
+      {
+        "path": "residencial/noticias.html",
+        "href": "programa-de-apoio-a-condominios-residenciais.html"
+      },
+      {
+        "path": "2026/06/09/index.html",
+        "href": "../../../programa-de-apoio-a-condominios-residenciais/index.html"
+      }
+    ]
+  },
+  {
+    "slug": "programa-de-apoio-a-bairros-mais-sustentaveis",
+    "title": "Programa de Apoio a Bairros mais Sustentáveis",
+    "image": "assets/bb0a330c97-Screenshot-from-2026-06-09-11-52-01-1-1024x1011.png",
+    "date": "2026-06-09",
+    "dateLabel": "9 junho 2026",
+    "category": "residencial",
+    "articlePath": "programa-de-apoio-a-bairros-mais-sustentaveis/index.html",
+    "showInNewsList": false,
+    "listings": [
+      {
+        "path": "2026/06/09/index.html",
+        "href": "../../../programa-de-apoio-a-bairros-mais-sustentaveis/index.html"
+      }
+    ]
   }
 ]
