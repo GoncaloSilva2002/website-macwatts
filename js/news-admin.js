@@ -96,7 +96,6 @@
         row.append(imageLink, info, button);
         publishedNewsList.append(row);
       }
-      publishedNewsList.append(publishedNewsList.querySelector(".news-add-card"));
     } catch (error) {
       setStatus(manageStatus, error.message || "Não foi possível carregar os artigos.", true);
     }
