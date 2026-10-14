@@ -24,7 +24,9 @@
       for (const item of newestFirst) {
         const card = document.createElement('a');
         card.className = 'news-card';
-        card.href = `${base}${encodeURIComponent(item.slug)}/index.html`;
+        const articleHref = `${base}${encodeURIComponent(item.slug)}/index.html`;
+        if ([...grid.querySelectorAll('.news-card')].some(existing => existing.getAttribute('href') === articleHref)) continue;
+        card.href = articleHref;
 
         const imageFrame = document.createElement('div');
         imageFrame.className = 'news-image';

@@ -90,6 +90,23 @@ function renderParagraphs(text) {
     .filter(Boolean).map(paragraph => `<p>${escapeHtml(paragraph).replace(/\n/g, '<br>')}</p>`).join('\n');
 }
 
+function renderNewsCard(article, category) {
+  const label = category === 'residencial' ? 'Residencial' : 'Empresarial';
+  const href = escapeHtml(`../${article.slug}/index.html`);
+  const image = escapeHtml(`../${article.image}`);
+  const title = escapeHtml(article.title);
+  const dateLabel = escapeHtml(article.dateLabel || article.date || "");
+  return `<a class="news-card" href="${href}"><div class="news-image"><img alt="${title}" loading="lazy" src="${image}"></div><div><p class="news-meta">${label} <span>${dateLabel}</span></p><h3>${title}</h3><span class="text-link">Ler artigo</span></div></a>`;
+}
+
+function addNewsCardToListing(html, article, category) {
+  const href = `href="../${article.slug}/index.html"`;
+  if (html.includes(href)) return html;
+  const grid = /(<div class="news-grid"[^>]*data-news-grid[^>]*>)/;
+  if (!grid.test(html)) throw new Error("Nao foi possivel encontrar a lista de noticias.");
+  return html.replace(grid, openingTag => `${openingTag}\n${renderNewsCard(article, category)}`);
+}
+
 async function renderArticle(article) {
   const newsIndex = await fs.readFile(path.join(root, 'noticias', 'index.html'), 'utf8');
   const header = newsIndex.match(/<header\b[\s\S]*?<\/header>/i)?.[0];
@@ -110,16 +127,19 @@ async function renderArticle(article) {
 <meta name="description" content="${excerpt}">
 <link rel="stylesheet" href="../assets/3a65094ad2-manrope.css">
 <link rel="stylesheet" href="../css/home.css?v=2">
+<link rel="stylesheet" href="../css/residential.css?v=2">
 <link rel="stylesheet" href="../css/business-navigation.css?v=3">
-<link rel="stylesheet" href="../css/news-article.css">
+<link rel="stylesheet" href="../css/residential-article.css">
+<link rel="stylesheet" href="../css/scroll-reveal.css">
 <script defer src="../js/home.js"></script>
+<script defer src="../js/scroll-reveal.js"></script>
 </head>
-<body class="business-home news-article-page">
+<body class="business-home">
 <a class="skip-link" href="#conteudo">Saltar para o conteúdo</a>
 ${header}
 <main id="conteudo">
-<section class="news-article-intro"><div class="wrap"><a class="news-article-back" href="../noticias/index.html">← Todas as notícias</a><p class="eyebrow">Notícias MacWatts</p><h1>${title}</h1><p class="news-article-meta"><time datetime="${date}">${label}</time></p><p class="news-article-lead">${excerpt}</p></div></section>
-<article class="news-article-body"><div class="wrap"><figure class="news-article-cover"><img src="${image}" alt="${title}" fetchpriority="high"><figcaption>${label}</figcaption></figure><div class="news-article-copy">${article.paragraphs}</div><a class="text-link news-article-return" href="../noticias/index.html">Voltar às notícias <span aria-hidden="true">→</span></a></div></article>
+<section class="article-heading"><div class="wrap"><a class="article-back" href="../noticias/index.html">Voltar às notícias</a><p class="eyebrow">Notícias / Empresarial</p><h1>${title}</h1><time class="article-date" datetime="${date}">${label}</time></div></section>
+<article class="wrap article-body"><figure><img src="${image}" alt="${title}" fetchpriority="high"></figure><div class="article-copy">${article.paragraphs}</div><div class="article-footer"><a class="text-link news-article-return" href="../noticias/index.html">Todas as notícias</a><a class="text-link" href="../contactos/index.html">Falar com a MacWatts</a></div></article>
 </main>
 ${footer}
 </body>
@@ -180,9 +200,14 @@ async function main() {
     paragraphs: renderParagraphs(text)
   };
 
+  const listingPath = path.join(root, 'noticias', 'index.html');
+  const listingHtml = await fs.readFile(listingPath, 'utf8');
+  const updatedListing = addNewsCardToListing(listingHtml, article, 'empresarial');
+
   await fs.mkdir(path.join(root, slug), { recursive: false });
   await fs.writeFile(path.join(root, image), downloaded.buffer, { flag: 'wx' });
   await fs.writeFile(path.join(root, slug, 'index.html'), await renderArticle(article), { flag: 'wx' });
+  await fs.writeFile(listingPath, updatedListing, 'utf8');
   await fs.writeFile(newsFile, `${JSON.stringify([{ slug, title, image, excerpt: article.excerpt, date, dateLabel: article.dateLabel }, ...entries], null, 2)}\n`, 'utf8');
 
   if (process.env.GITHUB_OUTPUT) {

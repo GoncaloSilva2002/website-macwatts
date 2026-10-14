@@ -21,3 +21,16 @@
 .news-form-status.is-error{color:#b33c31}
 .news-form-status a{margin-left:6px;color:#00836c;font-weight:700}
 @media(max-width:560px){.news-admin-shell{padding-top:28px}.news-admin-heading{display:block}.news-admin-logout{margin-top:15px}.news-admin-panel textarea{min-height:180px}}
+
+.news-admin-manage{margin-top:48px;padding-top:34px;border-top:1px solid #e2e9e8}
+.news-admin-manage h2{font-size:24px;line-height:1.2;letter-spacing:-.035em}
+.news-manage-list{display:grid;gap:12px;margin-top:18px}
+.news-manage-item{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:16px;border:1px solid #e2e9e8;border-radius:7px}
+.news-manage-item>div{min-width:0}
+.news-manage-meta{margin-bottom:5px;color:#00836c;font-size:11px;font-weight:700}
+.news-manage-title{display:inline-block;overflow-wrap:anywhere;font-size:14px;font-weight:700}
+.news-manage-title:hover{color:#00836c}
+.news-delete-button{flex:none;padding:9px 12px;border:1px solid #d6b2ae;border-radius:5px;background:#fff;color:#a23b32;font:inherit;font-size:12px;font-weight:700;cursor:pointer}
+.news-delete-button:hover{background:#fff4f2}
+.news-delete-button:disabled{cursor:wait;opacity:.6}
+@media(max-width:560px){.news-admin-manage{margin-top:35px;padding-top:28px}.news-manage-item{align-items:flex-start;flex-direction:column;gap:12px}.news-delete-button{align-self:flex-end}}

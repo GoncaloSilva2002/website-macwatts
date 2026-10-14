@@ -170,8 +170,70 @@ async function saveLocally(root, published) {
   }
 }
 
+async function getRemoteFileText(token, filePath, revision) {
+  const file = await githubRequest(token, `contents/${filePath}?ref=${encodeURIComponent(revision)}`);
+  return Buffer.from(file.content, "base64").toString("utf8");
+}
+
+function removeNewsCardFromListing(html, slug) {
+  const href = `../${slug}/index.html`;
+  const escapedHref = href.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const cardPattern = new RegExp(`<a\\b(?=[^>]*\\bhref="${escapedHref}")[^>]*>[\\s\\S]*?<\\/a>\\s*`, "g");
+  return html.replace(cardPattern, "");
+}
+
+async function commitNewsDeletion(token, files, deletedPaths, title, parentSha, baseTree) {
+  const tree = [];
+  for (const file of files) {
+    const blob = await githubRequest(token, "git/blobs", "POST", {
+      content: file.content.toString("base64"),
+      encoding: "base64"
+    });
+    tree.push({ path: file.path, mode: "100644", type: "blob", sha: blob.sha });
+  }
+  for (const filePath of deletedPaths) {
+    tree.push({ path: filePath, mode: "100644", type: "blob", sha: null });
+  }
+  const newTree = await githubRequest(token, "git/trees", "POST", { base_tree: baseTree, tree });
+  const commit = await githubRequest(token, "git/commits", "POST", {
+    message: `Elimina not\u00edcia: ${title.replace(/[\r\n]+/g, " ").slice(0, 100)}`,
+    tree: newTree.sha,
+    parents: [parentSha]
+  });
+  await githubRequest(token, `git/refs/heads/${encodeURIComponent(repositoryBranch)}`, "PATCH", {
+    sha: commit.sha,
+    force: false
+  });
+}
+
+async function readLocalNews(root) {
+  try {
+    const entries = JSON.parse(await fs.readFile(path.join(root, "data", "news.json"), "utf8"));
+    if (!Array.isArray(entries)) throw new Error("invalid news list");
+    return entries;
+  } catch (error) {
+    if (error.code === "ENOENT") return [];
+    throw error;
+  }
+}
+
 async function handle(req, res, pathname, root) {
   if (!pathname.startsWith('/api/admin/')) return false;
+  if (req.method === 'GET' && pathname === '/api/admin/news') {
+    if (!sessionFor(req)) {
+      sendJson(res, 401, { error: "A sess\u00e3o expirou. Entra novamente." });
+      return true;
+    }
+    const token = process.env.GITHUB_REPO_TOKEN;
+    if (process.env.RENDER === "true" && !token) {
+      sendJson(res, 503, { error: "Falta configurar o token GitHub para gerir as not\u00edcias." });
+      return true;
+    }
+    const remote = token ? await getRemoteNews(token) : null;
+    sendJson(res, 200, { news: remote ? remote.entries : await readLocalNews(root) });
+    return true;
+  }
+
   if (req.method === 'GET' && pathname === '/api/admin/session') {
     if (sessionFor(req)) sendEmpty(res, 204);
     else sendEmpty(res, 401);
@@ -211,6 +273,67 @@ async function handle(req, res, pathname, root) {
     const session = sessionFor(req);
     if (session) sessions.delete(session.token);
     sendEmpty(res, 204, { 'Set-Cookie': sessionCookie(req, '', 0) });
+    return true;
+  }
+
+  if (req.method === 'POST' && pathname === '/api/admin/news/delete') {
+    if (!sessionFor(req)) {
+      sendJson(res, 401, { error: "A sess\u00e3o expirou. Entra novamente." });
+      return true;
+    }
+    const input = await readJson(req, 4096);
+    const slug = typeof input?.slug === "string" ? input.slug : "";
+    if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) {
+      sendJson(res, 400, { error: "O artigo selecionado n\u00e3o é v\u00e1lido." });
+      return true;
+    }
+    const token = process.env.GITHUB_REPO_TOKEN;
+    if (process.env.RENDER === "true" && !token) {
+      sendJson(res, 503, { error: "Falta configurar o token GitHub para eliminar not\u00edcias." });
+      return true;
+    }
+    const remote = token ? await getRemoteNews(token) : null;
+    const entries = remote ? remote.entries : await readLocalNews(root);
+    const article = entries.find(item => item && item.slug === slug);
+    if (!article) {
+      sendJson(res, 404, { error: "O artigo j\u00e1 n\u00e3o existe na lista de not\u00edcias." });
+      return true;
+    }
+    const imagePattern = new RegExp(`^assets/noticia-${slug}\\.(?:png|jpg|webp)$`);
+    if (typeof article.image !== "string" || !imagePattern.test(article.image)) {
+      sendJson(res, 400, { error: "N\u00e3o \u00e9 poss\u00edvel eliminar os ficheiros associados a este artigo." });
+      return true;
+    }
+    const category = article.category === "residencial" ? "residencial" : "empresarial";
+    const listingPath = category === "residencial" ? "residencial/noticias.html" : "noticias/index.html";
+    const listingHtml = remote
+      ? await getRemoteFileText(token, listingPath, remote.parentSha)
+      : await fs.readFile(path.join(root, listingPath), "utf8");
+    const updatedListing = removeNewsCardFromListing(listingHtml, slug);
+    const nextNews = entries.filter(item => !item || item.slug !== slug);
+    const files = [
+      { path: listingPath, content: Buffer.from(updatedListing, "utf8") },
+      { path: "data/news.json", content: Buffer.from(`${JSON.stringify(nextNews, null, 2)}\n`, "utf8") }
+    ];
+    const deletedPaths = [`${slug}/index.html`, article.image];
+    if (token) {
+      await commitNewsDeletion(token, files, deletedPaths, article.title || slug, remote.parentSha, remote.baseTree);
+    } else {
+      for (const file of files) {
+        const destination = path.resolve(root, file.path);
+        if (!destination.startsWith(root + path.sep)) throw new ApiError(400, "Caminho inv\u00e1lido ao eliminar o artigo.");
+        await fs.writeFile(destination, file.content);
+      }
+      const articleFile = path.resolve(root, slug, "index.html");
+      const imageFile = path.resolve(root, article.image);
+      if (!articleFile.startsWith(root + path.sep) || !imageFile.startsWith(root + path.sep)) {
+        throw new ApiError(400, "Caminho inv\u00e1lido ao eliminar o artigo.");
+      }
+      await fs.rm(articleFile, { force: true });
+      await fs.rm(imageFile, { force: true });
+      await fs.rmdir(path.dirname(articleFile)).catch(() => {});
+    }
+    sendJson(res, 200, { message: "Artigo eliminado." });
     return true;
   }
 

@@ -11,6 +11,8 @@
   const submitButton = document.querySelector('#submit-news');
   const imageInput = document.querySelector('#news-image');
   const imagePreview = document.querySelector('#image-preview');
+  const publishedNewsList = document.querySelector('#published-news-list');
+  const manageStatus = document.querySelector('#manage-status');
 
   function setStatus(element, message, isError = false) {
     element.textContent = message;
@@ -20,6 +22,7 @@
   function showEditor() {
     loginPanel.hidden = true;
     editorPanel.hidden = false;
+    loadPublishedNews();
   }
 
   function showLogin() {
@@ -29,6 +32,68 @@
 
   async function readJson(response) {
     return response.json().catch(() => ({}));
+  }
+
+  async function loadPublishedNews() {
+    publishedNewsList.replaceChildren();
+    setStatus(manageStatus, "");
+    try {
+      const response = await fetch("/api/admin/news", { cache: "no-store" });
+      const result = await readJson(response);
+      if (response.status === 401) { showLogin(); return; }
+      if (!response.ok) throw new Error(result.error || "Não foi possível carregar os artigos.");
+      const items = Array.isArray(result.news) ? result.news : [];
+      if (!items.length) {
+        setStatus(manageStatus, "Ainda não existem artigos criados nesta área.");
+        return;
+      }
+      for (const item of items) {
+        if (!item || !item.slug || !item.title) continue;
+        const row = document.createElement("div");
+        row.className = "news-manage-item";
+        const info = document.createElement("div");
+        const meta = document.createElement("p");
+        meta.className = "news-manage-meta";
+        meta.textContent = `${item.category === "residencial" ? "Residencial" : "Empresarial"} · ${item.dateLabel || item.date || ""}`;
+        const title = document.createElement("a");
+        title.className = "news-manage-title";
+        title.href = `../${encodeURIComponent(item.slug)}/index.html`;
+        title.textContent = item.title;
+        info.append(meta, title);
+        const button = document.createElement("button");
+        button.className = "news-delete-button";
+        button.type = "button";
+        button.textContent = "Eliminar";
+        button.addEventListener("click", () => deletePublishedNews(item, button));
+        row.append(info, button);
+        publishedNewsList.append(row);
+      }
+    } catch (error) {
+      setStatus(manageStatus, error.message || "Não foi possível carregar os artigos.", true);
+    }
+  }
+
+  async function deletePublishedNews(item, button) {
+    if (!window.confirm(`Eliminar o artigo "${item.title}"? Esta ação não pode ser anulada.`)) return;
+    button.disabled = true;
+    button.textContent = "A eliminar…";
+    setStatus(manageStatus, "");
+    try {
+      const response = await fetch("/api/admin/news/delete", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ slug: item.slug })
+      });
+      const result = await readJson(response);
+      if (response.status === 401) showLogin();
+      if (!response.ok) throw new Error(result.error || "Não foi possível eliminar o artigo.");
+      await loadPublishedNews();
+      setStatus(manageStatus, result.message || "Artigo eliminado.");
+    } catch (error) {
+      setStatus(manageStatus, error.message || "Não foi possível eliminar o artigo.", true);
+      button.disabled = false;
+      button.textContent = "Eliminar";
+    }
   }
 
   fetch('/api/admin/session', { cache: 'no-store' })
@@ -125,6 +190,7 @@
       editorForm.reset();
       imagePreview.hidden = true;
       imagePreview.removeAttribute('src');
+      await loadPublishedNews();
     } catch (error) {
       setStatus(editorStatus, error.message || 'Não foi possível ligar ao servidor.', true);
     } finally {

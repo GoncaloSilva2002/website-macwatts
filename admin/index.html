@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="../assets/3a65094ad2-manrope.css">
   <link rel="stylesheet" href="../css/home.css?v=2">
   <link rel="stylesheet" href="../css/news-admin.css">
-  <script defer src="../js/news-admin.js?v=20261009-1"></script>
+  <script defer src="../js/news-admin.js?v=20261014-1"></script>
 </head>
 <body class="business-home news-admin-page">
   <main class="news-admin-shell">
@@ -62,6 +62,13 @@
         <button class="button" id="submit-news" type="submit">Criar notícia <span aria-hidden="true">→</span></button>
         <p class="news-form-status" id="form-status" role="status" aria-live="polite"></p>
       </form>
+
+      <section class="news-admin-manage" aria-labelledby="manage-title">
+        <h2 id="manage-title">Eliminar um artigo.</h2>
+        <p class="news-admin-intro">Gerir os artigos criados nesta &#225;rea.</p>
+        <p class="news-form-status" id="manage-status" role="status" aria-live="polite"></p>
+        <div class="news-manage-list" id="published-news-list" aria-live="polite"></div>
+      </section>
     </section>
   </main>
 </body>
