@@ -11,10 +11,11 @@ def content(selector, html):
 
 soup.title.string = 'MacWatts — Uma nova energia para a sua casa'
 soup.select_one('meta[name=description]')['content'] = 'Painéis solares, baterias, bombas de calor e carregadores elétricos para a sua casa. Conheça as soluções residenciais da MacWatts.'
-soup.body['class'] = 'residential'
+soup.body['class'] = ['residential', 'residential-home']
 content('.audience-inner nav', '<a href="index.html">Empresarial ↗</a><a href="residencial/index.html" class="selected" aria-current="page">Residencial</a>')
 content('.audience-inner > span', 'Mais conforto. Mais eficiência. A sua casa, com outra energia.')
-content('#main-nav', '<a href="#solucoes">Soluções</a><a href="#solar">Solar e baterias</a><a href="#mobilidade">Mobilidade</a><a href="#duvidas">Dúvidas</a><a href="contactos/index.html">Contactos</a><a class="button button-small" href="contactos/index.html">Pedir proposta <span aria-hidden="true">↗</span></a>')
+residential_nav = '<details class="business-menu"><summary>Soluções <span aria-hidden="true"></span></summary><div class="business-menu-panel"><div class="business-menu-intro"><span>Soluções para sua casa</span><a href="#soluções">Ver todas as soluções </a></div><div class="business-menu-columns"><div class="business-menu-column"><h2>Solar e baterias</h2><a href="residencial/paineis-solares-bateria.html">Painéis solares e armazenamento</a></div><div class="business-menu-column"><h2>Conforto térmico</h2><a href="residencial/bombas-calor.html">Bombas de calor</a></div><div class="business-menu-column"><h2>Mobilidade elétrica</h2><a href="residencial/carregadores.html">Carregadores para veículos eletricos</a></div><div class="business-menu-column"><h2>Consultoria</h2><a href="residencial/autditoria.html">Auditoria e certificação energética</a><a href="residencial/financiamento.html">Financiamento</a><a href="residencial/contratacao-e-venda-de-energia/index.html">Contratação e venda de energia</a></div></div></div></details><a href="#duvidas">Dúvidas</a><a href="residencial/noticias.html">Notícias</a><a href="residencial/contactos.html">Contactos</a><a class="button button-small" href="residencial/contactos.html">Pedir proposta</a>'
+content('#main-nav', residential_nav)
 soup.select_one('.brand')['href'] = 'residencial/index.html'
 soup.select_one('.brand')['aria-label'] = 'MacWatts — Residencial'
 for logo in soup.select('.brand img, .footer-brand img'):
@@ -44,7 +45,7 @@ for node, (label, heading, description, href) in zip(soup.select('.service-card'
     node.h3.append(BeautifulSoup(heading, 'html.parser'))
     node.p.string = description
 content('.service-card:nth-child(2) svg', '<path d="M5 22 24 5l19 17M10 18v25h28V18M17 25h14v12H17zM20 29h8m-8 4h8"/>')
-content('.service-extra', '<span>Quer avaliar as opções para a sua casa?</span><a class="text-link" href="financiamento/index.html">Conhecer o financiamento ↗</a><a class="text-link" href="contratacao-e-venda-de-energia/index.html">Contratação e venda de energia ↗</a>')
+content('.service-extra', '<span>Quer avaliar as opções para a sua casa?</span><a class="text-link" href="financiamento/index.html">Conhecer o financiamento ↗</a><a class="text-link" href="residencial/contratacao-e-venda-de-energia/index.html">Contratação e venda de energia ↗</a>')
 solar = '''<section id="solar" class="section residential-feature"><div class="wrap feature-grid"><div class="feature-visual"><img src="assets/23a77d47d6-WhatsApp-Image-2026-06-08-at-12.46.31.jpeg" alt="Solução de energia solar residencial" loading="lazy"><span class="feature-caption">Solar + armazenamento</span></div><div class="feature-copy"><p class="eyebrow">Uma energia mais sua</p><h2>O sol produz.<br>A sua casa aproveita.</h2><p>Uma solução fotovoltaica começa por conhecer os seus consumos. A produção e o armazenamento são dimensionados para as necessidades da sua habitação.</p><ul class="feature-list"><li>Painéis solares e soluções com inversor híbrido.</li><li>Armazenamento para utilizar energia noutros momentos.</li><li>Monitorização para acompanhar a sua instalação.</li></ul><a class="button" href="paineis-solares-e-baterias/index.html">Conhecer o kit solar <span aria-hidden="true">↗</span></a><a class="text-link simulator-link" href="https://main.d1ewoiy1pgag7s.amplifyapp.com/" target="_blank" rel="noopener noreferrer">Simular a minha solução <span aria-hidden="true">↗</span><span class="external-note">Abre o simulador externo</span></a></div></div></section>
 <section id="mobilidade" class="section residential-mobility"><div class="wrap feature-grid"><div class="feature-copy"><p class="eyebrow">Pronto para o dia seguinte</p><h2>O seu carregador.<br>No melhor lugar: casa.</h2><p>Ganhe a comodidade de carregar o seu veículo onde vive, com uma solução adaptada à instalação elétrica da sua habitação.</p><ul class="feature-list"><li>Gama de carregadores dos 7,4 kW aos 22 kW.</li><li>Gestão dinâmica de carga em função do consumo da casa.</li><li>Aplicação para monitorizar e gerir o carregamento.</li></ul><a class="text-link" href="carregadores-para-veiculos-eletricos/index.html">Explorar carregadores <span aria-hidden="true">↗</span></a></div><div class="feature-visual"><img src="assets/34df7626b5-person-taking-care-electric-car-scaled.jpg" alt="Carregamento de um veículo elétrico" loading="lazy"><span class="feature-caption">Mobilidade elétrica em casa</span></div></div></section>'''
 soup.select_one('.projects').replace_with(BeautifulSoup(solar, 'html.parser'))
@@ -64,7 +65,15 @@ soup.select_one('#solar').append(BeautifulSoup(
     f'<ul class="brand-grid" aria-label="Marcas de equipamentos solares e armazenamento">{brand_items}</ul></div>',
     'html.parser'))
 faq = '''<section id="duvidas" class="section residential-faq"><div class="wrap faq-grid"><div><p class="eyebrow">Antes de dar o próximo passo</p><h2>As suas dúvidas.<br>Respostas claras.</h2><p>Cada casa é diferente. A nossa equipa ajuda a avaliar o seu caso.</p><a class="text-link" href="contactos/index.html">Falar com a equipa ↗</a></div><div class="faq-items"><details><summary>Qual é a solução solar indicada para a minha casa?</summary><p>Depende do seu consumo, dos horários em que utiliza eletricidade e das condições do espaço disponível. Podemos avaliar essas necessidades e apresentar uma proposta dimensionada para a sua habitação.</p></details><details><summary>Preciso de instalar uma bateria?</summary><p>Uma bateria permite guardar energia para utilização posterior. A sua adequação depende do perfil de consumo e da produção prevista. A equipa pode ajudar a comparar as opções.</p></details><details><summary>Posso ter um carregador em casa?</summary><p>A instalação depende das condições do local e da instalação elétrica disponível. Fale com a nossa equipa para avaliar a potência e a solução adequadas ao seu veículo e à sua habitação.</p></details><details><summary>Existem soluções de financiamento?</summary><p>A MacWatts apresenta opções de financiamento para soluções residenciais. Consulte a <a href="financiamento/index.html">página de financiamento</a> ou peça informações à equipa sobre as condições aplicáveis.</p></details></div></div></section>'''
-soup.select_one('.about').replace_with(BeautifulSoup(faq, 'html.parser'))
+soup.select_one('#mobilidade').insert_after(BeautifulSoup(faq, 'html.parser'))
+about = soup.select_one('.about')
+about['class'] = ['section', 'about', 'about-divider']
+content('.about .eyebrow', 'Sobre a MacWatts')
+content('.about h2', 'Empresa Inovadora<br/><span>Especializada na Sustentabilidade e Transição Energética</span>')
+content('.about-copy', '''<p>A MacWatts é uma empresa de Engenharia dedicada à transição energética, acrescentando valor no dimensionamento, construção e colocação em operação de projetos que permitam reduzir os consumos energéticos nas empresas e particulares, rumo à sustentabilidade energética. Com expertise e competência, destacamo-nos no desenvolvimento de projetos de energia renovável, automação e controlo, mobilidade elétrica, consultoria e eficiência energética.</p><div class="about-topics"><span>Engenharia</span><span>Eficiência</span><span>Proximidade</span></div>''')
+about.select_one('.text-link').decompose()
+soup.select_one('#solar').insert_before(about)
+about.insert_after(BeautifulSoup('''<section aria-label="MacWatts em números" class="results about-results"><div class="wrap results-grid"><div><strong>253<span>+</span></strong><p>Projetos desenvolvidos</p></div><div><strong>46<span>+</span></strong><p>Parceiros</p></div><div><strong>32 <span>GWh</span></strong><p>Energia produzida</p></div><div><strong>15 <span>mil t</span></strong><p>De CO₂ evitadas</p></div></div></section>''', 'html.parser'))
 content('.news .section-heading h2', 'Novidades para uma<br>casa mais sustentável.')
 news = [
 ('apoio-a-concretizacao-de-comunidades-de-energia-renovavel-e-autoconsumo-coletivo/index.html','7ab5977ef5-Screenshot-from-2026-06-09-12-15-45-1.png','Comunidades de energia renovável e autoconsumo coletivo'),
@@ -83,6 +92,8 @@ for a in soup.select('.footer-grid a'):
     if a.get('href') == 'residencial/index.html':
         a['href'] = 'index.html'
         a.string = 'Soluções empresariais'
+    elif a.get('href') == 'sobre-nos/index.html' and a.get_text(' ', strip=True) == 'Sobre nós':
+        a.decompose()
 footer_links = soup.select('.footer-grid > div')[2]
 footer_links.clear()
 footer_links.append(BeautifulSoup('<h2>Para sua casa</h2><a href="paineis-solares-e-baterias/index.html">Solar e baterias</a><a href="bombas-de-calor/index.html">Bombas de calor</a><a href="carregadores-para-veiculos-eletricos/index.html">Carregadores elétricos</a><a href="financiamento/index.html">Financiamento</a>', 'html.parser'))

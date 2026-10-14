@@ -69,11 +69,18 @@ def unify():
                 image['class'] = image.get('class', []) + ['content-icon']
         if path.parent.name in ('politica-de-privacidade', 'termos-e-condicoes'):
             main['class'].append('legal-content')
-        soup.body.insert(0, shared('.site-header'))
+        header = shared('.site-header')
+        footer = shared('.site-footer')
+        if 'residencial' in path.relative_to(ROOT).parts:
+            for selector in ('.main-nav a[href*="sobre-nos"]', '.footer-grid a[href*="sobre-nos"]'):
+                for anchor in header.select(selector) + footer.select(selector):
+                    if anchor.get_text(' ', strip=True) == 'Sobre n\u00f3s':
+                        anchor.decompose()
+        soup.body.insert(0, header)
         skip = soup.new_tag('a', href='#conteudo', attrs={'class': 'skip-link'})
         skip.string = 'Saltar para o conteúdo'
         soup.body.insert(0, skip)
-        soup.body.append(shared('.site-footer'))
+        soup.body.append(footer)
         for asset in ('assets/3a65094ad2-manrope.css', 'css/home.css?v=2', 'css/business-navigation.css?v=3', 'css/site-pages.css'):
             for existing in soup.select('link[href]'):
                 if existing['href'].split('?')[0].endswith(asset.split('?')[0]):
