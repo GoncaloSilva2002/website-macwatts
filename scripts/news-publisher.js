@@ -96,6 +96,16 @@ function customizeArticle(html, category, sourceUrl) {
   const newsListUrl = category === 'residencial' ? '../residencial/noticias.html' : '../noticias/index.html';
   const categoryLabel = category === 'residencial' ? 'Residencial' : 'Empresarial';
   let result = html.split('href="../noticias/index.html"').join(`href="${newsListUrl}"`);
+  if (category === 'residencial') {
+    result = result
+      .replace('<body class="business-home">', '<body class="residential residential-news">')
+      .replaceAll('href="index.html#solucoes"', 'href="../residencial/index.html#solucoes"')
+      .replaceAll('href="index.html#duvidas"', 'href="../residencial/index.html#duvidas"')
+      .replaceAll('href="index.html"', 'href="../residencial/index.html"')
+      .replaceAll('href="contratacao-e-venda-de-energia/index.html"', 'href="../residencial/contratacao-e-venda-de-energia/index.html"')
+      .replaceAll('href="contactos.html"', 'href="../residencial/contactos.html"')
+      .replaceAll('href="../contactos/index.html"', 'href="../residencial/contactos.html"');
+  }
   result = result.replace('<p class="eyebrow">Notícias MacWatts</p>', `<p class="eyebrow">Notícias / ${categoryLabel}</p>`);
   if (sourceUrl) {
     const safeUrl = escapeHtml(sourceUrl);
@@ -105,8 +115,11 @@ function customizeArticle(html, category, sourceUrl) {
   return result;
 }
 
-async function renderArticle(root, article) {
-  const newsIndex = await fs.readFile(path.join(root, 'noticias', 'index.html'), 'utf8');
+async function renderArticle(root, article, category) {
+  const newsIndexPath = category === 'residencial'
+    ? path.join(root, 'residencial', 'noticias.html')
+    : path.join(root, 'noticias', 'index.html');
+  const newsIndex = await fs.readFile(newsIndexPath, 'utf8');
   const header = newsIndex.match(/<header\b[\s\S]*?<\/header>/i)?.[0];
   const footer = newsIndex.match(/<footer\b[\s\S]*?<\/footer>/i)?.[0];
   if (!header || !footer) throw new Error('Não foi possível encontrar o cabeçalho e o rodapé do site.');
@@ -132,7 +145,7 @@ async function renderArticle(root, article) {
 <script defer src="../js/home.js"></script>
 <script defer src="../js/scroll-reveal.js"></script>
 </head>
-<body class="business-home">
+<body class="${category === 'residencial' ? 'residential residential-news' : 'business-home'}">
 <a class="skip-link" href="#conteudo">Saltar para o conteúdo</a>
 ${header}
 <main id="conteudo">
@@ -192,7 +205,7 @@ async function createNews(root, input, existingNews = null) {
   const image = `assets/noticia-${slug}.${extension}`;
   const excerpt = text.replace(/\s+/g, ' ').slice(0, 200).trim();
   const article = { slug, title, image, excerpt, date, dateLabel, paragraphs: renderParagraphs(text) };
-  const html = customizeArticle(await renderArticle(root, article), category, sourceUrl);
+  const html = customizeArticle(await renderArticle(root, article, category), category, sourceUrl);
   const listingPath = category === 'residencial' ? 'residencial/noticias.html' : 'noticias/index.html';
   const listingHtml = await fs.readFile(path.join(root, listingPath), 'utf8');
   const updatedListing = addNewsCardToListing(listingHtml, article, category);
