@@ -11,5 +11,8 @@
   "description": "Versão estática do website MacWatts em HTML, CSS e JavaScript.",
   "devDependencies": {
     "playwright": "^1.63.0"
+  },
+  "dependencies": {
+    "nodemailer": "^10.1.1"
   }
 }

@@ -22,7 +22,7 @@ Abra `index.html` no navegador ou execute, com Node.js instalado:
 npm start
 ```
 
-Aceda a http://localhost:8080. O servidor usa módulos nativos de Node.js. As páginas públicas podem ser alojadas como ficheiros estáticos; para usar a área de administração, o alojamento tem de executar o servidor Node.
+Aceda a http://localhost:8080. O servidor usa Node.js e Nodemailer para o envio de email. As páginas públicas podem ser alojadas como ficheiros estáticos; para usar a área de administração e o envio de contactos, o alojamento tem de executar o servidor Node.
 
 ## Ficheiros
 
@@ -39,7 +39,7 @@ O HTML mantém as classes originais para preservar os estilos; as interações u
 
 ## Contactos e ligações externas
 
-O formulário valida o email e prepara uma mensagem na aplicação de email do visitante. O visitante confirma o envio nessa aplicação; não existe envio direto por servidor. O mapa incorporado, o LinkedIn e as restantes ligações externas precisam de internet.
+O formul&#225;rio envia as mensagens diretamente pelo servidor do site. Para ativar o envio, configure as credenciais SMTP descritas abaixo. O formul&#225;rio recebe a resposta no endere&#231;o indicado pelo visitante; o destinat&#225;rio predefinido &#233; leads@macwatts.pt. O mapa incorporado, o LinkedIn e as restantes liga&#231;&#245;es externas precisam de internet.
 
 ## Verificação
 
@@ -76,5 +76,11 @@ O serviço precisa de ser um **Web Service Node**, com `npm start` como comando 
 - `GITHUB_REPOSITORY` = `website-macwatts`
 - `GITHUB_BRANCH` = `main`
 - `ADMIN_COOKIE_SECURE` = `true`
+- `SMTP_HOST` = servidor SMTP do fornecedor de email
+- `SMTP_PORT` = `587` (ou `465`, conforme o fornecedor)
+- `SMTP_SECURE` = `false` para a porta 587; `true` para a 465
+- `SMTP_USER` e `SMTP_PASS` = credenciais SMTP
+- `CONTACT_FROM` = endere&#231;o autorizado para envio (opcional; por defeito usa `SMTP_USER`)
+- `CONTACT_TO` = destinat&#225;rio dos pedidos (opcional; por defeito `leads@macwatts.pt`)
 
-O servidor valida a palavra-passe e mantém a sessão num cookie HttpOnly. Ao publicar, cria um commit no GitHub; o Render atualiza o site quando o serviço está ligado a esse repositório e ramo. Não coloques a palavra-passe nem o token no HTML ou no JavaScript.
+O servidor valida a palavra-passe e mantém a sessão num cookie HttpOnly. Ao publicar, cria um commit no GitHub; o Render atualiza o site quando o serviço está ligado a esse repositório e ramo. Não coloques a palavra-passe nem o token no HTML ou no JavaScript. O endpoint `POST /api/contact` recebe os formulários e envia-os por SMTP. Define as mesmas variáveis SMTP no `.env` local para enviar mensagens durante o desenvolvimento.

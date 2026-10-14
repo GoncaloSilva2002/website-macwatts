@@ -36,6 +36,7 @@ function loadLocalEnvironment() {
 
 loadLocalEnvironment();
 const handleAdminApi = require('./news-admin-api');
+const handleContactApi = require('./contact-api');
 
 const server = http.createServer(async (req, res) => {
   let pathname;
@@ -52,6 +53,7 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
+  if (await handleContactApi(req, res, pathname)) return;
   if (await handleAdminApi(req, res, pathname, root)) return;
   if (req.method !== 'GET' && req.method !== 'HEAD') {
     res.writeHead(405, { Allow: 'GET, HEAD' }).end();
