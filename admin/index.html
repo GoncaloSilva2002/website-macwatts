@@ -7,8 +7,8 @@
   <title>Administração de notícias | MacWatts</title>
   <link rel="stylesheet" href="../assets/3a65094ad2-manrope.css">
   <link rel="stylesheet" href="../css/home.css?v=2">
-  <link rel="stylesheet" href="../css/news-admin.css">
-  <script defer src="../js/news-admin.js?v=20261014-2"></script>
+  <link rel="stylesheet" href="../css/news-admin.css?v=20261014-3">
+  <script defer src="../js/news-admin.js?v=20261014-3"></script>
 </head>
 <body class="business-home news-admin-page">
   <main class="news-admin-shell">
@@ -35,6 +35,12 @@
         <button class="news-admin-logout" id="logout-button" type="button">Terminar sessão</button>
       </div>
 
+      <section class="news-create-view" id="news-create-view" hidden>
+        <div class="news-create-heading">
+          <button class="news-admin-back-button" id="back-to-news" type="button">← Voltar às notícias</button>
+          <h2>Adicionar notícia.</h2>
+          <p class="news-admin-intro">Preenche os dados para publicar um novo artigo.</p>
+        </div>
       <form id="news-form">
         <label for="news-title">Título</label>
         <input id="news-title" name="title" type="text" maxlength="160" required placeholder="Título da notícia">
@@ -62,9 +68,10 @@
         <button class="button" id="submit-news" type="submit">Criar notícia <span aria-hidden="true">→</span></button>
         <p class="news-form-status" id="form-status" role="status" aria-live="polite"></p>
       </form>
+      </section>
 
-      <section class="news-admin-manage" aria-labelledby="manage-title">
-        <h2 id="manage-title">Artigos publicados.</h2>
+      <section class="news-admin-manage" id="news-dashboard" aria-labelledby="manage-title">
+        <h2 id="manage-title">Notícias publicadas.</h2>
         <p class="news-admin-intro">Aqui podes eliminar qualquer artigo que esteja publicado no site.</p>
         <p class="news-form-status" id="manage-status" role="status" aria-live="polite"></p>
         <div class="news-manage-list" id="published-news-list" aria-live="polite"></div>

@@ -13,6 +13,9 @@
   const imagePreview = document.querySelector('#image-preview');
   const publishedNewsList = document.querySelector('#published-news-list');
   const manageStatus = document.querySelector('#manage-status');
+  const newsDashboard = document.querySelector('#news-dashboard');
+  const createView = document.querySelector('#news-create-view');
+  const backToNewsButton = document.querySelector('#back-to-news');
 
   function setStatus(element, message, isError = false) {
     element.textContent = message;
@@ -22,6 +25,7 @@
   function showEditor() {
     loginPanel.hidden = true;
     editorPanel.hidden = false;
+    showDashboard();
     loadPublishedNews();
   }
 
@@ -30,12 +34,24 @@
     loginPanel.hidden = false;
   }
 
+  function showDashboard() {
+    createView.hidden = true;
+    newsDashboard.hidden = false;
+  }
+
+  function showCreateView() {
+    newsDashboard.hidden = true;
+    createView.hidden = false;
+    document.querySelector('#news-title').focus();
+  }
+
   async function readJson(response) {
     return response.json().catch(() => ({}));
   }
 
   async function loadPublishedNews() {
     publishedNewsList.replaceChildren();
+    appendAddCard();
     setStatus(manageStatus, "");
     try {
       const response = await fetch("/api/admin/news", { cache: "no-store" });
@@ -51,14 +67,25 @@
         if (!item || !item.slug || !item.title) continue;
         const row = document.createElement("div");
         row.className = "news-manage-item";
+        const articlePath = item.articlePath || `${item.slug}/index.html`;
+        const imageLink = document.createElement("a");
+        imageLink.className = "news-manage-image";
+        imageLink.href = `../${articlePath.split('/').map(encodeURIComponent).join('/')}`;
+        imageLink.setAttribute("aria-label", `Abrir: ${item.title}`);
+        const image = document.createElement("img");
+        image.src = `../${String(item.image || '').split('/').map(encodeURIComponent).join('/')}`;
+        image.alt = "";
+        image.loading = "lazy";
+        image.addEventListener("error", () => row.classList.add("has-no-image"), { once: true });
+        imageLink.append(image);
         const info = document.createElement("div");
+        info.className = "news-manage-content";
         const meta = document.createElement("p");
         meta.className = "news-manage-meta";
         meta.textContent = `${item.category === "residencial" ? "Residencial" : "Empresarial"} · ${item.dateLabel || item.date || ""}`;
         const title = document.createElement("a");
         title.className = "news-manage-title";
-        const articlePath = item.articlePath || `${item.slug}/index.html`;
-        title.href = `../${articlePath.split('/').map(encodeURIComponent).join('/')}`;
+        title.href = imageLink.href;
         title.textContent = item.title;
         info.append(meta, title);
         const button = document.createElement("button");
@@ -66,12 +93,30 @@
         button.type = "button";
         button.textContent = "Eliminar";
         button.addEventListener("click", () => deletePublishedNews(item, button));
-        row.append(info, button);
+        row.append(imageLink, info, button);
         publishedNewsList.append(row);
       }
+      publishedNewsList.append(publishedNewsList.querySelector(".news-add-card"));
     } catch (error) {
       setStatus(manageStatus, error.message || "Não foi possível carregar os artigos.", true);
     }
+  }
+
+  function appendAddCard() {
+    if (publishedNewsList.querySelector(".news-add-card")) return;
+    const card = document.createElement("button");
+    card.className = "news-add-card";
+    card.type = "button";
+    card.setAttribute("aria-label", "Adicionar uma nova not\u00edcia");
+    const plus = document.createElement("span");
+    plus.className = "news-add-card-icon";
+    plus.setAttribute("aria-hidden", "true");
+    plus.textContent = "+";
+    const label = document.createElement("span");
+    label.textContent = "Adicionar not\u00edcia";
+    card.append(plus, label);
+    card.addEventListener("click", showCreateView);
+    publishedNewsList.append(card);
   }
 
   async function deletePublishedNews(item, button) {
@@ -133,6 +178,8 @@
     showLogin();
   });
 
+  backToNewsButton.addEventListener('click', showDashboard);
+
   imageInput.addEventListener('change', () => {
     const file = imageInput.files[0];
     if (!file) {
@@ -192,6 +239,12 @@
       imagePreview.hidden = true;
       imagePreview.removeAttribute('src');
       await loadPublishedNews();
+      showDashboard();
+      setStatus(manageStatus, result.message || 'Notícia criada.');
+      const articleLink = document.createElement('a');
+      articleLink.href = result.url;
+      articleLink.textContent = 'Abrir artigo';
+      manageStatus.append(document.createTextNode(' '), articleLink);
     } catch (error) {
       setStatus(editorStatus, error.message || 'Não foi possível ligar ao servidor.', true);
     } finally {
