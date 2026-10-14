@@ -78,16 +78,17 @@ function singleLine(value, maxLength) {
 }
 
 function smtpTransport() {
-  const host = process.env.SMTP_HOST?.trim();
-  const port = Number(process.env.SMTP_PORT || 587);
-  const user = process.env.SMTP_USER?.trim();
-  const pass = process.env.SMTP_PASS;
+  const host = (process.env.MAIL_HOST || process.env.SMTP_HOST || '').trim();
+  const port = Number(process.env.MAIL_PORT || process.env.SMTP_PORT || 587);
+  const user = (process.env.MAIL_USERNAME || process.env.SMTP_USER || '').trim();
+  const pass = process.env.MAIL_PASSWORD || process.env.SMTP_PASS;
   if (!host || !Number.isInteger(port) || port < 1 || port > 65535 || !user || !pass) return null;
 
-  const secure = process.env.SMTP_SECURE
-    ? process.env.SMTP_SECURE.toLowerCase() === 'true'
+  const secureSetting = process.env.MAIL_SECURE || process.env.SMTP_SECURE;
+  const secure = secureSetting
+    ? secureSetting.toLowerCase() === 'true'
     : port === 465;
-  const from = process.env.CONTACT_FROM?.trim() || user;
+  const from = (process.env.MAIL_FROM || process.env.CONTACT_FROM || user).trim();
   const to = process.env.CONTACT_TO?.trim() || 'leads@macwatts.pt';
   const transport = nodemailer.createTransport({
     host,

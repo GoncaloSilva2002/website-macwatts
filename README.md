@@ -76,11 +76,12 @@ O serviço precisa de ser um **Web Service Node**, com `npm start` como comando 
 - `GITHUB_REPOSITORY` = `website-macwatts`
 - `GITHUB_BRANCH` = `main`
 - `ADMIN_COOKIE_SECURE` = `true`
-- `SMTP_HOST` = servidor SMTP do fornecedor de email
-- `SMTP_PORT` = `587` (ou `465`, conforme o fornecedor)
-- `SMTP_SECURE` = `false` para a porta 587; `true` para a 465
-- `SMTP_USER` e `SMTP_PASS` = credenciais SMTP
-- `CONTACT_FROM` = endere&#231;o autorizado para envio (opcional; por defeito usa `SMTP_USER`)
+- `MAIL_HOST` = servidor SMTP (para Gmail: `smtp.gmail.com`)
+- `MAIL_PORT` = `587` (TLS/STARTTLS) ou `465` (SSL)
+- `MAIL_USERNAME` e `MAIL_PASSWORD` = credenciais SMTP
+- `MAIL_FROM` = endere&#231;o autorizado para envio (opcional; por defeito usa `MAIL_USERNAME`)
 - `CONTACT_TO` = destinat&#225;rio dos pedidos (opcional; por defeito `leads@macwatts.pt`)
 
-O servidor valida a palavra-passe e mantém a sessão num cookie HttpOnly. Ao publicar, cria um commit no GitHub; o Render atualiza o site quando o serviço está ligado a esse repositório e ramo. Não coloques a palavra-passe nem o token no HTML ou no JavaScript. O endpoint `POST /api/contact` recebe os formulários e envia-os por SMTP. Define as mesmas variáveis SMTP no `.env` local para enviar mensagens durante o desenvolvimento.
+O servidor valida a palavra-passe e mantém a sessão num cookie HttpOnly. Ao publicar, cria um commit no GitHub; o Render atualiza o site quando o serviço está ligado a esse repositório e ramo. Não coloques a palavra-passe nem o token no HTML ou no JavaScript. O endpoint `POST /api/contact` recebe os formulários e envia-os por SMTP. Define as mesmas variáveis `MAIL_*` no `.env` local para enviar mensagens durante o desenvolvimento.
+
+As variáveis `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS` e `CONTACT_FROM` também são aceites como nomes alternativos. Para Gmail, usa uma palavra-passe de aplicação em `MAIL_PASSWORD`; a conta Google tem de ter a validação em dois passos ativa.
