@@ -102,6 +102,46 @@ function smtpTransport() {
   return { transport, from, to };
 }
 
+function gmailRelayConfig() {
+  const url = (process.env.GMAIL_RELAY_URL || '').trim();
+  const token = process.env.GMAIL_RELAY_TOKEN || '';
+  if (!url && !token) return null;
+  if (!url || !token) throw new ContactApiError(503, 'O envio por Gmail ainda não está totalmente configurado.');
+
+  let parsedUrl;
+  try {
+    parsedUrl = new URL(url);
+  } catch {
+    throw new ContactApiError(503, 'O endereço do relay Gmail não é válido.');
+  }
+  if (parsedUrl.protocol !== 'https:') {
+    throw new ContactApiError(503, 'O relay Gmail tem de usar uma ligação HTTPS.');
+  }
+  return { url: parsedUrl.toString(), token };
+}
+
+async function sendViaGmailRelay(config, payload) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 20000);
+  try {
+    const response = await fetch(config.url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ...payload, token: config.token }),
+      signal: controller.signal,
+      redirect: 'follow'
+    });
+    const result = await response.json().catch(() => null);
+    if (!response.ok || result?.ok !== true) {
+      const error = new Error(result?.error || `Gmail relay respondeu com HTTP ${response.status}.`);
+      error.code = `GMAIL_RELAY_HTTP_${response.status}`;
+      throw error;
+    }
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
 async function handle(req, res, pathname) {
   if (pathname !== '/api/contact') return false;
   if (req.method !== 'POST') {
@@ -142,8 +182,9 @@ async function handle(req, res, pathname) {
     if (message.length < 10) throw new ContactApiError(400, 'Escreva uma mensagem com pelo menos 10 caracteres.');
     if (!audience) throw new ContactApiError(400, 'Não foi possível identificar a área do pedido.');
 
-    const config = smtpTransport();
-    if (!config) {
+    const relay = gmailRelayConfig();
+    const config = relay ? null : smtpTransport();
+    if (!relay && !config) {
       sendJson(res, 503, { error: 'O envio de email ainda não está configurado. Tente novamente mais tarde ou escreva para leads@macwatts.pt.' });
       return true;
     }
@@ -158,19 +199,23 @@ async function handle(req, res, pathname) {
       message
     ].join('\n\n');
 
-    await config.transport.sendMail({
-      from: { name: 'MacWatts', address: config.from },
-      to: config.to,
-      replyTo: { name, address: email },
-      subject: `Pedido de contacto ${audience} - MacWatts`,
-      text
-    });
+    if (relay) {
+      await sendViaGmailRelay(relay, { name, email, phone, solution, audience, message });
+    } else {
+      await config.transport.sendMail({
+        from: { name: 'MacWatts', address: config.from },
+        to: config.to,
+        replyTo: { name, address: email },
+        subject: `Pedido de contacto ${audience} - MacWatts`,
+        text
+      });
+    }
     sendJson(res, 200, { message: 'A mensagem foi enviada. Obrigado pelo contacto.' });
   } catch (error) {
     if (error instanceof ContactApiError) {
       sendJson(res, error.status, { error: error.message });
     } else {
-      console.error('Não foi possível enviar o formulário de contactos:', error.message);
+      console.error('Não foi possível enviar o formulário de contactos:', error.code || 'SEM_CODIGO', error.message);
       sendJson(res, 502, { error: 'Não foi possível enviar a mensagem agora. Tente novamente ou escreva para leads@macwatts.pt.' });
     }
   }

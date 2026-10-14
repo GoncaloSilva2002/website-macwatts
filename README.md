@@ -81,7 +81,14 @@ O serviço precisa de ser um **Web Service Node**, com `npm start` como comando 
 - `MAIL_USERNAME` e `MAIL_PASSWORD` = credenciais SMTP
 - `MAIL_FROM` = endere&#231;o autorizado para envio (opcional; por defeito usa `MAIL_USERNAME`)
 - `CONTACT_TO` = destinat&#225;rio dos pedidos (opcional; por defeito `leads@macwatts.pt`)
+- `GMAIL_RELAY_URL` e `GMAIL_RELAY_TOKEN` = relay HTTPS opcional, necess&#225;rio para usar Gmail num servi&#231;o Render gratuito
 
-O servidor valida a palavra-passe e mantém a sessão num cookie HttpOnly. Ao publicar, cria um commit no GitHub; o Render atualiza o site quando o serviço está ligado a esse repositório e ramo. Não coloques a palavra-passe nem o token no HTML ou no JavaScript. O endpoint `POST /api/contact` recebe os formulários e envia-os por SMTP. Define as mesmas variáveis `MAIL_*` no `.env` local para enviar mensagens durante o desenvolvimento.
+O servidor valida a palavra-passe e mantém a sessão num cookie HttpOnly. Ao publicar, cria um commit no GitHub; o Render atualiza o site quando o serviço está ligado a esse repositório e ramo. Não coloques palavras-passe ou tokens no HTML ou no JavaScript. O endpoint `POST /api/contact` envia por SMTP quando não há relay configurado e usa o relay Gmail quando `GMAIL_RELAY_URL` e `GMAIL_RELAY_TOKEN` estão definidos.
 
-As variáveis `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS` e `CONTACT_FROM` também são aceites como nomes alternativos. Para Gmail, usa uma palavra-passe de aplicação em `MAIL_PASSWORD`; a conta Google tem de ter a validação em dois passos ativa.
+As variáveis `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS` e `CONTACT_FROM` também são aceites como nomes alternativos para o transporte SMTP. O relay Gmail usa a conta Google que autorizou o projeto Apps Script.
+
+### Relay Gmail para Render gratuito
+
+Os servi&#231;os Render gratuitos bloqueiam as portas SMTP. Para continuar a enviar pela conta Gmail, o projeto inclui `scripts/gmail-contact-relay/Code.gs`, que envia a mensagem com o servi&#231;o MailApp do Google por HTTPS. Cria um projeto em `script.google.com` com esse c&#243;digo e adiciona a propriedade de script `GMAIL_RELAY_TOKEN`, copiando o valor local de `GMAIL_RELAY_TOKEN` do `.env`. Executa `authorizeMailApp` uma vez no editor para autorizar o envio. Depois cria uma implementa&#231;&#227;o como **Web app**, escolhe **Executar como: eu** e acesso **Qualquer pessoa**, e copia o URL terminado em `/exec`.
+
+Define `GMAIL_RELAY_URL` e o mesmo `GMAIL_RELAY_TOKEN` no Render. Mant&#233;m o token como segredo: n&#227;o o publiques nem o coloques no HTML. O relay fixa o destinat&#225;rio em `leads@macwatts.pt` e responde ao visitante atrav&#233;s de `Reply-To`.
