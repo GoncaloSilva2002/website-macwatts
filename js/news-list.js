@@ -7,15 +7,14 @@
     const base = grid.dataset.newsBase || '../';
     if (!feeds.has(base)) {
       feeds.set(base, fetch(`${base}data/news.json`, { cache: 'no-store' })
-        .then(response => response.ok ? response.json() : [])
-        .catch(() => []));
+        .then(response => response.ok ? response.json() : null)
+        .catch(() => null));
     }
 
     feeds.get(base).then(items => {
       if (!Array.isArray(items)) return;
       const category = grid.dataset.newsCategory || 'empresarial';
       const limit = Number.parseInt(grid.dataset.newsLimit || '0', 10);
-      const insertionPoint = grid.firstElementChild;
       const newestFirst = [...items]
         .filter(item => item && item.showInNewsList !== false && item.slug && item.title && item.image && (item.category || 'empresarial') === category)
         .sort((first, second) => String(second.date || '').localeCompare(String(first.date || '')))
@@ -27,21 +26,26 @@
           return href;
         }
       };
-      const existingHrefs = new Set(
-        [...grid.querySelectorAll('.news-card[href]')]
-          .map(card => normalizeHref(card.getAttribute('href')))
+      const fallbackImageClasses = new Map(
+        [...grid.querySelectorAll('.news-card[href]')].map(card => [
+          normalizeHref(card.getAttribute('href')),
+          card.querySelector('.news-image')?.className || 'news-image'
+        ])
       );
+      const renderedHrefs = new Set();
+      const cards = [];
 
       for (const item of newestFirst) {
         const card = document.createElement('a');
         card.className = 'news-card';
         const articleHref = item.listingHref || `${base}${encodeURIComponent(item.slug)}/index.html`;
         const normalizedArticleHref = normalizeHref(articleHref);
-        if (existingHrefs.has(normalizedArticleHref)) continue;
+        if (renderedHrefs.has(normalizedArticleHref)) continue;
+        renderedHrefs.add(normalizedArticleHref);
         card.href = articleHref;
 
         const imageFrame = document.createElement('div');
-        imageFrame.className = 'news-image';
+        imageFrame.className = fallbackImageClasses.get(normalizedArticleHref) || 'news-image';
         const image = document.createElement('img');
         image.src = `${base}${item.image}`;
         image.alt = item.title;
@@ -63,9 +67,9 @@
         link.textContent = 'Ler artigo';
         content.append(meta, title, link);
         card.append(imageFrame, content);
-        grid.insertBefore(card, insertionPoint);
-        existingHrefs.add(normalizedArticleHref);
+        cards.push(card);
       }
+      grid.replaceChildren(...cards);
     });
   }
 })();
