@@ -20,12 +20,24 @@
         .filter(item => item && item.showInNewsList !== false && item.slug && item.title && item.image && (item.category || 'empresarial') === category)
         .sort((first, second) => String(second.date || '').localeCompare(String(first.date || '')))
         .slice(0, limit > 0 ? limit : undefined);
+      const normalizeHref = href => {
+        try {
+          return new URL(href, document.baseURI).href;
+        } catch {
+          return href;
+        }
+      };
+      const existingHrefs = new Set(
+        [...grid.querySelectorAll('.news-card[href]')]
+          .map(card => normalizeHref(card.getAttribute('href')))
+      );
 
       for (const item of newestFirst) {
         const card = document.createElement('a');
         card.className = 'news-card';
         const articleHref = item.listingHref || `${base}${encodeURIComponent(item.slug)}/index.html`;
-        if ([...grid.querySelectorAll('.news-card')].some(existing => existing.getAttribute('href') === articleHref)) continue;
+        const normalizedArticleHref = normalizeHref(articleHref);
+        if (existingHrefs.has(normalizedArticleHref)) continue;
         card.href = articleHref;
 
         const imageFrame = document.createElement('div');
@@ -52,6 +64,7 @@
         content.append(meta, title, link);
         card.append(imageFrame, content);
         grid.insertBefore(card, insertionPoint);
+        existingHrefs.add(normalizedArticleHref);
       }
     });
   }
