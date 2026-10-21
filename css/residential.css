@@ -8,6 +8,7 @@
 @media(max-width:700px){.feature-grid,.faq-grid{grid-template-columns:1fr;gap:32px}.home-benefits{grid-template-columns:1fr;gap:20px;padding-block:27px}.home-benefits>div{padding-left:35px}.home-benefits strong{font-size:16px}.home-benefits p{font-size:12px}.residential-feature .feature-copy{grid-row:1}.feature-visual{aspect-ratio:1.15}.feature-copy h2,.residential-faq h2{font-size:33px}.feature-copy>p:not(.eyebrow){font-size:14px}.feature-list li{font-size:13px}.faq-items summary{font-size:14px}.residential .hero h1{font-size:clamp(43px,12vw,59px)}}
 .residential .service-photo img{object-position:center}
 .residential .service-card:nth-child(3) .service-photo img{object-position:center 58%}
+.residential .service-card h3{text-align:center}
 /* Residential homepage sections alternate white and pale gray. */
 .residential-home .about,.residential-home .about-results,.residential-home .residential-mobility,.residential-home .news{background:var(--pale)}
 .residential-home .residential-feature,.residential-home .residential-faq{background:#fff}
