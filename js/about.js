@@ -102,4 +102,21 @@
       });
     }, 120);
   }, { passive: true });
+
+  const projectSection = document.querySelector('.company-projects');
+  const generatedProjectToggle = projectSection?.querySelector('.projects-more button');
+
+  if (projectSection && generatedProjectToggle) {
+    const projectToggle = generatedProjectToggle.cloneNode(true);
+    projectToggle.textContent = 'Ver mais projetos';
+    projectToggle.setAttribute('aria-expanded', 'false');
+    projectToggle.setAttribute('aria-controls', 'lista-projetos');
+    generatedProjectToggle.replaceWith(projectToggle);
+
+    projectToggle.addEventListener('click', () => {
+      const expanded = projectSection.classList.toggle('projects-expanded');
+      projectToggle.setAttribute('aria-expanded', String(expanded));
+      projectToggle.textContent = expanded ? 'Ver menos projetos' : 'Ver mais projetos';
+    });
+  }
 })();
