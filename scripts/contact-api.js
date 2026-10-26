@@ -77,6 +77,76 @@ function singleLine(value, maxLength) {
     : '';
 }
 
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, character => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  })[character]);
+}
+
+function contactEmailHtml({ name, email, phone, solution, message, audience }) {
+  const fieldRow = (label, value) => `
+    <tr>
+      <td style="padding:12px 16px;border-bottom:1px solid #e7edeb;color:#687784;font-size:13px;vertical-align:top;width:145px;">${label}</td>
+      <td style="padding:12px 16px;border-bottom:1px solid #e7edeb;color:#203347;font-size:14px;line-height:1.6;">${value}</td>
+    </tr>`;
+  const safeEmail = escapeHtml(email);
+  const safeMessage = escapeHtml(message).replace(/\r?\n/g, '<br>');
+  const receivedAt = new Intl.DateTimeFormat('pt-PT', {
+    dateStyle: 'long',
+    timeStyle: 'short',
+    timeZone: 'Europe/Lisbon'
+  }).format(new Date());
+
+  return `<!doctype html>
+<html lang="pt-PT">
+  <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"></head>
+  <body style="margin:0;padding:24px 12px;background:#f2f6f5;font-family:Arial,Helvetica,sans-serif;color:#203347;">
+    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse;">
+      <tr><td align="center">
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="620" style="width:100%;max-width:620px;border-collapse:separate;border-spacing:0;">
+          <tr>
+            <td style="padding:25px 30px;background:#203347;border-radius:10px 10px 0 0;">
+              <div style="color:#ffffff;font-size:20px;font-weight:700;letter-spacing:.04em;">MacWatts</div>
+              <div style="margin-top:7px;color:#c7d6dc;font-size:13px;">Novo pedido de contacto</div>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:30px;background:#ffffff;border:1px solid #e2eae7;border-top:0;">
+              <div style="display:inline-block;padding:6px 10px;border-radius:3px;background:#e7f7f2;color:#007c66;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;">${escapeHtml(audience)}</div>
+              <h1 style="margin:18px 0 8px;color:#203347;font-size:24px;line-height:1.3;font-weight:600;">Pedido de ${escapeHtml(audience.toLowerCase())}</h1>
+              <p style="margin:0 0 24px;color:#687784;font-size:14px;line-height:1.6;">Recebeu uma nova mensagem através do formulário do site.</p>
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse;border:1px solid #e7edeb;">
+                ${fieldRow('Nome', escapeHtml(name))}
+                ${fieldRow('Email', `<a href="mailto:${safeEmail}" style="color:#007c66;text-decoration:underline;">${safeEmail}</a>`)}
+                ${fieldRow('Telefone', escapeHtml(phone || 'Não indicado'))}
+                ${fieldRow('Área de interesse', escapeHtml(solution || 'Não indicada'))}
+              </table>
+              <div style="margin-top:24px;padding:18px 20px;background:#f6f9f8;border-left:3px solid #00a887;">
+                <div style="margin-bottom:9px;color:#687784;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;">Mensagem</div>
+                <div style="color:#203347;font-size:14px;line-height:1.7;">${safeMessage}</div>
+              </div>
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top:25px;border-collapse:collapse;">
+                <tr><td style="border-radius:4px;background:#00836c;">
+                  <a href="mailto:${safeEmail}" style="display:inline-block;padding:12px 18px;color:#ffffff;font-size:13px;font-weight:700;text-decoration:none;">Responder a ${escapeHtml(name)}</a>
+                </td></tr>
+              </table>
+              <p style="margin:24px 0 0;color:#8a969e;font-size:11px;line-height:1.5;">Recebido em ${escapeHtml(receivedAt)} · Formulário de contacto MacWatts</p>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:16px 20px;text-align:center;color:#7c898f;font-size:11px;line-height:1.5;">MacWatts · Energia e sustentabilidade</td>
+          </tr>
+        </table>
+      </td></tr>
+    </table>
+  </body>
+</html>`;
+}
+
 function smtpTransport() {
   const host = (process.env.MAIL_HOST || process.env.SMTP_HOST || '').trim();
   const port = Number(process.env.MAIL_PORT || process.env.SMTP_PORT || 587);
@@ -163,7 +233,8 @@ async function handle(req, res, pathname) {
       to: config.to,
       replyTo: { name, address: email },
       subject: `Pedido de contacto ${audience} - MacWatts`,
-      text
+      text,
+      html: contactEmailHtml({ name, email, phone, solution, message, audience })
     });
     sendJson(res, 200, { message: 'A mensagem foi enviada. Obrigado pelo contacto.' });
   } catch (error) {
