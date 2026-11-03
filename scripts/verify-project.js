@@ -12,7 +12,7 @@ const assert = require('node:assert/strict');
       await page.locator('img').evaluateAll(images => Promise.all(images.filter(i => i.hasAttribute('src')).map(async i => { i.loading = 'eager'; await i.decode(); })));
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
       assert.equal(await page.locator('h1').count(), 1);
-      if (width === 390 || width === 1440) await page.screenshot({ path: `south-atlantic-${width}.png`, fullPage: true });
+      if (width === 390 || width === 1440) await page.screenshot({ path: `capturas-teste/south-atlantic-${width}.png`, fullPage: true });
       await page.locator('.gallery-item').first().click();
       assert.equal(await page.locator('dialog').evaluate(d => d.open), true);
       await page.keyboard.press('ArrowRight');

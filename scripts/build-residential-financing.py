@@ -29,7 +29,7 @@ soup.main.replace_with(BeautifulSoup('''
   </div></section>
   <section class="section solar-included"><div class="wrap feature-grid">
     <div class="feature-copy"><p class="eyebrow">Do projeto ao financiamento</p><h2>Uma equipa.<br/>Ao longo de todo o processo.</h2><p>Na MacWatts encontra um parceiro com competências na engenharia da solução, execução, operação, manutenção e financiamento do projeto.</p><p>O ponto de partida é uma solução que se traduza em poupança energética, com uma avaliação dos pressupostos e do investimento necessário.</p><a class="text-link" href="contactos.html">Fale-nos do seu projeto ↗</a></div>
-    <div class="feature-visual"><img src="../assets/9170d7193c-team-work-environment-project-scaled.jpg" alt="Equipa a analisar um projeto e as suas necessidades" loading="lazy"/></div>
+    <div class="feature-visual"><img src="../assets/9170d7193c-team-work-environment-project-scaled.webp" alt="Equipa a analisar um projeto e as suas necessidades" loading="lazy"/></div>
   </div></section>
   <section class="section"><div class="wrap feature-grid">
     <div class="feature-visual"><img src="../assets/residential-service-1.webp" alt="Habitação com painéis solares para autoconsumo" width="800" height="450" loading="lazy"/></div>

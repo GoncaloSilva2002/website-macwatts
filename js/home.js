@@ -83,12 +83,12 @@
   }
   const energyCards = document.querySelectorAll('#energia .directory-card');
   const energyCardImages = [
-    { src: '../assets/9ed488d695-solar-panels-roof-solar-cell-1-1.jpg', alt: 'Painéis solares numa cobertura industrial' },
-    { src: '../assets/b48df63d55-clean-power-battery-storage-edited-scaled-1.jpg', alt: 'Sistema de armazenamento de energia' },
+    { src: '../assets/9ed488d695-solar-panels-roof-solar-cell-1-1.webp', alt: 'Painéis solares numa cobertura industrial' },
+    { src: '../assets/b48df63d55-clean-power-battery-storage-edited-scaled-1.webp', alt: 'Sistema de armazenamento de energia' },
     { src: '../assets/599dfa8130-gestaoint1.jpg', alt: 'Técnico a monitorizar uma instalação elétrica' },
-    { src: '../assets/d814ba1c7e-electric-car-power-charging.jpg', alt: 'Veículo elétrico em carregamento' },
-    { src: '../assets/e6cf090706-power-pole-2524112_1920.jpg', alt: 'Rede elétrica de alta tensão' },
-    { src: '../assets/64ee4cbccb-photo-automobile-production-line-welding-car-body-modern-car-assembly-plant-auto-industry-interior-hightech-factory-modern-production-1-1.jpg', alt: 'Iluminação numa instalação industrial' },
+    { src: '../assets/d814ba1c7e-electric-car-power-charging.webp', alt: 'Veículo elétrico em carregamento' },
+    { src: '../assets/e6cf090706-power-pole-2524112_1920.webp', alt: 'Rede elétrica de alta tensão' },
+    { src: '../assets/64ee4cbccb-photo-automobile-production-line-welding-car-body-modern-car-assembly-plant-auto-industry-interior-hightech-factory-modern-production-1-1.webp', alt: 'Iluminação numa instalação industrial' },
     { src: '../assets/78e2210662-close-up-heat-pump-outside-home_23-2149250253.jpg', alt: 'Unidades de uma bomba de calor' }
   ];
   energyCards.forEach((card, index) => {
@@ -121,15 +121,15 @@
   };
   addDirectoryCardImages('#consultoria', [
     { src: '../assets/93df7fbff6-projeto.jpg', alt: 'Técnico a trabalhar num projeto energético' },
-    { src: '../assets/auditoria-certificacao-energetica.png', alt: 'Classificação energética de uma habitação e relatório de eficiência' },
+    { src: '../assets/auditoria-certificacao-energetica.webp', alt: 'Classificação energética de uma habitação e relatório de eficiência' },
     { src: '../assets/325b92b357-Instalacao-Eletrica_-veja-o-passo-a-passo-completo-1.jpg', alt: 'Plantas técnicas para auditoria' },
-    { src: '../assets/contratacao-venda-energia.png', alt: 'Empresários a fechar um acordo com energias renováveis ao fundo' }
+    { src: '../assets/contratacao-venda-energia.webp', alt: 'Empresários a fechar um acordo com energias renováveis ao fundo' }
   ]);
   addDirectoryCardImages('#operacoes-e-manutencao', [
-    { src: '../assets/cbd3f9886d-dji_fly_20241211_151712_156_1733930266746_photo_optimized.jpg', alt: 'Instalação fotovoltaica numa cobertura industrial' },
+    { src: '../assets/cbd3f9886d-dji_fly_20241211_151712_156_1733930266746_photo_optimized.webp', alt: 'Instalação fotovoltaica numa cobertura industrial' },
     { src: '../assets/e5395e3b87-gestint3.jpg', alt: 'Gestão integrada da manutenção numa instalação' }
   ]);
   addDirectoryCardImages('#financiamento', [
-    { src: '../assets/solucoes-empresariais.png', alt: 'Equipa empresarial a colaborar num projeto' }
+    { src: '../assets/solucoes-empresariais.webp', alt: 'Equipa empresarial a colaborar num projeto' }
   ]);
 })();

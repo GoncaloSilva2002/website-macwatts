@@ -10,7 +10,7 @@ soup.select_one('meta[name="description"]')['content'] = 'Conheça o desempenho 
 soup.main.replace_with(BeautifulSoup('''
 <main id="conteudo">
   <section class="solar-hero">
-    <img src="../assets/9170d7193c-team-work-environment-project-scaled.jpg" alt="Equipa técnica a analisar um projeto" fetchpriority="high"/>
+    <img src="../assets/9170d7193c-team-work-environment-project-scaled.webp" alt="Equipa técnica a analisar um projeto" fetchpriority="high"/>
     <div class="wrap"><p class="eyebrow">Residencial / Auditoria e certificação</p><h1>Conheça a sua casa.<br/><span>Melhore a sua energia.</span></h1><p class="solar-lead">Pretende avaliar a eficiência energética da sua habitação? Com uma auditoria efetuada por técnicos especializados, conheça o seu desempenho e as medidas que o podem melhorar.</p><div class="solar-actions"><a class="button" href="contactos.html">Pedir uma proposta</a><a class="text-link" href="#vantagens">Conhecer as vantagens ↓</a></div></div>
   </section>
   <section class="section" id="vantagens"><div class="wrap">
@@ -23,7 +23,7 @@ soup.main.replace_with(BeautifulSoup('''
   </div></section>
   <section class="section solar-included"><div class="wrap feature-grid">
     <div class="feature-copy"><p class="eyebrow">Auditoria e certificação</p><h2>O desempenho da casa.<br/>Com uma avaliação técnica.</h2><p>A auditoria e a emissão do certificado energético permitem compreender o comportamento energético da sua habitação e caracterizar os seus elementos construtivos.</p><p>Com esta informação, poderá conhecer as medidas que permitem aumentar o desempenho energético e valorizar a sua casa.</p><a class="text-link" href="contactos.html">Fale com a nossa equipa ↗</a></div>
-    <div class="feature-visual"><img src="../assets/9170d7193c-team-work-environment-project-scaled.jpg" alt="Análise técnica de um projeto em equipa" loading="lazy"/></div>
+    <div class="feature-visual"><img src="../assets/9170d7193c-team-work-environment-project-scaled.webp" alt="Análise técnica de um projeto em equipa" loading="lazy"/></div>
   </div></section>
   <section class="section"><div class="wrap feature-grid">
     <div class="feature-visual"><img src="../assets/297c093ea5-bombas-calor.jpg" alt="Habitação com soluções de eficiência energética" width="1024" height="559" loading="lazy"/></div>

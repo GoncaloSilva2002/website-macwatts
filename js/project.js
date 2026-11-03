@@ -2,17 +2,17 @@
   'use strict';
 
   const allProjects = [
-    { slug: 'primor', title: 'Primor', category: 'Mobilidade elétrica', image: 'b587e230b1-PXL_20240924_162108483.MP_.jpg' },
-    { slug: 'batherafarm', title: 'Batherafarm', category: 'Energia solar', image: '6f78979f49-BATHERAFARM-2.jpg' },
-    { slug: 'bombeiros-voluntarios-de-moncao', title: 'Bombeiros Voluntários de Monção', category: 'Energia solar', image: '9916dbf53c-BV-MONCAO.png' },
-    { slug: 'ert', title: 'ERT', category: 'Energia solar', image: '744c360b42-ERT7.jpg' },
-    { slug: 'medlog-alcochete', title: 'Medlog Alcochete', category: 'Energia solar', image: '5d7fc2e046-dji_fly_20241212_115244_174_1734004381664_photo_optimized.jpg' },
-    { slug: 'misericordia-nossa-senhora-dos-milagres', title: 'Misericórdia Nossa Senhora dos Milagres', category: 'Energia solar', image: 'e5507296c9-MILAGRES-5.jpg' },
-    { slug: 'prazer-do-pao', title: 'Prazer do Pão', category: 'Energia solar', image: 'ce1bf56944-PRAZER-DO-PAO.jpg' },
-    { slug: 'premium-for-leather', title: 'Premium for Leather', category: 'Energia solar', image: '32c49cbea6-Premium-for-leather.jpg' },
-    { slug: 'ribeiros', title: 'Ribeiros', category: 'Energia solar', image: '2b584d9eb6-Ribeiros-1.jpg' },
-    { slug: 'south-atlantic', title: 'South Atlantic', category: 'Energia solar', image: 'cbd3f9886d-dji_fly_20241211_151712_156_1733930266746_photo_optimized.jpg' },
-    { slug: 'air-olesa', title: 'Air Olesa', category: 'Energia solar', image: 'aff2e7aab2-AIR-OLESA.jpg' }
+    { slug: 'primor', title: 'Primor', category: 'Mobilidade elétrica', image: 'b587e230b1-PXL_20240924_162108483.MP_.webp' },
+    { slug: 'batherafarm', title: 'Batherafarm', category: 'Energia solar', image: '6f78979f49-BATHERAFARM-2.webp' },
+    { slug: 'bombeiros-voluntarios-de-moncao', title: 'Bombeiros Voluntários de Monção', category: 'Energia solar', image: '9916dbf53c-BV-MONCAO.webp' },
+    { slug: 'ert', title: 'ERT', category: 'Energia solar', image: '744c360b42-ERT7.webp' },
+    { slug: 'medlog-alcochete', title: 'Medlog Alcochete', category: 'Energia solar', image: '5d7fc2e046-dji_fly_20241212_115244_174_1734004381664_photo_optimized.webp' },
+    { slug: 'misericordia-nossa-senhora-dos-milagres', title: 'Misericórdia Nossa Senhora dos Milagres', category: 'Energia solar', image: 'e5507296c9-MILAGRES-5.webp' },
+    { slug: 'prazer-do-pao', title: 'Prazer do Pão', category: 'Energia solar', image: 'ce1bf56944-PRAZER-DO-PAO.webp' },
+    { slug: 'premium-for-leather', title: 'Premium for Leather', category: 'Energia solar', image: '32c49cbea6-Premium-for-leather.webp' },
+    { slug: 'ribeiros', title: 'Ribeiros', category: 'Energia solar', image: '2b584d9eb6-Ribeiros-1.webp' },
+    { slug: 'south-atlantic', title: 'South Atlantic', category: 'Energia solar', image: 'cbd3f9886d-dji_fly_20241211_151712_156_1733930266746_photo_optimized.webp' },
+    { slug: 'air-olesa', title: 'Air Olesa', category: 'Energia solar', image: 'aff2e7aab2-AIR-OLESA.webp' }
   ];
 
   const relatedTrack = document.querySelector('.more-projects .related-grid');

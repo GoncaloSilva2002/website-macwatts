@@ -22,7 +22,7 @@ for logo in soup.select('.brand img, .footer-brand img'):
     logo['src'] = 'assets/cd34105af2-logo-white-w-macwhatts.png'
     logo['width'] = '194'
     logo['height'] = '110'
-soup.select_one('.hero-image')['src'] = 'assets/99407cc5f5-yamu_jay-ai-generated-9109553-scaled.jpg'
+soup.select_one('.hero-image')['src'] = 'assets/99407cc5f5-yamu_jay-ai-generated-9109553-scaled.webp'
 soup.select_one('.hero-image')['alt'] = 'Família em frente a uma casa com painéis solares'
 if soup.select_one('.hero .eyebrow'):
     soup.select_one('.hero .eyebrow').decompose()
@@ -46,15 +46,15 @@ for node, (label, heading, description, href) in zip(soup.select('.service-card'
     node.p.string = description
 content('.service-card:nth-child(2) svg', '<path d="M5 22 24 5l19 17M10 18v25h28V18M17 25h14v12H17zM20 29h8m-8 4h8"/>')
 content('.service-extra', '<span>Quer avaliar as opções para a sua casa?</span><a class="text-link" href="financiamento/index.html">Conhecer o financiamento ↗</a><a class="text-link" href="residencial/contratacao-e-venda-de-energia/index.html">Contratação e venda de energia ↗</a>')
-solar = '''<section id="solar" class="section residential-feature"><div class="wrap feature-grid"><div class="feature-visual"><img src="assets/23a77d47d6-WhatsApp-Image-2026-06-08-at-12.46.31.jpeg" alt="Solução de energia solar residencial" loading="lazy"><span class="feature-caption">Solar + armazenamento</span></div><div class="feature-copy"><p class="eyebrow">Uma energia mais sua</p><h2>O sol produz.<br>A sua casa aproveita.</h2><p>Uma solução fotovoltaica começa por conhecer os seus consumos. A produção e o armazenamento são dimensionados para as necessidades da sua habitação.</p><ul class="feature-list"><li>Painéis solares e soluções com inversor híbrido.</li><li>Armazenamento para utilizar energia noutros momentos.</li><li>Monitorização para acompanhar a sua instalação.</li></ul><a class="button" href="paineis-solares-e-baterias/index.html">Conhecer o kit solar <span aria-hidden="true">↗</span></a><a class="text-link simulator-link" href="https://main.d1ewoiy1pgag7s.amplifyapp.com/" target="_blank" rel="noopener noreferrer">Simular a minha solução <span aria-hidden="true">↗</span><span class="external-note">Abre o simulador externo</span></a></div></div></section>
-<section id="mobilidade" class="section residential-mobility"><div class="wrap feature-grid"><div class="feature-copy"><p class="eyebrow">Pronto para o dia seguinte</p><h2>O seu carregador.<br>No melhor lugar: casa.</h2><p>Ganhe a comodidade de carregar o seu veículo onde vive, com uma solução adaptada à instalação elétrica da sua habitação.</p><ul class="feature-list"><li>Gama de carregadores dos 7,4 kW aos 22 kW.</li><li>Gestão dinâmica de carga em função do consumo da casa.</li><li>Aplicação para monitorizar e gerir o carregamento.</li></ul><a class="text-link" href="carregadores-para-veiculos-eletricos/index.html">Explorar carregadores <span aria-hidden="true">↗</span></a></div><div class="feature-visual"><img src="assets/34df7626b5-person-taking-care-electric-car-scaled.jpg" alt="Carregamento de um veículo elétrico" loading="lazy"><span class="feature-caption">Mobilidade elétrica em casa</span></div></div></section>'''
+solar = '''<section id="solar" class="section residential-feature"><div class="wrap feature-grid"><div class="feature-visual"><img src="assets/23a77d47d6-WhatsApp-Image-2026-06-08-at-12.46.31.webp" alt="Solução de energia solar residencial" loading="lazy"><span class="feature-caption">Solar + armazenamento</span></div><div class="feature-copy"><p class="eyebrow">Uma energia mais sua</p><h2>O sol produz.<br>A sua casa aproveita.</h2><p>Uma solução fotovoltaica começa por conhecer os seus consumos. A produção e o armazenamento são dimensionados para as necessidades da sua habitação.</p><ul class="feature-list"><li>Painéis solares e soluções com inversor híbrido.</li><li>Armazenamento para utilizar energia noutros momentos.</li><li>Monitorização para acompanhar a sua instalação.</li></ul><a class="button" href="paineis-solares-e-baterias/index.html">Conhecer o kit solar <span aria-hidden="true">↗</span></a><a class="text-link simulator-link" href="https://main.d1ewoiy1pgag7s.amplifyapp.com/" target="_blank" rel="noopener noreferrer">Simular a minha solução <span aria-hidden="true">↗</span><span class="external-note">Abre o simulador externo</span></a></div></div></section>
+<section id="mobilidade" class="section residential-mobility"><div class="wrap feature-grid"><div class="feature-copy"><p class="eyebrow">Pronto para o dia seguinte</p><h2>O seu carregador.<br>No melhor lugar: casa.</h2><p>Ganhe a comodidade de carregar o seu veículo onde vive, com uma solução adaptada à instalação elétrica da sua habitação.</p><ul class="feature-list"><li>Gama de carregadores dos 7,4 kW aos 22 kW.</li><li>Gestão dinâmica de carga em função do consumo da casa.</li><li>Aplicação para monitorizar e gerir o carregamento.</li></ul><a class="text-link" href="carregadores-para-veiculos-eletricos/index.html">Explorar carregadores <span aria-hidden="true">↗</span></a></div><div class="feature-visual"><img src="assets/34df7626b5-person-taking-care-electric-car-scaled.webp" alt="Carregamento de um veículo elétrico" loading="lazy"><span class="feature-caption">Mobilidade elétrica em casa</span></div></div></section>'''
 soup.select_one('.projects').replace_with(BeautifulSoup(solar, 'html.parser'))
 brands = [
     ('LONGi', 'f389b43927-LONGi-logo-new.png'),
     ('JA Solar', 'b8a46d42c9-new-logos-ja-solar.png'),
     ('Jinko Solar', 'f3903fff88-4929f869da28c2f656cdb0503dbef12f.png'),
     ('Trina Solar', 'cb6137b26d-Trina_-_logo.png'),
-    ('Huawei', 'd97a4dee7d-Huawei-Logo.png'),
+    ('Huawei', 'd97a4dee7d-Huawei-Logo.webp'),
     ('Fox ESS', '422c69c370-logo-new.png'),
     ('Tesla', 'a80a5d7a45-Tesla_logo.png'),
 ]
@@ -76,8 +76,8 @@ soup.select_one('#solar').insert_before(about)
 about.insert_after(BeautifulSoup('''<section aria-label="MacWatts em números" class="results about-results"><div class="wrap results-grid"><div><strong>253<span>+</span></strong><p>Projetos desenvolvidos</p></div><div><strong>46<span>+</span></strong><p>Parceiros</p></div><div><strong>32 <span>GWh</span></strong><p>Energia produzida</p></div><div><strong>15 <span>mil t</span></strong><p>De CO₂ evitadas</p></div></div></section>''', 'html.parser'))
 content('.news .section-heading h2', 'Novidades para uma<br>casa mais sustentável.')
 news = [
-('apoio-a-concretizacao-de-comunidades-de-energia-renovavel-e-autoconsumo-coletivo/index.html','7ab5977ef5-Screenshot-from-2026-06-09-12-15-45-1.png','Comunidades de energia renovável e autoconsumo coletivo'),
-('programa-de-apoio-a-condominios-residenciais/index.html','21d838c928-Screenshot-from-2026-06-09-12-11-43-1.png','Programa de Apoio a Condomínios Residenciais')]
+('apoio-a-concretizacao-de-comunidades-de-energia-renovavel-e-autoconsumo-coletivo/index.html','7ab5977ef5-Screenshot-from-2026-06-09-12-15-45-1.webp','Comunidades de energia renovável e autoconsumo coletivo'),
+('programa-de-apoio-a-condominios-residenciais/index.html','21d838c928-Screenshot-from-2026-06-09-12-11-43-1.webp','Programa de Apoio a Condomínios Residenciais')]
 for node, (href, image, heading) in zip(soup.select('.news-card'), news):
     node['href'] = href
     node.img['src'] = 'assets/' + image

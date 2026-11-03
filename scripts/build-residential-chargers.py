@@ -9,7 +9,7 @@ soup.select_one('meta[name="description"]')['content'] = 'Carregadores de 7,4 kW
 soup.main.replace_with(BeautifulSoup('''
 <main id="conteudo">
   <section class="solar-hero">
-    <img src="../assets/34df7626b5-person-taking-care-electric-car-scaled.jpg" alt="Carregamento de um veículo elétrico" fetchpriority="high"/>
+    <img src="../assets/34df7626b5-person-taking-care-electric-car-scaled.webp" alt="Carregamento de um veículo elétrico" fetchpriority="high"/>
     <div class="wrap"><p class="eyebrow">Residencial / Mobilidade elétrica</p><h1>A sua energia.<br/><span>Pronta para a próxima viagem.</span></h1><p class="solar-lead">Carregue a sua viatura em casa com uma solução ajustada às suas necessidades. A MacWatts dispõe de carregadores de 7,4 kW a 22 kW, com gestão dinâmica do carregamento.</p><div class="solar-actions"><a class="button" href="contactos.html">Pedir uma proposta</a><a class="text-link" href="#vantagens">Conhecer as vantagens ↓</a></div></div>
   </section>
   <section class="section" id="vantagens"><div class="wrap">
@@ -22,7 +22,7 @@ soup.main.replace_with(BeautifulSoup('''
   </div></section>
   <section class="section solar-included"><div class="wrap feature-grid">
     <div class="feature-copy"><p class="eyebrow">Gestão dinâmica</p><h2>Energia para o carro.<br/>Equilíbrio para a casa.</h2><p>Associamos ao carregador um sistema dinâmico de gestão do carregamento, que ajusta a energia destinada à viatura em função da disponibilidade da instalação.</p><p>Esta gestão ajuda a evitar cortes no fornecimento de energia à habitação durante o carregamento.</p><a class="text-link" href="contactos.html">Encontre a solução certa ↗</a></div>
-    <div class="feature-visual"><img src="../assets/34df7626b5-person-taking-care-electric-car-scaled.jpg" alt="Ligação de um carregador a um veículo elétrico" loading="lazy"/></div>
+    <div class="feature-visual"><img src="../assets/34df7626b5-person-taking-care-electric-car-scaled.webp" alt="Ligação de um carregador a um veículo elétrico" loading="lazy"/></div>
   </div></section>
   <section class="section"><div class="wrap feature-grid">
     <div class="feature-visual"><img src="../assets/residential-service-1.webp" alt="Habitação com painéis solares para autoconsumo" width="800" height="450" loading="lazy"/></div>
