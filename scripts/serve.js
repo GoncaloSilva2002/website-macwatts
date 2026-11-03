@@ -20,6 +20,7 @@ const types = {
   '.ttf': 'font/ttf',
   '.pdf': 'application/pdf'
 };
+const blocked = /^\/(\.|scripts\/|templates\/|node_modules\/|package(-lock)?\.json$|README\.md$|clone-report\.json$|verification-report\.json$)|\/\./;
 
 function loadLocalEnvironment() {
   try {
@@ -57,6 +58,11 @@ const server = http.createServer(async (req, res) => {
   if (await handleAdminApi(req, res, pathname, root)) return;
   if (req.method !== 'GET' && req.method !== 'HEAD') {
     res.writeHead(405, { Allow: 'GET, HEAD' }).end();
+    return;
+  }
+
+  if (blocked.test(pathname)) {
+    res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' }).end('Página não encontrada');
     return;
   }
 
