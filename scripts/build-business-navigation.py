@@ -8,27 +8,27 @@ import json
 
 ROOT = Path(__file__).resolve().parent.parent
 GROUPS = [
-    ('energia', 'Energia', 'Produção, armazenamento e utilização eficiente de energia.', [
-        ('fotovoltaico', 'Fotovoltaico', 'Produza energia a partir do sol.'),
-        ('armazenamento', 'Armazenamento', 'Guarde energia para utilizar quando precisa.'),
-        ('monitorizacao-e-gestao-de-energia', 'Monitorização e gestão de energia', 'Acompanhe os consumos e a utilização de energia.'),
-        ('mobilidade-eletrica', 'Mobilidade elétrica', 'Soluções de carregamento para a sua empresa.'),
-        ('compensacao-de-energia-reativa', 'Compensação de energia reativa', 'Melhore a gestão da energia reativa da instalação.'),
-        ('iluminacao', 'Iluminação', 'Soluções de iluminação para os seus espaços.'),
-        ('bombas-de-calor', 'Bombas de calor', 'Soluções térmicas para as necessidades da sua atividade.'),
+    ('energia', 'Energia', 'Produzir, armazenar e consumir energia com mais eficiência e menos dependência da rede.', [
+        ('fotovoltaico', 'Fotovoltaico', 'Autoconsumo dimensionado para o seu perfil de consumo, com garantia de produção.'),
+        ('armazenamento', 'Armazenamento', 'Baterias para aproveitar o excedente solar e proteger equipamentos críticos.'),
+        ('monitorizacao-e-gestao-de-energia', 'Monitorização e gestão de energia', 'Consumos, produção e alarmes de vários edifícios numa só plataforma.'),
+        ('mobilidade-eletrica', 'Mobilidade elétrica', 'Postos de carregamento para frota e clientes, com gestão na plataforma MEC.'),
+        ('compensacao-de-energia-reativa', 'Compensação de energia reativa', 'Baterias de condensadores para eliminar os custos de energia reativa.'),
+        ('iluminacao', 'Iluminação', 'Iluminação de elevado rendimento, dimensionada para os requisitos de cada espaço.'),
+        ('bombas-de-calor', 'Bombas de calor', 'Eletrifique consumos térmicos e reduza a dependência do gás natural.'),
     ]),
-    ('consultoria', 'Consultoria', 'Conhecimento técnico para planear e decidir.', [
-        ('projeto', 'Projeto', 'Planeamento e dimensionamento de soluções de energia.'),
-        ('auditoria-e-certificacao-energetica', 'Auditoria e certificação energética', 'Conheça o desempenho energético das instalações.'),
-        ('auditoria-tecnica', 'Auditoria técnica', 'Avalie as condições técnicas da sua instalação.'),
-        ('contratacao-e-venda-de-energia', 'Contratação e venda de energia', 'Apoio à contratação e à venda de energia.'),
+    ('consultoria', 'Consultoria', 'Diagnóstico técnico e independente para decidir com base em dados.', [
+        ('projeto', 'Projeto', 'Projeto de execução integrado, com um único interlocutor para todas as especialidades.'),
+        ('auditoria-e-certificacao-energetica', 'Auditoria e certificação energética', 'Auditorias energéticas, SGCIE e certificação, com plano de racionalização de consumos.'),
+        ('auditoria-tecnica', 'Auditoria técnica', 'Inspeção da infraestrutura elétrica e serviço de técnico responsável (TRIESP).'),
+        ('contratacao-e-venda-de-energia', 'Contratação e venda de energia', 'Escolha independente do tarifário e valorização do excedente fotovoltaico.'),
     ]),
-    ('operacoes-e-manutencao', 'Operações e manutenção', 'Acompanhamento ao longo da vida da instalação.', [
-        ('instalacoes-fotovoltaicas', 'Instalações fotovoltaicas', 'Manutenção e acompanhamento dos sistemas solares.'),
-        ('gestao-integrada-da-manutencao', 'Gestão integrada da manutenção', 'Organize e acompanhe a manutenção das instalações.'),
+    ('operacoes-e-manutencao', 'Operações e manutenção', 'Desempenho, segurança e continuidade ao longo da vida da instalação.', [
+        ('instalacoes-fotovoltaicas', 'Instalações fotovoltaicas', 'Manutenção preventiva e corretiva, com acompanhamento do Performance Ratio.'),
+        ('gestao-integrada-da-manutencao', 'Gestão integrada da manutenção', 'Planeamento preventivo e resposta a anomalias em 24/48 h na infraestrutura elétrica.'),
     ]),
-    ('financiamento', 'Financiamento', 'Conheça as opções para concretizar o seu projeto.', [
-        ('', 'Soluções de financiamento', 'Explore as modalidades disponíveis para a sua empresa.'),
+    ('financiamento', 'Financiamento', 'Modelos sem investimento inicial ou com financiamento, ajustados ao seu projeto.', [
+        ('', 'Soluções de financiamento', 'Modelos ESCO pagos pelas poupanças geradas ou financiamento do projeto.'),
     ]),
 ]
 
@@ -86,7 +86,7 @@ sections = ''
 for index, (group, title, description, services) in enumerate(GROUPS, 1):
     cards = ''.join(f'<a class="directory-card" href="{service_path(group, slug)}"><h3>{name}</h3><p>{desc}</p><span>Conhecer a solução <b aria-hidden="true">↗</b></span></a>' for slug, name, desc in services)
     sections += f'<section id="{group}" class="directory-group"><div class="wrap"><div class="directory-group-heading"><div><p class="eyebrow">0{index} / Área de atuação</p><h2>{title}</h2></div><p>{description}</p></div><div class="directory-grid">{cards}</div></div></section>'
-soup.main.append(BeautifulSoup(f'<section class="directory-intro"><div class="wrap"><a class="directory-back" href="index.html">← Página inicial</a><p class="eyebrow">Soluções empresariais</p><h1>Toda a nossa energia.<br>Ao serviço da sua empresa.</h1><p>Encontre a solução de que precisa. Da produção de energia à manutenção, organizámos os nossos serviços em quatro áreas.</p><nav class="directory-tabs" aria-label="Áreas de soluções">{tabs}</nav></div></section>{sections}<section class="contact-banner"><div class="wrap contact-inner"><div><p class="eyebrow">Ajudamos a encontrar o caminho</p><h2>Não sabe por onde começar?</h2><p>Conte-nos o desafio da sua empresa. Pensamos na solução consigo.</p></div><a class="button button-dark" href="contactos/index.html">Falar com a equipa ↗</a></div></section>', 'html.parser'))
+soup.main.append(BeautifulSoup(f'<section class="directory-intro"><div class="wrap"><a class="directory-back" href="index.html">← Página inicial</a><p class="eyebrow">Soluções empresariais</p><h1>Soluções de energia<br>para a indústria.</h1><p>Da produção de energia à manutenção e ao financiamento, um único parceiro para reduzir custos, garantir a continuidade da operação e cumprir as obrigações energéticas.</p><nav class="directory-tabs" aria-label="Áreas de soluções">{tabs}</nav></div></section>{sections}<section class="contact-banner"><div class="wrap contact-inner"><div><p class="eyebrow">Ajudamos a encontrar o caminho</p><h2>Não sabe por onde começar?</h2><p>Envie-nos as faturas ou o diagrama de cargas. Indicamos as soluções com maior impacto na sua operação.</p></div><a class="button button-dark" href="contactos/index.html">Falar com a equipa ↗</a></div></section>', 'html.parser'))
 for a in soup.select('#main-nav > a'):
     if a['href'].startswith('#'):
         a['href'] = 'index.html' + a['href']
