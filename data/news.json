@@ -32,10 +32,6 @@
       {
         "path": "noticias/index.html",
         "href": "../compete-2030-anunciou-a-abertura-da-rececao-de-registos-de-pedido-de-auxilio-para-projetos-de-descarbonizacao-das-empresas/index.html"
-      },
-      {
-        "path": "2025/03/14/index.html",
-        "href": "../../../compete-2030-anunciou-a-abertura-da-rececao-de-registos-de-pedido-de-auxilio-para-projetos-de-descarbonizacao-das-empresas/index.html"
       }
     ]
   },
@@ -52,10 +48,6 @@
       {
         "path": "noticias/index.html",
         "href": "../a-empresa-macwatts-esteve-presente-no-forum-de-sustentabilidade-e-energia/index.html"
-      },
-      {
-        "path": "2024/12/03/index.html",
-        "href": "../../../a-empresa-macwatts-esteve-presente-no-forum-de-sustentabilidade-e-energia/index.html"
       }
     ]
   },
@@ -76,10 +68,6 @@
       {
         "path": "residencial/noticias.html",
         "href": "apoio-a-concretizacao-de-comunidades-de-energia-renovavel-e-autoconsumo-coletivo.html"
-      },
-      {
-        "path": "2026/06/09/index.html",
-        "href": "../../../apoio-a-concretizacao-de-comunidades-de-energia-renovavel-e-autoconsumo-coletivo/index.html"
       }
     ]
   },
@@ -100,10 +88,6 @@
       {
         "path": "residencial/noticias.html",
         "href": "programa-de-apoio-a-condominios-residenciais.html"
-      },
-      {
-        "path": "2026/06/09/index.html",
-        "href": "../../../programa-de-apoio-a-condominios-residenciais/index.html"
       }
     ]
   },
@@ -116,11 +100,6 @@
     "category": "residencial",
     "articlePath": "programa-de-apoio-a-bairros-mais-sustentaveis/index.html",
     "showInNewsList": false,
-    "listings": [
-      {
-        "path": "2026/06/09/index.html",
-        "href": "../../../programa-de-apoio-a-bairros-mais-sustentaveis/index.html"
-      }
-    ]
+    "listings": []
   }
 ]

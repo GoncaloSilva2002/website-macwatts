@@ -20,6 +20,17 @@ const types = {
   '.ttf': 'font/ttf',
   '.pdf': 'application/pdf'
 };
+const redirects = {
+  '/residencia/': '/residencial/',
+  '/bombas-de-calor/': '/residencial/bombas-calor.html',
+  '/financiamento/': '/residencial/financiamento.html',
+  '/auditoria-e-certificacao-energetica/': '/residencial/autditoria.html',
+  '/carregadores-para-veiculos-eletricos/': '/residencial/carregadores.html',
+  '/paineis-solares-e-baterias/': '/residencial/paineis-solares-bateria.html',
+  '/2024/12/03/': '/noticias/',
+  '/2025/03/14/': '/noticias/',
+  '/2026/06/09/': '/noticias/'
+};
 const blocked = /^\/(\.|scripts\/|templates\/|node_modules\/|package(-lock)?\.json$|README\.md$|clone-report\.json$|verification-report\.json$)|\/\./;
 
 function loadLocalEnvironment() {
@@ -58,6 +69,12 @@ const server = http.createServer(async (req, res) => {
   if (await handleAdminApi(req, res, pathname, root)) return;
   if (req.method !== 'GET' && req.method !== 'HEAD') {
     res.writeHead(405, { Allow: 'GET, HEAD' }).end();
+    return;
+  }
+
+  const redirect = redirects[pathname.replace(/index\.html$/, '').replace(/([^/])$/, '$1/')];
+  if (redirect && (req.method === 'GET' || req.method === 'HEAD')) {
+    res.writeHead(301, { Location: redirect }).end();
     return;
   }
 
