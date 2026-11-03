@@ -14,7 +14,7 @@ const assert = require('node:assert/strict');
       assert.equal(await page.locator('.business-menu-column a').count(), 14);
       assert.equal(await page.locator('.business-menu-panel').isVisible(), true);
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
-      if (width === 1440) await page.screenshot({ path: 'business-menu-desktop.png' });
+      if (width === 1440) await page.screenshot({ path: 'capturas-teste/business-menu-desktop.png' });
       await page.keyboard.press('Escape');
       assert.equal(await page.locator('.business-menu').evaluate(e => e.open), false);
       await page.locator('.business-menu summary').click();
@@ -22,7 +22,7 @@ const assert = require('node:assert/strict');
       assert.equal(new URL(page.url()).pathname, '/empresarial/index.html');
       assert.equal(await page.locator('.directory-card').count(), 14);
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
-      if ([390, 1440].includes(width)) await page.screenshot({ path: `business-directory-${width}.png`, fullPage: true });
+      if ([390, 1440].includes(width)) await page.screenshot({ path: `capturas-teste/business-directory-${width}.png`, fullPage: true });
     }
     const links = await page.locator('.directory-card').evaluateAll(anchors => anchors.map(a => a.href));
     for (const href of links) {

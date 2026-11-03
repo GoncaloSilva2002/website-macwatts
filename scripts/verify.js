@@ -34,7 +34,7 @@ const assert = require('node:assert/strict');
     await page.waitForFunction(() => [...document.images].every(img => img.complete));
     await page.locator('img').evaluateAll(images => Promise.all(images.map(img => img.decode().catch(() => {}))));
     await page.waitForTimeout(200);
-    await page.screenshot({ path: `preview-${width}.png`, fullPage: true });
+    await page.screenshot({ path: `capturas-teste/preview-${width}.png`, fullPage: true });
     assert.equal(await page.locator('h1').count(), 1);
     const links = await page.locator('a[href]').evaluateAll(anchors => anchors.map(a => a.href).filter(href => href.startsWith(location.origin)));
     for (const href of new Set(links)) {

@@ -31,7 +31,7 @@ const redirects = {
   '/2025/03/14/': '/noticias/',
   '/2026/06/09/': '/noticias/'
 };
-const blocked = /^\/(\.|scripts\/|templates\/|node_modules\/|package(-lock)?\.json$|README\.md$|clone-report\.json$|verification-report\.json$)|\/\./;
+const blocked = /^\/(\.|scripts\/|templates\/|node_modules\/|capturas-teste\/|package(-lock)?\.json$|README\.md$|clone-report\.json$|verification-report\.json$)|\/\./;
 
 function loadLocalEnvironment() {
   try {
@@ -97,7 +97,11 @@ const server = http.createServer(async (req, res) => {
     res.writeHead(200, {
       'Content-Type': types[path.extname(target)] || 'application/octet-stream',
       'X-Content-Type-Options': 'nosniff',
-      'Cache-Control': path.extname(target) === '.html' ? 'no-cache' : 'public, max-age=3600'
+      'Cache-Control': path.extname(target) === '.html'
+        ? 'no-cache'
+        : /^\/assets\/[0-9a-f]{10}-/.test(pathname)
+          ? 'public, max-age=31536000, immutable'
+          : 'public, max-age=3600'
     });
     res.end(req.method === 'HEAD' ? undefined : data);
   });
