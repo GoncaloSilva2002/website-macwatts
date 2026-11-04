@@ -68,7 +68,9 @@
       const imageBox = image.getBoundingClientRect();
       const visibleWidth = ((right - left) / canvas.width) * imageBox.width;
       const visibleHeight = ((bottom - top) / canvas.height) * imageBox.height;
-      const scale = Math.min(targetWidth / visibleWidth, targetHeight / visibleHeight);
+      // Match visual area rather than a fixed box so square and tall logos are not dwarfed by wide ones.
+      const areaScale = Math.sqrt((targetWidth * targetHeight) / (visibleWidth * visibleHeight));
+      const scale = Math.min(areaScale, targetWidth / visibleWidth, (targetHeight * 1.8) / visibleHeight);
 
       if (Number.isFinite(scale) && scale > 0) image.style.transform = `scale(${scale})`;
     } catch {

@@ -11,7 +11,7 @@
     'main .contact-inner > *, main .directory-group-heading, main .directory-card, ' +
     'main .results-grid > *, main .project-card, main .about-grid > *, ' +
     'main .service-extra, main .all-solutions-link, main .company-story > *, ' +
-    'main .principles-grid > *'
+    'main .principles-grid > *, main .company-values > li'
   )].filter(el => !el.parentElement.closest('.elementor-widget'));
   const reveal = el => {
     el.classList.remove('mw-reveal-pending');
