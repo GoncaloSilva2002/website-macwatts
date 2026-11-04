@@ -136,6 +136,8 @@ async function renderArticle(root, article, category) {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${title} | Notícias MacWatts</title>
 <meta name="description" content="${excerpt}">
+<link rel="icon" href="../assets/f1c794a5af-favicon-1.png" sizes="32x32">
+<link rel="apple-touch-icon" href="../assets/f1c794a5af-favicon-1.png">
 <link rel="stylesheet" href="../assets/3a65094ad2-manrope.css">
 <link rel="stylesheet" href="../css/home.css?v=2">
 <link rel="stylesheet" href="../css/residential.css?v=2">
@@ -144,6 +146,7 @@ async function renderArticle(root, article, category) {
 <link rel="stylesheet" href="../css/scroll-reveal.css">
 <script defer src="../js/home.js"></script>
 <script defer src="../js/scroll-reveal.js"></script>
+<script defer src="../js/cookie-consent.js"></script>
 </head>
 <body class="${category === 'residencial' ? 'residential residential-news' : 'business-home'}">
 <a class="skip-link" href="#conteudo">Saltar para o conteúdo</a>

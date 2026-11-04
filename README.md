@@ -55,6 +55,14 @@ Os conteúdos, as imagens e a identidade visual são os do website de origem.
 
 `css/site-pages.css` adapta os conteúdos exportados ao estilo de `css/home.css`, incluindo serviços, projetos, notícias, arquivos e páginas legais. `python scripts/unify-site.py` aplica o cabeçalho e o rodapé partilhados às páginas antigas; páginas já convertidas são preservadas. O exportador executa este passo automaticamente depois de atualizar a navegação empresarial.
 
+## Aviso de cookies
+
+`js/cookie-consent.js` está incluído em todas as páginas públicas e mostra o aviso até o visitante aceitar ou recusar; a escolha fica em `localStorage`. Os iframes com `data-consent-src` em vez de `src` (o mapa do Google nas páginas de contacto) só carregam depois de aceite. O script acrescenta a ligação «Cookies» ao rodapé para alterar a escolha. A secção 8 da política de privacidade descreve este funcionamento; atualize-a se acrescentar serviços externos.
+
+## SEO e página de erro
+
+Execute `node scripts/build-sitemap.js` para gerar `sitemap.xml` e `robots.txt` a partir das páginas versionadas no git (exclui o admin, os modelos e as páginas de redirecionamento). O domínio predefinido é `https://macwatts.pt`; para outro, defina `SITE_URL`. Volte a executá-lo depois de publicar ou remover notícias. O servidor responde com `404.html` às páginas inexistentes.
+
 ## Adicionar notícias
 
 No formulário de administração, escolhe **Residencial** ou **Empresarial** e, se existir, cola o link HTTPS da fonte. A página da notícia é criada com o estilo do site; o cartão aparece na lista e na página inicial da categoria escolhida, e o artigo inclui um botão para abrir a fonte original.

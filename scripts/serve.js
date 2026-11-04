@@ -18,7 +18,11 @@ const types = {
   '.woff2': 'font/woff2',
   '.woff': 'font/woff',
   '.ttf': 'font/ttf',
-  '.pdf': 'application/pdf'
+  '.pdf': 'application/pdf',
+  '.txt': 'text/plain; charset=utf-8',
+  '.xml': 'application/xml; charset=utf-8',
+  '.gif': 'image/gif',
+  '.ico': 'image/x-icon'
 };
 const redirects = {
   '/residencia/': '/residencial/',
@@ -50,6 +54,17 @@ loadLocalEnvironment();
 const handleAdminApi = require('./news-admin-api');
 const handleContactApi = require('./contact-api');
 
+function sendNotFound(req, res) {
+  fs.readFile(path.join(root, '404.html'), (error, data) => {
+    if (error) {
+      res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' }).end('Página não encontrada');
+      return;
+    }
+    res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-cache' });
+    res.end(req.method === 'HEAD' ? undefined : data);
+  });
+}
+
 const server = http.createServer(async (req, res) => {
   let pathname;
   try {
@@ -79,7 +94,7 @@ const server = http.createServer(async (req, res) => {
   }
 
   if (blocked.test(pathname)) {
-    res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' }).end('Página não encontrada');
+    sendNotFound(req, res);
     return;
   }
 
@@ -91,7 +106,7 @@ const server = http.createServer(async (req, res) => {
   if (fs.existsSync(target) && fs.statSync(target).isDirectory()) target = path.join(target, 'index.html');
   fs.readFile(target, (error, data) => {
     if (error) {
-      res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' }).end('Página não encontrada');
+      sendNotFound(req, res);
       return;
     }
     res.writeHead(200, {
