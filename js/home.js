@@ -74,7 +74,7 @@
   if (projectsSection && projectsGrid && projectsGrid.children.length > 3) {
     const projectsMore = document.createElement('div');
     projectsMore.className = 'projects-more';
-    projectsMore.innerHTML = '<button class="button" type="button">Ver mais projetos <span aria-hidden="true"></span></button>';
+    projectsMore.innerHTML = '<button class="button" type="button">Ver mais projetos</button>';
     projectsGrid.after(projectsMore);
     projectsMore.querySelector('button').addEventListener('click', () => {
       projectsSection.classList.add('projects-expanded');

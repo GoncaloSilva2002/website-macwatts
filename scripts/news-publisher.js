@@ -109,7 +109,7 @@ function customizeArticle(html, category, sourceUrl) {
   result = result.replace('<p class="eyebrow">Notícias MacWatts</p>', `<p class="eyebrow">Notícias / ${categoryLabel}</p>`);
   if (sourceUrl) {
     const safeUrl = escapeHtml(sourceUrl);
-    const sourceLink = `<a class="button article-source" href="${safeUrl}" target="_blank" rel="noopener noreferrer">Ler a notícia original <span aria-hidden="true">↗</span></a>`;
+    const sourceLink = `<a class="button article-source" href="${safeUrl}" target="_blank" rel="noopener noreferrer">Ler a notícia original</a>`;
     result = result.replace('<div class="article-footer">', `${sourceLink}<div class="article-footer">`);
   }
   return result;

@@ -23,3 +23,21 @@
 @media(max-width:900px){.more-projects .related-grid{grid-auto-columns:calc((100% - 24px)/2)}}
 @media(max-width:700px){.more-projects .related-grid{grid-auto-columns:min(84%,380px)}.more-projects .related-grid .project-image{aspect-ratio:1.5}}
 @media(prefers-reduced-motion:reduce){.more-projects .related-grid{scroll-behavior:auto}}
+
+/* Abertura com imagem em largura total (projetos) */
+.project-hero{position:relative;isolation:isolate;display:flex;min-height:calc(100svh - 90px);background:var(--navy);color:#fff;overflow:hidden}
+.project-hero-image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 55%;z-index:-2}
+.project-hero:after{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,#0c202ef2 0%,#0c202eb3 32%,#0c202e33 62%,#0c202e8c 100%),linear-gradient(90deg,#0c202e99 0%,transparent 60%)}
+.project-hero-content{display:flex;flex-direction:column;justify-content:space-between;gap:60px;padding-block:28px 56px}
+.project-hero .breadcrumbs{margin:0;color:#ffffffb3}
+.project-hero .breadcrumbs a:hover{color:#57dfb8}
+.project-hero .eyebrow{margin-bottom:14px}
+.project-hero h1{max-width:15ch;font-size:clamp(48px,6.6vw,104px);font-weight:600;line-height:.95;letter-spacing:-.06em}
+.project-hero-meta{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;margin-top:34px;padding-top:24px;border-top:1px solid #ffffff38}
+.project-hero .location{display:flex;align-items:center;gap:10px;padding:0;font-size:15px;font-weight:600;line-height:1.5;color:#fff}
+.project-hero .location svg{width:20px;height:20px;fill:none;stroke:#57dfb8;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.project-hero .project-lead{margin:0;max-width:520px;text-wrap:balance;font-size:17px;line-height:1.7;color:#d6e1e4;text-align:right}
+.project-hero+.project-numbers{padding-top:80px}
+.gallery-portrait{grid-template-columns:.5625fr 1.778fr .5625fr;align-items:stretch}
+.gallery-portrait .gallery-item{aspect-ratio:auto;height:clamp(320px,40vw,560px)}
+@media(max-width:800px){.project-hero{min-height:calc(100svh - 76px)}.project-hero-content{gap:40px;padding-block:22px 36px}.project-hero-meta{flex-direction:column;gap:12px;margin-top:22px;padding-top:18px}.project-hero .project-lead{font-size:14px;text-align:left}.project-hero .project-lead br{display:none}.project-hero+.project-numbers{padding-top:56px}.gallery-portrait{grid-template-columns:1fr 1fr}.gallery-portrait .gallery-item{height:auto;aspect-ratio:.7}.gallery-portrait .gallery-item:nth-child(2){grid-column:1/-1;grid-row:1;aspect-ratio:1.5}}

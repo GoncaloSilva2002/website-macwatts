@@ -47,11 +47,6 @@
       copy.append(category, title);
       info.append(copy);
 
-      const arrow = document.createElement('span');
-      arrow.className = 'round-arrow';
-      arrow.setAttribute('aria-hidden', 'true');
-      arrow.textContent = '↗';
-      info.append(arrow);
       card.append(imageFrame, info);
       return card;
     });
