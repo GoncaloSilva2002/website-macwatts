@@ -35,3 +35,4 @@
 .business-directory .directory-card:hover .directory-card-image img,.business-directory .directory-card:focus-visible .directory-card-image img{transform:scale(1.04)}
 @media(max-width:520px){.business-directory .directory-card{padding:0 22px 22px}.business-directory .directory-card-image{margin-inline:-22px;margin-bottom:20px}}
 @media(prefers-reduced-motion:reduce){.business-directory .directory-card-image img{transition:none}.business-directory .directory-card:hover .directory-card-image img,.business-directory .directory-card:focus-visible .directory-card-image img{transform:none}}
+.directory-hero .hero-image{animation:none;filter:none;opacity:1}
