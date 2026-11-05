@@ -50,15 +50,16 @@ solar = '''<section id="solar" class="section residential-feature"><div class="w
 <section id="mobilidade" class="section residential-mobility"><div class="wrap feature-grid"><div class="feature-copy"><p class="eyebrow">Pronto para o dia seguinte</p><h2>O seu carregador.<br>No melhor lugar: casa.</h2><p>Ganhe a comodidade de carregar o seu veículo onde vive, com uma solução adaptada à instalação elétrica da sua habitação.</p><ul class="feature-list"><li>Gama de carregadores dos 7,4 kW aos 22 kW.</li><li>Gestão dinâmica de carga em função do consumo da casa.</li><li>Aplicação para monitorizar e gerir o carregamento.</li></ul><a class="text-link" href="carregadores-para-veiculos-eletricos/index.html">Explorar carregadores <span aria-hidden="true">↗</span></a></div><div class="feature-visual"><img src="assets/34df7626b5-person-taking-care-electric-car-scaled.webp" alt="Carregamento de um veículo elétrico" loading="lazy"><span class="feature-caption">Mobilidade elétrica em casa</span></div></div></section>'''
 soup.select_one('.projects').replace_with(BeautifulSoup(solar, 'html.parser'))
 brands = [
-    ('LONGi', 'f389b43927-LONGi-logo-new.png'),
-    ('JA Solar', 'b8a46d42c9-new-logos-ja-solar.png'),
-    ('Jinko Solar', 'f3903fff88-4929f869da28c2f656cdb0503dbef12f.png'),
-    ('Trina Solar', 'cb6137b26d-Trina_-_logo.png'),
-    ('Huawei', 'd97a4dee7d-Huawei-Logo.webp'),
-    ('Fox ESS', '422c69c370-logo-new.png'),
-    ('Tesla', 'a80a5d7a45-Tesla_logo.png'),
+    ('LONGi', 'brand-longi.png', 83, 31),
+    ('JA Solar', 'brand-ja-solar.png', 112, 20),
+    ('Jinko Solar', 'brand-jinko.png', 88, 29),
+    ('Trina Solar', 'brand-trina.png', 105, 25),
+    ('Huawei', 'brand-huawei.png', 51, 51),
+    ('Fox ESS', 'brand-fox-ess.png', 71, 37),
+    ('Tesla', 'brand-tesla.png', 45, 58),
 ]
-brand_items = ''.join(f'<li><img src="assets/{filename}" alt="{name}" loading="lazy"></li>' for name, filename in brands)
+# Logos are trimmed to their content and sized by visual area so they carry the same weight.
+brand_items = ''.join(f'<li><img src="assets/{filename}" alt="{name}" width="{width}" height="{height}" loading="lazy"></li>' for name, filename, width, height in brands)
 soup.select_one('#solar').append(BeautifulSoup(
     '<div class="wrap solar-brands"><div class="brands-heading"><p class="eyebrow">Tecnologia que faz parte das nossas soluções</p>'
     '<h3>As marcas com que trabalhamos.</h3></div>'
