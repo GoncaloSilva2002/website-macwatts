@@ -30,7 +30,7 @@
 .careers-principles-heading{display:grid;grid-template-columns:1fr 1fr;column-gap:70px;align-items:end}
 .careers-principles-heading .eyebrow{grid-column:1/-1}
 .careers-principles-heading h2{font-size:clamp(38px,4.5vw,58px);font-weight:600;line-height:1.08;letter-spacing:-.05em}
-.careers-principles-heading h2 span{color:#00856c}
+
 .careers-principles-heading>p:last-child{max-width:470px;color:var(--muted);font-size:14px;line-height:1.9}
 .careers-principles-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:48px}
 .careers-principles-grid article{min-height:205px;padding:24px;border:1px solid var(--line);border-radius:5px;background:var(--pale)}
