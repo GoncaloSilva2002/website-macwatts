@@ -35,7 +35,31 @@ const redirects = {
   '/2025/03/14/': '/noticias/',
   '/2026/06/09/': '/noticias/'
 };
-const blocked = /^\/(\.|scripts\/|templates\/|node_modules\/|capturas-teste\/|package(-lock)?\.json$|README\.md$|clone-report\.json$|verification-report\.json$)|\/\./;
+// Every page only loads its own scripts. Inline styles are still used across the
+// site, and the only external frames are the Google map and the Amplify app.
+const contentSecurityPolicy = [
+  "default-src 'self'",
+  "script-src 'self'",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: blob: https:",
+  "font-src 'self' data:",
+  "connect-src 'self'",
+  'frame-src https://maps.google.com https://www.google.com https://main.d1ewoiy1pgag7s.amplifyapp.com',
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "frame-ancestors 'none'"
+].join('; ');
+const securityHeaders = {
+  'Content-Security-Policy': contentSecurityPolicy,
+  'X-Frame-Options': 'DENY',
+  'X-Content-Type-Options': 'nosniff',
+  'Referrer-Policy': 'strict-origin-when-cross-origin',
+  'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=()',
+  // Only over HTTPS: Render serves the site over HTTPS, the local server does not.
+  ...(process.env.RENDER === 'true' ? { 'Strict-Transport-Security': 'max-age=31536000' } : {})
+};
+const blocked =/^\/(\.|scripts\/|templates\/|node_modules\/|capturas-teste\/|package(-lock)?\.json$|README\.md$|clone-report\.json$|verification-report\.json$)|\/\./;
 
 function loadLocalEnvironment() {
   try {
@@ -66,6 +90,7 @@ function sendNotFound(req, res) {
 }
 
 const server = http.createServer(async (req, res) => {
+  for (const [name, value] of Object.entries(securityHeaders)) res.setHeader(name, value);
   let pathname;
   try {
     pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname).replace(/\\/g, '/');

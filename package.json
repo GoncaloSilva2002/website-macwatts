@@ -13,6 +13,6 @@
     "playwright": "^1.63.0"
   },
   "dependencies": {
-    "nodemailer": "^10.1.1"
+    "nodemailer": "^10.3.1"
   }
 }

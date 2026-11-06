@@ -92,6 +92,49 @@ function sourceUrlFrom(value) {
   return url.href;
 }
 
+// Where a news item's page lives, relative to the site root. Older residential
+// articles live in residencial/<slug>.html; everything else in <slug>/index.html.
+async function articlePagePath(root, item) {
+  for (const candidate of [`residencial/${item.slug}.html`, `${item.slug}/index.html`]) {
+    try {
+      const html = await fs.readFile(path.join(root, candidate), 'utf8');
+      if (html.includes('class="article-heading"')) return candidate;
+    } catch (error) {
+      if (error.code !== 'ENOENT') throw error;
+    }
+  }
+  return null;
+}
+
+// "Outras notícias": up to three other articles from the same category, newest first.
+async function renderRelatedNews(root, news, current, pagePath) {
+  const fromDir = path.posix.dirname(pagePath);
+  const cards = [];
+  const others = news.filter(item => item.slug !== current.slug && item.category === current.category)
+    .sort((a, b) => String(b.date).localeCompare(String(a.date)));
+  for (const item of others) {
+    if (cards.length === 3) break;
+    const target = await articlePagePath(root, item);
+    if (!target) continue;
+    const href = escapeHtml(path.posix.relative(fromDir, target));
+    const image = escapeHtml(path.posix.relative(fromDir, item.image));
+    const title = escapeHtml(item.title);
+    cards.push(`<a class="related-news-card" href="${href}"><img alt="" loading="lazy" src="${image}"><div><time datetime="${escapeHtml(item.date)}">${escapeHtml(item.dateLabel || '')}</time><h3>${title}</h3></div></a>`);
+  }
+  if (!cards.length) return '';
+  return `<section class="related-news" aria-labelledby="outras-noticias"><div class="wrap"><h2 id="outras-noticias">Outras notícias</h2><div class="related-news-grid">${cards.join('')}</div></div></section>`;
+}
+
+function withRelatedNews(html, section) {
+  const cleaned = html.replace(/<section class="related-news"[\s\S]*?<\/section>\s*(?=<\/main>)/, '');
+  return section ? cleaned.replace('</main>', `${section}\n</main>`) : cleaned;
+}
+
+function sourceLinkHtml(sourceUrl) {
+  const host = new URL(sourceUrl).hostname.replace(/^www\./, '');
+  return `<a class="article-source" href="${escapeHtml(sourceUrl)}" target="_blank" rel="noopener noreferrer">Ler a notícia original em ${escapeHtml(host)}</a>`;
+}
+
 function customizeArticle(html, category, sourceUrl) {
   const newsListUrl = category === 'residencial' ? '../residencial/noticias.html' : '../noticias/index.html';
   const categoryLabel = category === 'residencial' ? 'Residencial' : 'Empresarial';
@@ -108,9 +151,7 @@ function customizeArticle(html, category, sourceUrl) {
   }
   result = result.replace('<p class="eyebrow">Notícias MacWatts</p>', `<p class="eyebrow">Notícias / ${categoryLabel}</p>`);
   if (sourceUrl) {
-    const safeUrl = escapeHtml(sourceUrl);
-    const sourceLink = `<a class="button article-source" href="${safeUrl}" target="_blank" rel="noopener noreferrer">Ler a notícia original</a>`;
-    result = result.replace('<div class="article-footer">', `${sourceLink}<div class="article-footer">`);
+    result = result.replace('<div class="article-footer">', `${sourceLinkHtml(sourceUrl)}<div class="article-footer">`);
   }
   return result;
 }
@@ -208,7 +249,9 @@ async function createNews(root, input, existingNews = null) {
   const image = `assets/noticia-${slug}.${extension}`;
   const excerpt = text.replace(/\s+/g, ' ').slice(0, 200).trim();
   const article = { slug, title, image, excerpt, date, dateLabel, paragraphs: renderParagraphs(text) };
-  const html = customizeArticle(await renderArticle(root, article, category), category, sourceUrl);
+  const articleHtml = customizeArticle(await renderArticle(root, article, category), category, sourceUrl);
+  const related = await renderRelatedNews(root, existingNews, { slug, category }, `${slug}/index.html`);
+  const html = withRelatedNews(articleHtml, related);
   const listingPath = category === 'residencial' ? 'residencial/noticias.html' : 'noticias/index.html';
   const listingHtml = await fs.readFile(path.join(root, listingPath), 'utf8');
   const updatedListing = addNewsCardToListing(listingHtml, article, category);
@@ -228,4 +271,4 @@ async function createNews(root, input, existingNews = null) {
   };
 }
 
-module.exports = { NewsInputError, createNews };
+module.exports = { NewsInputError, createNews, articlePagePath, renderRelatedNews, withRelatedNews, sourceLinkHtml };

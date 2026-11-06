@@ -4,6 +4,7 @@ const crypto = require('node:crypto');
 const fs = require('node:fs/promises');
 const path = require('node:path');
 const { NewsInputError, createNews } = require('./news-publisher');
+const requestIp = require('./request-ip');
 
 const sessions = new Map();
 const loginAttempts = new Map();
@@ -11,6 +12,7 @@ const sessionLifetimeMs = 8 * 60 * 60 * 1000;
 const maxRequestBytes = 12 * 1024 * 1024;
 const loginWindowMs = 15 * 60 * 1000;
 const maxLoginAttempts = 5;
+const minPasswordLength = 12;
 const repositoryOwner = process.env.GITHUB_OWNER || 'GoncaloSilva2002';
 const repositoryName = process.env.GITHUB_REPOSITORY || 'website-macwatts';
 const repositoryBranch = process.env.GITHUB_BRANCH || 'main';
@@ -80,8 +82,16 @@ function passwordMatches(candidate, expected) {
   return crypto.timingSafeEqual(candidateHash, expectedHash);
 }
 
-function clientAddress(req) {
-  return req.socket.remoteAddress || 'unknown';
+// Browsers always send Origin on a POST. A request from another site is refused
+// even though the SameSite=Strict cookie would already keep it unauthenticated.
+function hasSameOrigin(req) {
+  const origin = req.headers.origin;
+  if (!origin) return true;
+  try {
+    return new URL(origin).host === req.headers.host;
+  } catch {
+    return false;
+  }
 }
 
 function clearExpiredAttempts() {
@@ -218,6 +228,10 @@ async function readLocalNews(root) {
 
 async function handle(req, res, pathname, root) {
   if (!pathname.startsWith('/api/admin/')) return false;
+  if (req.method === 'POST' && !hasSameOrigin(req)) {
+    sendJson(res, 403, { error: 'Pedido não autorizado.' });
+    return true;
+  }
   if (req.method === 'GET' && pathname === '/api/admin/news') {
     if (!sessionFor(req)) {
       sendJson(res, 401, { error: "A sess\u00e3o expirou. Entra novamente." });
@@ -241,12 +255,12 @@ async function handle(req, res, pathname, root) {
 
   if (req.method === 'POST' && pathname === '/api/admin/login') {
     const password = process.env.NEWS_ADMIN_PASSWORD;
-    if (!password || password.length < 6) {
-      sendJson(res, 503, { error: 'A palavra-passe de administração ainda não está configurada no servidor.' });
+    if (!password || password.length < minPasswordLength) {
+      sendJson(res, 503, { error: `A palavra-passe de administração não está configurada no servidor ou tem menos de ${minPasswordLength} caracteres.` });
       return true;
     }
     clearExpiredAttempts();
-    const address = clientAddress(req);
+    const address = requestIp(req);
     const attempt = loginAttempts.get(address);
     if (attempt && attempt.count >= maxLoginAttempts && attempt.resetAt > Date.now()) {
       sendJson(res, 429, { error: 'Demasiadas tentativas. Aguarda 15 minutos e volta a tentar.' });

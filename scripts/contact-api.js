@@ -1,6 +1,7 @@
 'use strict';
 
 const nodemailer = require('nodemailer');
+const requestIp = require('./request-ip');
 
 const maxRequestBytes = 16000;
 const rateLimitWindowMs = 10 * 60 * 1000;
@@ -36,11 +37,6 @@ async function readJson(req) {
   } catch {
     throw new ContactApiError(400, 'Não foi possível ler os dados do formulário.');
   }
-}
-
-function requestIp(req) {
-  const forwarded = req.headers['x-forwarded-for'];
-  return (typeof forwarded === 'string' ? forwarded.split(',')[0].trim() : '') || req.socket.remoteAddress || 'unknown';
 }
 
 function consumeRateLimit(req) {
@@ -206,7 +202,9 @@ async function handle(req, res, pathname) {
     const audience = input?.audience === 'residencial' ? 'Residencial' : input?.audience === 'empresarial' ? 'Empresarial' : '';
 
     if (name.length < 2) throw new ContactApiError(400, 'Indique o seu nome.');
-    if (email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    // Plain addresses only: no quotes, angle brackets, commas or semicolons, which
+    // the email library could read as extra addresses in the Reply-To header.
+    if (email.length > 254 || !/^[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?(?:\.[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)+$/.test(email)) {
       throw new ContactApiError(400, 'Indique um endereço de email válido.');
     }
     if (message.length < 10) throw new ContactApiError(400, 'Escreva uma mensagem com pelo menos 10 caracteres.');
